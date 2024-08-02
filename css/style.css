@@ -11,15 +11,15 @@ input[type="range"] {
 input[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none;
     margin-top: -7.5px; /* Выравниваем ползунок по центру */
-    width: 30px;
-    height: 15px;
+    width: 15px;
+    height: 30px;
     background: black;
     cursor: pointer;
 }
 
 input[type="range"]::-moz-range-thumb {
-    width: 30px;
-    height: 15px;
+    width: 15px;
+    height: 30px;
     background: black;
     cursor: pointer;
 }
