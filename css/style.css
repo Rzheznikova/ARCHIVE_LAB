@@ -29,3 +29,51 @@ body {
     left: 25%; /* Отступ слева 1/4 ширины экрана */
     bottom: 20%; /* Отступ от низа экрана 1/5 высоты экрана */
 }
+
+/* Стили для слайдеров и ползунков */
+input[type="range"] {
+    -webkit-appearance: none; /* Убираем стандартный стиль для всех браузеров */
+    appearance: none;
+    background: transparent; /* Фон слайдера делаем прозрачным */
+    cursor: pointer;
+}
+
+/* Стили для ползунка горизонтального слайдера */
+#horizontalRangeSlider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 30px; /* Ширина ползунка */
+    height: 15px; /* Высота ползунка */
+    background: black; /* Цвет ползунка */
+    cursor: pointer;
+}
+
+#horizontalRangeSlider::-moz-range-thumb {
+    width: 30px;
+    height: 15px;
+    background: black;
+}
+
+/* Стили для ползунка вертикального слайдера */
+#verticalRangeSlider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 15px; /* Ширина ползунка менее высокого */
+    height: 30px; /* Высота ползунка более широкая */
+    background: black;
+    cursor: pointer;
+}
+
+#verticalRangeSlider::-moz-range-thumb {
+    width: 15px;
+    height: 30px;
+    background: black;
+}
+
+/* Стилизация тела слайдера для полного контроля */
+#horizontalRangeSlider, #verticalRangeSlider {
+    width: 100%; /* Позволяет слайдеру заполнять свои контейнеры */
+    height: 100%;
+}
+
+#horizontalSlider, #verticalSlider {
+    background-color: black; /* Черный фон для видимой части слайдера */
+}
