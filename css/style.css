@@ -17,20 +17,11 @@ body {
 
 #verticalSlider {
     position: absolute;
-    height: 300px; /* Задаем фиксированную высоту для вертикального слайдера */
+    height: 75vh; /* Длина слайдера равна 3/4 высоты экрана */
     width: 10px; /* Толщина полосы */
     background-color: black; /* Цвет слайдера */
     left: 25%; /* Отступ слева 1/4 ширины экрана */
     bottom: 20%; /* Отступ от низа экрана 1/5 высоты экрана */
-    transform: rotate(-90deg); /* Поворачиваем слайдер на 90 градусов против часовой стрелки */
-    transform-origin: top left; /* Точка, вокруг которой происходит поворот */
-}
-
-#verticalRangeSlider {
-    width: 100%; /* Позволяет слайдеру заполнять свой контейнер */
-    -webkit-appearance: none;
-    appearance: none;
-    background: transparent;
 }
 
 /* Стили для всех типов ползунков */
@@ -52,7 +43,13 @@ input[type="range"]::-webkit-slider-thumb {
     cursor: pointer;
 }
 
-input[type="range"]::-moz-range-thumb,
+input[type="range"]::-moz-range-thumb {
+    width: 30px;
+    height: 15px;
+    background: black;
+    cursor: pointer;
+}
+
 input[type="range"]::-ms-thumb {
     width: 30px;
     height: 15px;
@@ -67,9 +64,4 @@ input[type="range"]::-ms-track {
     width: 100%;
     height: 10px;
     background: black;
-}
-
-/* Убираем фокусную рамку, которая может появляться вокруг ползунка при клике */
-input[type="range"]:focus {
-    outline: none;
 }
