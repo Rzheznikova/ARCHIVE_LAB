@@ -1,5 +1,9 @@
 window.onload = function() {
     const canvas = document.getElementById('glCanvas');
+    // Устанавливаем размер canvas согласно размеру вьюпорта
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
     const gl = canvas.getContext('webgl');
 
     if (!gl) {
@@ -7,8 +11,7 @@ window.onload = function() {
         return;
     }
 
-    // TODO: Set up WebGL and shaders
-    // Placeholder example
-    gl.clearColor(0.0, 0.0, 0.0, 1.0);
+    // Настройка цвета очистки на черный (возможно, вы захотите изменить его)
+    gl.clearColor(1.0, 1.0, 1.0, 1.0);  // Очищаем белым цветом для консистентности с фоном
     gl.clear(gl.COLOR_BUFFER_BIT);
 };
