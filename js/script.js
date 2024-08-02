@@ -11,7 +11,23 @@ window.onload = function() {
         return;
     }
 
-    // Настройка цвета очистки на черный (возможно, вы захотите изменить его)
-    gl.clearColor(1.0, 1.0, 1.0, 1.0);  // Очищаем белым цветом для консистентности с фоном
+    // Настройка цвета очистки на черный (поменяно на белый для консистентности)
+    gl.clearColor(1.0, 1.0, 1.0, 1.0);  // Очищаем белым цветом
     gl.clear(gl.COLOR_BUFFER_BIT);
+
+    // Подключаем слайдеры
+    const horizontalSlider = document.getElementById('horizontalRangeSlider');
+    const verticalSlider = document.getElementById('verticalRangeSlider');
+
+    // Обработка движения горизонтального слайдера
+    horizontalSlider.addEventListener('input', function() {
+        console.log('Horizontal slider value:', this.value);
+        // Здесь можно добавить дополнительную логику, например, влияющую на WebGL
+    });
+
+    // Обработка движения вертикального слайдера
+    verticalSlider.addEventListener('input', function() {
+        console.log('Vertical slider value:', this.value);
+        // Здесь можно добавить дополнительную логику, например, влияющую на WebGL
+    });
 };
