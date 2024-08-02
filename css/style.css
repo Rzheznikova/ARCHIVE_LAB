@@ -1,3 +1,29 @@
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: white; /* Установка белого фона для сайта */
+}
+
+/* Стилизация основных слайдеров */
+#horizontalSlider {
+    position: absolute;
+    bottom: 20%; /* Отступ от нижнего края экрана равен 1/5 высоты экрана */
+    left: 12.5%; /* Отступ слева 1/8 ширины экрана */
+    right: 12.5%; /* Отступ справа 1/8 ширины экрана */
+    height: 10px; /* Толщина полосы */
+    background-color: black; /* Цвет слайдера */
+}
+
+#verticalSlider {
+    position: absolute;
+    height: 75vh; /* Длина слайдера равна 3/4 высоты экрана */
+    width: 10px; /* Толщина полосы */
+    background-color: black; /* Цвет слайдера */
+    left: 25%; /* Отступ слева 1/4 ширины экрана */
+    bottom: 20%; /* Отступ от низа экрана 1/5 высоты экрана */
+}
+
 /* Стили для всех типов ползунков */
 input[type="range"] {
     -webkit-appearance: none;
@@ -12,14 +38,14 @@ input[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none;
     margin-top: -7.5px; /* Выравниваем ползунок по центру */
     width: 30px;
-    height: 30px;
+    height: 15px;
     background: black;
     cursor: pointer;
 }
 
 input[type="range"]::-moz-range-thumb {
     width: 30px;
-    height: 30px;
+    height: 15px;
     background: black;
     cursor: pointer;
 }
