@@ -1,17 +1,29 @@
 body {
     margin: 0;
     overflow: hidden;
+    background-color: white; /* Установка белого фона для сайта */
 }
+
 #glCanvas {
     width: 100vw;
     height: 100vh;
     display: block;
 }
-#sliders {
+
+#horizontalSlider {
     position: absolute;
-    bottom: 10px;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    gap: 20px;
+    bottom: 20%; /* Отступ от нижнего края экрана равен 1/5 высоты экрана */
+    left: 12.5%; /* Отступ слева 1/8 экрана */
+    right: 12.5%; /* Отступ справа 1/8 экрана */
+    height: 10px; /* Толщина полосы */
+    background-color: black; /* Цвет слайдера */
+}
+
+#verticalSlider {
+    position: absolute;
+    height: 75vh; /* Длина слайдера равна 3/4 высоты экрана */
+    width: 10px; /* Толщина полосы */
+    background-color: black; /* Цвет слайдера */
+    left: 25%; /* Отступ слева 1/4 ширины экрана */
+    bottom: 20%; /* Отступ от низа экрана 1/5 высоты экрана */
 }
