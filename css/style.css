@@ -13,10 +13,26 @@ body {
 #horizontalSlider {
     position: absolute;
     bottom: 20%; /* Отступ от нижнего края экрана равен 1/5 высоты экрана */
-    left: 12.5%; /* Отступ слева 1/8 экрана */
-    right: 12.5%; /* Отступ справа 1/8 экрана */
+    left: 12.5%; /* Отступ слева 1/8 ширины экрана */
+    width: 75%; /* Ширина слайдера 3/4 экрана */
     height: 10px; /* Толщина полосы */
     background-color: black; /* Цвет слайдера */
+}
+
+#horizontalRangeSlider {
+    width: 100%; /* Ширина ползунка на весь слайдер */
+    height: 10px; /* Толщина полосы */
+    cursor: pointer;
+    -webkit-appearance: none; /* Убираем стандартный стиль для Webkit/Blink */
+    appearance: none;
+}
+
+#horizontalRangeSlider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 30px; /* Ширина ползунка */
+    height: 15px; /* Высота ползунка */
+    background: black; /* Цвет ползунка */
 }
 
 #verticalSlider {
@@ -26,4 +42,21 @@ body {
     background-color: black; /* Цвет слайдера */
     left: 25%; /* Отступ слева 1/4 ширины экрана */
     bottom: 20%; /* Отступ от низа экрана 1/5 высоты экрана */
+}
+
+#verticalRangeSlider {
+    height: 100%; /* Высота ползунка на весь слайдер */
+    width: 10px; /* Ширина полосы */
+    cursor: pointer;
+    -webkit-appearance: none; /* Убираем стандартный стиль для Webkit/Blink */
+    appearance: none;
+    writing-mode: bt-lr; /* Поворачиваем слайдер на 90 градусов */
+}
+
+#verticalRangeSlider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 10px; /* Ширина ползунка */
+    height: 30px; /* Высота ползунка */
+    background: black; /* Цвет ползунка */
 }
