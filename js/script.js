@@ -13,8 +13,6 @@ window.onload = function() {
     gl.clearColor(1.0, 1.0, 1.0, 1.0);  // Очищаем белым цветом
     gl.clear(gl.COLOR_BUFFER_BIT);
 
-    const horizontalSlider = document.getElementById('horizontalRangeSlider');
-    const verticalSlider = document.getElementById('verticalRangeSlider');
     const imageContainer = document.getElementById('imageContainer');
     const randomImage = document.getElementById('randomImage');
 
@@ -27,7 +25,10 @@ window.onload = function() {
                 return response.json();
             })
             .then(data => callback(data))
-            .catch(error => console.error('Error loading images:', error));
+            .catch(error => {
+                console.error('Error loading images:', error);
+                alert('Error loading images.json: ' + error.message);
+            });
     }
 
     function getRandomImage(images) {
@@ -35,15 +36,10 @@ window.onload = function() {
         return images[randomIndex];
     }
 
-    horizontalSlider.addEventListener('change', function() {
-        loadImages(function(images) {
-            const randomImagePath = `goticheskaya/${getRandomImage(images)}`;
-            randomImage.src = randomImagePath;
-            imageContainer.style.display = 'block';
-        });
-    });
-
-    verticalSlider.addEventListener('input', function() {
-        console.log('Vertical slider value:', this.value);
+    // Загружаем случайное изображение при загрузке страницы
+    loadImages(function(images) {
+        const randomImagePath = `goticheskaya/${getRandomImage(images)}`;
+        randomImage.src = randomImagePath;
+        imageContainer.style.display = 'block';
     });
 };
