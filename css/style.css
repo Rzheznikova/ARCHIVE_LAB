@@ -42,20 +42,23 @@ input[type="range"] {
     height: 30px; /* Высота ползунка */
     background: black; /* Цвет ползунка */
     cursor: pointer;
+    margin-top: -10px; /* Сдвиг по вертикали для выравнивания */
 }
 
 #horizontalRangeSlider::-moz-range-thumb {
-    width: 30px;
-    height: 15px;
+    width: 15px;
+    height: 30px;
     background: black;
     cursor: pointer;
+    margin-top: -10px; /* Сдвиг по вертикали для выравнивания */
 }
 
 #horizontalRangeSlider::-ms-thumb {
-    width: 30px;
-    height: 15px;
+    width: 15px;
+    height: 30px;
     background: black;
     cursor: pointer;
+    margin-top: -10px; /* Сдвиг по вертикали для выравнивания */
 }
 
 /* Стили для дорожки горизонтального слайдера */
@@ -75,6 +78,7 @@ input[type="range"] {
     background: black; /* Цвет ползунка */
     cursor: pointer;
     transform: rotate(90deg); /* Поворот ползунка для вертикального движения */
+    margin-left: -10px; /* Сдвиг по горизонтали для выравнивания */
 }
 
 #verticalRangeSlider::-moz-range-thumb {
@@ -83,6 +87,7 @@ input[type="range"] {
     background: black;
     cursor: pointer;
     transform: rotate(90deg); /* Поворот ползунка для вертикального движения */
+    margin-left: -10px; /* Сдвиг по горизонтали для выравнивания */
 }
 
 #verticalRangeSlider::-ms-thumb {
@@ -91,6 +96,7 @@ input[type="range"] {
     background: black;
     cursor: pointer;
     transform: rotate(90deg); /* Поворот ползунка для вертикального движения */
+    margin-left: -10px; /* Сдвиг по горизонтали для выравнивания */
 }
 
 /* Стили для дорожки вертикального слайдера */
@@ -106,5 +112,6 @@ input[type="range"] {
 input[type="range"]:focus {
     outline: none;
 }
+
 
 
