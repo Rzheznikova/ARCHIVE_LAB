@@ -66,8 +66,22 @@ window.onload = function() {
         handleSliderMovement(this);
     });
 
+    // Удаляем обработчик для вертикального слайдера, так как он не нужен
+    const verticalSlider = document.getElementById('verticalRangeSlider');
+    verticalSlider.addEventListener('input', function() {
+        handleSliderMovement(horizontalSlider);
+    });
+
     // Изначально скрываем контейнер с изображением
     imageContainer.style.display = 'none';
+
+    // Загружаем случайное изображение при загрузке страницы
+    loadImages(function(images) {
+        const randomImagePath = `goticheskaya/${getRandomImage(images)}`;
+        randomImage.src = randomImagePath;
+        imageContainer.style.display = 'block';
+    });
 };
+
 
 
