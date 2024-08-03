@@ -38,6 +38,7 @@ window.onload = function() {
 
     let previousValue = 0;
     let previousTime = Date.now();
+    let images = [];
 
     function handleSliderMovement(slider) {
         const currentValue = parseInt(slider.value);
@@ -48,11 +49,13 @@ window.onload = function() {
         const speed = deltaValue / deltaTime;
 
         if (speed === 0) { // Если скорость равна 0, то считаем что ползунок остановился
-            loadImages(function(images) {
+            if (images.length > 0) {
                 const randomImagePath = `goticheskaya/${getRandomImage(images)}`;
                 randomImage.src = randomImagePath;
                 imageContainer.style.display = 'block';
-            });
+            } else {
+                console.error('No images loaded');
+            }
         } else {
             imageContainer.style.display = 'none';
         }
@@ -71,10 +74,8 @@ window.onload = function() {
         handleSliderMovement(this);
     });
 
-    // Загружаем случайное изображение при загрузке страницы
-    loadImages(function(images) {
-        const randomImagePath = `goticheskaya/${getRandomImage(images)}`;
-        randomImage.src = randomImagePath;
-        imageContainer.style.display = 'block';
+    // Загружаем изображения при загрузке страницы
+    loadImages(function(loadedImages) {
+        images = loadedImages;
     });
 };
