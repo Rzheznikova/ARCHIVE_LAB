@@ -1,73 +1,62 @@
-window.onload = function() {
-    const canvas = document.getElementById('glCanvas');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: white; /* Установка белого фона для сайта */
+}
 
-    const gl = canvas.getContext('webgl');
+/* Стилизация основных слайдеров */
+#horizontalSlider {
+    position: absolute;
+    bottom: 20%; /* Отступ от нижнего края экрана равен 1/5 высоты экрана */
+    left: 12.5%; /* Отступ слева 1/8 ширины экрана */
+    width: 75%; /* Ширина слайдера 3/4 от доступного пространства */
+    height: 10px; /* Толщина полосы */
+    background-color: black; /* Цвет слайдера */
+}
 
-    if (!gl) {
-        console.error("Unable to initialize WebGL. Your browser or machine may not support it.");
-        return;
-    }
+/* Стили для всех типов ползунков */
+input[type="range"] {
+    -webkit-appearance: none; /* Убираем стандартный стиль для всех браузеров */
+    appearance: none;
+    background: transparent; /* Фон слайдера делаем прозрачным */
+    cursor: pointer;
+    width: 100%; /* Обеспечивает, что слайдер растягивается на всю длину контейнера */
+}
 
-    gl.clearColor(1.0, 1.0, 1.0, 1.0);  // Очищаем белым цветом
-    gl.clear(gl.COLOR_BUFFER_BIT);
+/* Стили для ползунка горизонтального слайдера */
+#horizontalRangeSlider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 30px; /* Ширина ползунка */
+    height: 15px; /* Высота ползунка */
+    background: black; /* Цвет ползунка */
+    cursor: pointer;
+}
 
-    const imageContainer = document.getElementById('imageContainer');
-    const randomImage = document.getElementById('randomImage');
+#horizontalRangeSlider::-moz-range-thumb {
+    width: 30px;
+    height: 15px;
+    background: black;
+    cursor: pointer;
+}
 
-    function loadImages(callback) {
-        fetch('images.json')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok ' + response.statusText);
-                }
-                return response.json();
-            })
-            .then(data => callback(data))
-            .catch(error => {
-                console.error('Error loading images:', error);
-                alert('Error loading images.json: ' + error.message);
-            });
-    }
+#horizontalRangeSlider::-ms-thumb {
+    width: 30px;
+    height: 15px;
+    background: black;
+    cursor: pointer;
+}
 
-    function getRandomImage(images) {
-        const randomIndex = Math.floor(Math.random() * images.length);
-        return images[randomIndex];
-    }
+/* Стили для дорожки горизонтального слайдера */
+#horizontalRangeSlider::-webkit-slider-runnable-track,
+#horizontalRangeSlider::-moz-range-track,
+#horizontalRangeSlider::-ms-track {
+    width: 100%;
+    height: 10px;
+    background: black;
+}
 
-    let previousValue = 0;
-    let previousTime = Date.now();
-
-    function handleSliderMovement(slider) {
-        const currentValue = parseInt(slider.value);
-        const currentTime = Date.now();
-        const deltaValue = Math.abs(currentValue - previousValue);
-        const deltaTime = currentTime - previousTime;
-
-        const speed = deltaValue / deltaTime;
-
-        if (speed === 0) { // Если скорость равна 0, то считаем что ползунок остановился
-            loadImages(function(images) {
-                const randomImagePath = `goticheskaya/${getRandomImage(images)}`;
-                randomImage.src = randomImagePath;
-                imageContainer.style.display = 'block';
-            });
-        } else {
-            imageContainer.style.display = 'none';
-        }
-
-        previousValue = currentValue;
-        previousTime = currentTime;
-    }
-
-    const horizontalSlider = document.getElementById('horizontalRangeSlider');
-    horizontalSlider.addEventListener('input', function() {
-        handleSliderMovement(this);
-    });
-
-    // Изначально скрываем контейнер с изображением
-    imageContainer.style.display = 'none';
-};
-
-
+/* Убираем фокусную рамку, которая может появляться вокруг ползунка при клике */
+input[type="range"]:focus {
+    outline: none;
+}
