@@ -47,6 +47,7 @@ window.onload = function() {
 
     let previousValue = 0;
     let previousTime = Date.now();
+    let timeout = null;
 
     function handleSliderMovement(slider) {
         const currentValue = parseInt(slider.value);
@@ -57,12 +58,16 @@ window.onload = function() {
         const speed = deltaValue / deltaTime;
 
         if (speed === 0) { // Если скорость равна 0, то считаем что ползунок остановился
-            loadImages(function(images) {
-                const randomImagePath = `goticheskaya/${getRandomImage(images)}`;
-                randomImage.src = randomImagePath;
-                imageContainer.style.display = 'block';
-            });
+            clearTimeout(timeout);
+            timeout = setTimeout(() => {
+                loadImages(function(images) {
+                    const randomImagePath = `goticheskaya/${getRandomImage(images)}`;
+                    randomImage.src = randomImagePath;
+                    imageContainer.style.display = 'block';
+                });
+            }, 200); // 200 мс задержка для лучшего определения остановки
         } else {
+            clearTimeout(timeout);
             imageContainer.style.display = 'none';
         }
 
