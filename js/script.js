@@ -45,6 +45,7 @@ window.onload = function() {
 
     let previousValue = 0;
     let previousTime = Date.now();
+    let loadTimeout = null;
 
     function handleSliderMovement(slider) {
         const currentValue = parseInt(slider.value);
@@ -81,4 +82,5 @@ window.onload = function() {
         handleSliderMovement(this);
     });
 };
+
 
