@@ -10,7 +10,7 @@ window.onload = function() {
         return;
     }
 
-    gl.clearColor(1.0, 1.0, 1.0, 1.0);  // РћС‡РёС‰Р°РµРј Р±РµР»С‹Рј С†РІРµС‚РѕРј
+    gl.clearColor(1.0, 1.0, 1.0, 1.0);  // Очищаем белым цветом
     gl.clear(gl.COLOR_BUFFER_BIT);
 
     const imageContainer = document.getElementById('imageContainer');
@@ -47,7 +47,7 @@ window.onload = function() {
 
         const speed = deltaValue / deltaTime;
 
-        if (speed === 0) { // Р•СЃР»Рё СЃРєРѕСЂРѕСЃС‚СЊ СЂР°РІРЅР° 0, С‚Рѕ СЃС‡РёС‚Р°РµРј С‡С‚Рѕ РїРѕР»Р·СѓРЅРѕРє РѕСЃС‚Р°РЅРѕРІРёР»СЃСЏ
+        if (speed === 0) { // Если скорость равна 0, то считаем что ползунок остановился
             loadImages(function(images) {
                 const randomImagePath = `goticheskaya/${getRandomImage(images)}`;
                 randomImage.src = randomImagePath;
@@ -71,13 +71,21 @@ window.onload = function() {
         handleSliderMovement(this);
     });
 
-    // Р—Р°РіСЂСѓР¶Р°РµРј СЃР»СѓС‡Р°Р№РЅРѕРµ РёР·РѕР±СЂР°Р¶РµРЅРёРµ РїСЂРё Р·Р°РіСЂСѓР·РєРµ СЃС‚СЂР°РЅРёС†С‹
+    // Загружаем случайное изображение при загрузке страницы
     loadImages(function(images) {
         const randomImagePath = `goticheskaya/${getRandomImage(images)}`;
         randomImage.src = randomImagePath;
         imageContainer.style.display = 'block';
     });
+
+    // Меняем изображение при щелчке правой кнопкой мыши
+    document.addEventListener('contextmenu', function(event) {
+        event.preventDefault(); // Отменяем стандартное контекстное меню
+        loadImages(function(images) {
+            const randomImagePath = `goticheskaya/${getRandomImage(images)}`;
+            randomImage.src = randomImagePath;
+            imageContainer.style.display = 'block';
+        });
+    });
 };
-
-
 
