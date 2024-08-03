@@ -36,6 +36,14 @@ window.onload = function() {
         return images[randomIndex];
     }
 
+    function displayRandomImage() {
+        loadImages(function(images) {
+            const randomImagePath = `goticheskaya/${getRandomImage(images)}`;
+            randomImage.src = randomImagePath;
+            imageContainer.style.display = 'block';
+        });
+    }
+
     let previousValue = 0;
     let previousTime = Date.now();
 
@@ -48,11 +56,7 @@ window.onload = function() {
         const speed = deltaValue / deltaTime;
 
         if (speed === 0) { // Если скорость равна 0, то считаем что ползунок остановился
-            loadImages(function(images) {
-                const randomImagePath = `goticheskaya/${getRandomImage(images)}`;
-                randomImage.src = randomImagePath;
-                imageContainer.style.display = 'block';
-            });
+            displayRandomImage();
         } else {
             imageContainer.style.display = 'none';
         }
@@ -72,20 +76,12 @@ window.onload = function() {
     });
 
     // Загружаем случайное изображение при загрузке страницы
-    loadImages(function(images) {
-        const randomImagePath = `goticheskaya/${getRandomImage(images)}`;
-        randomImage.src = randomImagePath;
-        imageContainer.style.display = 'block';
-    });
+    displayRandomImage();
 
     // Меняем изображение при щелчке правой кнопкой мыши
     document.addEventListener('contextmenu', function(event) {
         event.preventDefault(); // Отменяем стандартное контекстное меню
-        loadImages(function(images) {
-            const randomImagePath = `goticheskaya/${getRandomImage(images)}`;
-            randomImage.src = randomImagePath;
-            imageContainer.style.display = 'block';
-        });
+        displayRandomImage();
     });
 };
 
