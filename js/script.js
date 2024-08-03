@@ -47,7 +47,7 @@ window.onload = function() {
 
         const speed = deltaValue / deltaTime;
 
-        if (speed < 0.1) { // Если скорость меньше 0.1, то считаем что ползунок остановился
+        if (speed === 0) { // Если скорость равна 0, то считаем что ползунок остановился
             loadImages(function(images) {
                 const randomImagePath = `goticheskaya/${getRandomImage(images)}`;
                 randomImage.src = randomImagePath;
