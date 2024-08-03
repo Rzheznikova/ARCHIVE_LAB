@@ -1,110 +1,73 @@
-body {
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-color: white; /* Установка белого фона для сайта */
-}
+window.onload = function() {
+    const canvas = document.getElementById('glCanvas');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
 
-/* Стилизация основных слайдеров */
-#horizontalSlider {
-    position: absolute;
-    bottom: 20%; /* Отступ от нижнего края экрана равен 1/5 высоты экрана */
-    left: 12.5%; /* Отступ слева 1/8 ширины экрана */
-    width: 75%; /* Ширина слайдера 3/4 от доступного пространства */
-    height: 10px; /* Толщина полосы */
-    background-color: black; /* Цвет слайдера */
-}
+    const gl = canvas.getContext('webgl');
 
-#verticalSlider {
-    position: absolute;
-    left: 15%; /* Отступ слева 1/4 ширины экрана */
-    bottom: 15%; /* Отступ от низа экрана 1/5 высоты экрана */
-    width: 75vh; /* Длина слайдера равна 3/4 высоты экрана (горизонтально, до поворота) */
-    height: 10px; /* Толщина полосы */
-    background-color: black; /* Цвет слайдера */
-    transform: rotate(-90deg); /* Поворачиваем слайдер */
-    transform-origin: bottom left; /* Устанавливаем точку поворота */
-}
+    if (!gl) {
+        console.error("Unable to initialize WebGL. Your browser or machine may not support it.");
+        return;
+    }
 
-/* Стили для всех типов ползунков */
-input[type="range"] {
-    -webkit-appearance: none; /* Убираем стандартный стиль для всех браузеров */
-    appearance: none;
-    background: transparent; /* Фон слайдера делаем прозрачным */
-    cursor: pointer;
-    width: 100%; /* Обеспечивает, что слайдер растягивается на всю длину контейнера */
-}
+    gl.clearColor(1.0, 1.0, 1.0, 1.0);  // Очищаем белым цветом
+    gl.clear(gl.COLOR_BUFFER_BIT);
 
-/* Стили для ползунка горизонтального слайдера */
-#horizontalRangeSlider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    width: 30px; /* Ширина ползунка */
-    height: 15px; /* Высота ползунка */
-    background: black; /* Цвет ползунка */
-    cursor: pointer;
-}
+    const imageContainer = document.getElementById('imageContainer');
+    const randomImage = document.getElementById('randomImage');
 
-#horizontalRangeSlider::-moz-range-thumb {
-    width: 30px;
-    height: 15px;
-    background: black;
-    cursor: pointer;
-}
+    function loadImages(callback) {
+        fetch('images.json')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(data => callback(data))
+            .catch(error => {
+                console.error('Error loading images:', error);
+                alert('Error loading images.json: ' + error.message);
+            });
+    }
 
-#horizontalRangeSlider::-ms-thumb {
-    width: 30px;
-    height: 15px;
-    background: black;
-    cursor: pointer;
-}
+    function getRandomImage(images) {
+        const randomIndex = Math.floor(Math.random() * images.length);
+        return images[randomIndex];
+    }
 
-/* Стили для дорожки горизонтального слайдера */
-#horizontalRangeSlider::-webkit-slider-runnable-track,
-#horizontalRangeSlider::-moz-range-track,
-#horizontalRangeSlider::-ms-track {
-    width: 100%;
-    height: 10px;
-    background: black;
-}
+    let previousValue = 0;
+    let previousTime = Date.now();
 
-/* Стили для ползунка вертикального слайдера */
-#verticalRangeSlider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    width: 30px; /* Ширина ползунка */
-    height: 15px; /* Высота ползунка */
-    background: black; /* Цвет ползунка */
-    cursor: pointer;
-    transform: rotate(90deg); /* Поворот ползунка для вертикального движения */
-}
+    function handleSliderMovement(slider) {
+        const currentValue = parseInt(slider.value);
+        const currentTime = Date.now();
+        const deltaValue = Math.abs(currentValue - previousValue);
+        const deltaTime = currentTime - previousTime;
 
-#verticalRangeSlider::-moz-range-thumb {
-    width: 30px;
-    height: 15px;
-    background: black;
-    cursor: pointer;
-    transform: rotate(90deg); /* Поворот ползунка для вертикального движения */
-}
+        const speed = deltaValue / deltaTime;
 
-#verticalRangeSlider::-ms-thumb {
-    width: 30px;
-    height: 15px;
-    background: black;
-    cursor: pointer;
-    transform: rotate(90deg); /* Поворот ползунка для вертикального движения */
-}
+        if (speed === 0) { // Если скорость равна 0, то считаем что ползунок остановился
+            loadImages(function(images) {
+                const randomImagePath = `goticheskaya/${getRandomImage(images)}`;
+                randomImage.src = randomImagePath;
+                imageContainer.style.display = 'block';
+            });
+        } else {
+            imageContainer.style.display = 'none';
+        }
 
-/* Стили для дорожки вертикального слайдера */
-#verticalRangeSlider::-webkit-slider-runnable-track,
-#verticalRangeSlider::-moz-range-track,
-#verticalRangeSlider::-ms-track {
-    width: 100%;
-    height: 10px;
-    background: black;
-}
+        previousValue = currentValue;
+        previousTime = currentTime;
+    }
 
-/* Убираем фокусную рамку, которая может появляться вокруг ползунка при клике */
-input[type="range"]:focus {
-    outline: none;
-}
+    const horizontalSlider = document.getElementById('horizontalRangeSlider');
+    horizontalSlider.addEventListener('input', function() {
+        handleSliderMovement(this);
+    });
+
+    // Изначально скрываем контейнер с изображением
+    imageContainer.style.display = 'none';
+};
 
 
