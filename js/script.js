@@ -36,6 +36,41 @@ window.onload = function() {
         return images[randomIndex];
     }
 
+    let previousValue = 0;
+    let previousTime = Date.now();
+
+    function handleSliderMovement(slider) {
+        const currentValue = parseInt(slider.value);
+        const currentTime = Date.now();
+        const deltaValue = Math.abs(currentValue - previousValue);
+        const deltaTime = currentTime - previousTime;
+
+        const speed = deltaValue / deltaTime;
+
+        if (speed === 0) {
+            loadImages(function(images) {
+                const randomImagePath = `goticheskaya/${getRandomImage(images)}`;
+                randomImage.src = randomImagePath;
+                imageContainer.style.display = 'block';
+            });
+        } else {
+            imageContainer.style.display = 'none';
+        }
+
+        previousValue = currentValue;
+        previousTime = currentTime;
+    }
+
+    const horizontalSlider = document.getElementById('horizontalRangeSlider');
+    horizontalSlider.addEventListener('input', function() {
+        handleSliderMovement(this);
+    });
+
+    const verticalSlider = document.getElementById('verticalRangeSlider');
+    verticalSlider.addEventListener('input', function() {
+        handleSliderMovement(this);
+    });
+
     // Загружаем случайное изображение при загрузке страницы
     loadImages(function(images) {
         const randomImagePath = `goticheskaya/${getRandomImage(images)}`;
@@ -43,3 +78,4 @@ window.onload = function() {
         imageContainer.style.display = 'block';
     });
 };
+
