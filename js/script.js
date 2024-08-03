@@ -19,7 +19,7 @@ window.onload = function() {
     const randomImage = document.getElementById('randomImage');
 
     function loadImages(callback) {
-        fetch('goticheskaya/images.json')
+        fetch('images.json')
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok ' + response.statusText);
@@ -37,7 +37,7 @@ window.onload = function() {
 
     horizontalSlider.addEventListener('change', function() {
         loadImages(function(images) {
-            const randomImagePath = getRandomImage(images);
+            const randomImagePath = `goticheskaya/${getRandomImage(images)}`;
             randomImage.src = randomImagePath;
             imageContainer.style.display = 'block';
         });
@@ -47,4 +47,3 @@ window.onload = function() {
         console.log('Vertical slider value:', this.value);
     });
 };
-
