@@ -9,16 +9,20 @@
 <body>
     <canvas id="glCanvas"></canvas>
     <div id="sliders">
+        <!-- Контейнер для горизонтального слайдера -->
         <div id="horizontalSlider">
             <input type="range" id="horizontalRangeSlider" min="0" max="100" step="1">
         </div>
+        <!-- Контейнер для вертикального слайдера -->
         <div id="verticalSlider">
             <input type="range" id="verticalRangeSlider" min="0" max="100" step="1" orient="vertical">
         </div>
     </div>
+    <!-- Контейнер для изображения -->
     <div id="imageContainer" style="display: none; text-align: center;">
         <img id="randomImage" src="" alt="Random Image" style="max-width: 50%; height: auto;">
     </div>
     <script src="js/script.js"></script>
 </body>
 </html>
+
