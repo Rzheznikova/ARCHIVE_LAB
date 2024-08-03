@@ -56,7 +56,9 @@ window.onload = function() {
         const speed = deltaValue / deltaTime;
 
         if (speed === 0) { // Если скорость равна 0, то считаем что ползунок остановился
-            displayRandomImage();
+            if (imageContainer.style.display === 'none') {
+                displayRandomImage();
+            }
         } else {
             imageContainer.style.display = 'none';
         }
@@ -77,11 +79,6 @@ window.onload = function() {
 
     // Загружаем случайное изображение при загрузке страницы
     displayRandomImage();
-
-    // Меняем изображение при щелчке правой кнопкой мыши
-    document.addEventListener('contextmenu', function(event) {
-        event.preventDefault(); // Отменяем стандартное контекстное меню
-        displayRandomImage();
-    });
 };
+
 
