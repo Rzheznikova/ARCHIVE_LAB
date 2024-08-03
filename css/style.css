@@ -70,9 +70,10 @@ input[type="range"] {
 
 /* Стили для вертикального слайдера */
 #verticalRangeSlider {
-    height: 100%;
     writing-mode: bt-lr; /* Вертикальное движение ползунка */
     -webkit-appearance: none;
+    width: 100%; /* Обеспечивает, что слайдер растягивается на всю длину контейнера */
+    height: 100%; /* Обеспечивает, что слайдер растягивается на всю длину контейнера */
 }
 
 #verticalRangeSlider::-webkit-slider-thumb {
@@ -81,6 +82,7 @@ input[type="range"] {
     height: 30px; /* Ширина ползунка */
     background: black;
     cursor: pointer;
+    transform: rotate(-90deg); /* Поворачиваем ползунок для вертикального движения */
 }
 
 #verticalRangeSlider::-moz-range-thumb {
@@ -88,6 +90,7 @@ input[type="range"] {
     height: 30px;
     background: black;
     cursor: pointer;
+    transform: rotate(-90deg); /* Поворачиваем ползунок для вертикального движения */
 }
 
 #verticalRangeSlider::-ms-thumb {
@@ -95,14 +98,16 @@ input[type="range"] {
     height: 30px;
     background: black;
     cursor: pointer;
+    transform: rotate(-90deg); /* Поворачиваем ползунок для вертикального движения */
 }
 
 /* Стили для дорожки вертикального слайдера */
 #verticalRangeSlider::-webkit-slider-runnable-track,
 #verticalRangeSlider::-moz-range-track,
 #verticalRangeSlider::-ms-track {
+    width: 100%;
     height: 100%;
-    width: 10px; /* Толщина дорожки */
     background: black;
 }
+
 
