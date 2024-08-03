@@ -66,11 +66,10 @@ window.onload = function() {
         handleSliderMovement(this);
     });
 
-    const verticalSlider = document.getElementById('verticalRangeSlider');
-    verticalSlider.addEventListener('input', function() {
-        handleSliderMovement(this);
-    });
+    // Изначально скрываем контейнер с изображением
+    imageContainer.style.display = 'none';
 };
+
 
 
 
