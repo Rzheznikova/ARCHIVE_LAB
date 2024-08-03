@@ -45,32 +45,23 @@ window.onload = function() {
     }
 
     let previousValue = 0;
-    let previousTime = Date.now();
-    let checkStopTimeout;
+    let stopTimer;
 
     function handleSliderMovement(slider) {
-        clearTimeout(checkStopTimeout);
         const currentValue = parseInt(slider.value);
-        const currentTime = Date.now();
 
-        const deltaValue = Math.abs(currentValue - previousValue);
-        const deltaTime = currentTime - previousTime;
-
-        const speed = deltaValue / deltaTime;
-
-        if (speed > 0) {
+        if (currentValue !== previousValue) { // Ползунок движется
+            clearTimeout(stopTimer);
             imageContainer.style.display = 'none';
         }
 
-        previousValue = currentValue;
-        previousTime = currentTime;
-
-        checkStopTimeout = setTimeout(() => {
-            const newCurrentValue = parseInt(slider.value);
-            if (newCurrentValue === previousValue) {
+        stopTimer = setTimeout(() => {
+            if (currentValue === previousValue) { // Ползунок остановился
                 displayRandomImage();
             }
-        }, 500); // 500 ms
+        }, 500); // Проверка через 500 мс
+
+        previousValue = currentValue;
     }
 
     const horizontalSlider = document.getElementById('horizontalRangeSlider');
@@ -86,4 +77,5 @@ window.onload = function() {
     // Загружаем случайное изображение при загрузке страницы
     displayRandomImage();
 };
+
 
