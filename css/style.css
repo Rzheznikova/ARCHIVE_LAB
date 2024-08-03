@@ -15,6 +15,17 @@ body {
     background-color: black; /* Цвет слайдера */
 }
 
+#verticalSlider {
+    position: absolute;
+    left: 15%; /* Отступ слева 1/4 ширины экрана */
+    bottom: 15%; /* Отступ от низа экрана 1/5 высоты экрана */
+    width: 75vh; /* Длина слайдера равна 3/4 высоты экрана (горизонтально, до поворота) */
+    height: 10px; /* Толщина полосы */
+    background-color: black; /* Цвет слайдера */
+    transform: rotate(-90deg); /* Поворачиваем слайдер */
+    transform-origin: bottom left; /* Устанавливаем точку поворота */
+}
+
 /* Стили для всех типов ползунков */
 input[type="range"] {
     -webkit-appearance: none; /* Убираем стандартный стиль для всех браузеров */
@@ -27,8 +38,8 @@ input[type="range"] {
 /* Стили для ползунка горизонтального слайдера */
 #horizontalRangeSlider::-webkit-slider-thumb {
     -webkit-appearance: none;
-    width: 30px; /* Ширина ползунка */
-    height: 15px; /* Высота ползунка */
+    width: 15px; /* Ширина ползунка */
+    height: 30px; /* Высота ползунка */
     background: black; /* Цвет ползунка */
     cursor: pointer;
 }
@@ -56,7 +67,44 @@ input[type="range"] {
     background: black;
 }
 
+/* Стили для ползунка вертикального слайдера */
+#verticalRangeSlider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 30px; /* Ширина ползунка */
+    height: 15px; /* Высота ползунка */
+    background: black; /* Цвет ползунка */
+    cursor: pointer;
+    transform: rotate(90deg); /* Поворот ползунка для вертикального движения */
+}
+
+#verticalRangeSlider::-moz-range-thumb {
+    width: 30px;
+    height: 15px;
+    background: black;
+    cursor: pointer;
+    transform: rotate(90deg); /* Поворот ползунка для вертикального движения */
+}
+
+#verticalRangeSlider::-ms-thumb {
+    width: 30px;
+    height: 15px;
+    background: black;
+    cursor: pointer;
+    transform: rotate(90deg); /* Поворот ползунка для вертикального движения */
+}
+
+/* Стили для дорожки вертикального слайдера */
+#verticalRangeSlider::-webkit-slider-runnable-track,
+#verticalRangeSlider::-moz-range-track,
+#verticalRangeSlider::-ms-track {
+    width: 100%;
+    height: 10px;
+    background: black;
+}
+
 /* Убираем фокусную рамку, которая может появляться вокруг ползунка при клике */
 input[type="range"]:focus {
     outline: none;
 }
+
+
