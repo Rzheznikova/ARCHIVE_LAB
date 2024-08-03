@@ -1,4 +1,6 @@
 window.onload = function() {
+    console.log("Page loaded");
+
     const canvas = document.getElementById('glCanvas');
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
@@ -17,6 +19,7 @@ window.onload = function() {
     const randomImage = document.getElementById('randomImage');
 
     function loadImages(callback) {
+        console.log("Loading images");
         fetch('images.json')
             .then(response => {
                 if (!response.ok) {
@@ -24,7 +27,10 @@ window.onload = function() {
                 }
                 return response.json();
             })
-            .then(data => callback(data))
+            .then(data => {
+                console.log("Images loaded:", data);
+                callback(data);
+            })
             .catch(error => {
                 console.error('Error loading images:', error);
                 alert('Error loading images.json: ' + error.message);
@@ -33,12 +39,12 @@ window.onload = function() {
 
     function getRandomImage(images) {
         const randomIndex = Math.floor(Math.random() * images.length);
+        console.log("Random image index:", randomIndex);
         return images[randomIndex];
     }
 
     let previousValue = 0;
     let previousTime = Date.now();
-    let images = [];
 
     function handleSliderMovement(slider) {
         const currentValue = parseInt(slider.value);
@@ -48,14 +54,15 @@ window.onload = function() {
 
         const speed = deltaValue / deltaTime;
 
+        console.log("Slider speed:", speed);
+
         if (speed === 0) { // Если скорость равна 0, то считаем что ползунок остановился
-            if (images.length > 0) {
+            console.log("Slider stopped, loading random image");
+            loadImages(function(images) {
                 const randomImagePath = `goticheskaya/${getRandomImage(images)}`;
                 randomImage.src = randomImagePath;
                 imageContainer.style.display = 'block';
-            } else {
-                console.error('No images loaded');
-            }
+            });
         } else {
             imageContainer.style.display = 'none';
         }
@@ -73,9 +80,5 @@ window.onload = function() {
     verticalSlider.addEventListener('input', function() {
         handleSliderMovement(this);
     });
-
-    // Загружаем изображения при загрузке страницы
-    loadImages(function(loadedImages) {
-        images = loadedImages;
-    });
 };
+
