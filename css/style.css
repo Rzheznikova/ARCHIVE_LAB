@@ -38,8 +38,8 @@ input[type="range"] {
 /* Стили для ползунка горизонтального слайдера */
 #horizontalRangeSlider::-webkit-slider-thumb {
     -webkit-appearance: none;
-    width: 30px; /* Ширина ползунка */
-    height: 15px; /* Высота ползунка */
+    width: 15px; /* Ширина ползунка */
+    height: 30px; /* Высота ползунка */
     background: black; /* Цвет ползунка */
     cursor: pointer;
 }
