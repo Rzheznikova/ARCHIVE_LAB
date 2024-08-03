@@ -1,18 +1,4 @@
 window.onload = function() {
-    const canvas = document.getElementById('glCanvas');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    const gl = canvas.getContext('webgl');
-
-    if (!gl) {
-        console.error("Unable to initialize WebGL. Your browser or machine may not support it.");
-        return;
-    }
-
-    gl.clearColor(1.0, 1.0, 1.0, 1.0);  // Очищаем белым цветом
-    gl.clear(gl.COLOR_BUFFER_BIT);
-
     const imageContainer = document.getElementById('imageContainer');
     const randomImage = document.getElementById('randomImage');
 
@@ -36,49 +22,16 @@ window.onload = function() {
         return images[randomIndex];
     }
 
-    let previousValue = 0;
-    let previousTime = Date.now();
-
-    function handleSliderMovement(slider) {
-        const currentValue = parseInt(slider.value);
-        const currentTime = Date.now();
-        const deltaValue = Math.abs(currentValue - previousValue);
-        const deltaTime = currentTime - previousTime;
-
-        const speed = deltaValue / deltaTime;
-
-        if (speed === 0) { // Если скорость равна 0, то считаем что ползунок остановился
-            loadImages(function(images) {
-                const randomImagePath = `goticheskaya/${getRandomImage(images)}`;
-                randomImage.src = randomImagePath;
-                imageContainer.style.display = 'block';
-            });
-        } else {
-            imageContainer.style.display = 'none';
-        }
-
-        previousValue = currentValue;
-        previousTime = currentTime;
+    function displayRandomImage() {
+        loadImages(function(images) {
+            const randomImagePath = `goticheskaya/${getRandomImage(images)}`;
+            randomImage.src = randomImagePath;
+            imageContainer.style.display = 'block';
+        });
     }
 
-    const horizontalSlider = document.getElementById('horizontalRangeSlider');
-    horizontalSlider.addEventListener('input', function() {
-        handleSliderMovement(this);
-    });
-
-    const verticalSlider = document.getElementById('verticalRangeSlider');
-    verticalSlider.addEventListener('input', function() {
-        handleSliderMovement(horizontalSlider);
-    });
-
-    // Изначально скрываем контейнер с изображением
-    imageContainer.style.display = 'none';
-
-    // Загружаем случайное изображение при загрузке страницы
-    loadImages(function(images) {
-        const randomImagePath = `goticheskaya/${getRandomImage(images)}`;
-        randomImage.src = randomImagePath;
-        imageContainer.style.display = 'block';
+    document.addEventListener('click', function() {
+        displayRandomImage();
     });
 };
 
