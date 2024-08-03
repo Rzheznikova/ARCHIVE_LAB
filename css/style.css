@@ -15,23 +15,6 @@ body {
     background-color: black; /* Цвет слайдера */
 }
 
-#verticalSlider {
-    position: absolute;
-    height: 75vh; /* Длина слайдера равна 3/4 высоты экрана */
-    width: 10px; /* Толщина полосы */
-    background-color: black; /* Цвет слайдера */
-    left: 25%; /* Отступ слева 1/4 ширины экрана */
-    bottom: 20%; /* Отступ от низа экрана 1/5 высоты экрана */
-}
-
-/* Стили для всех типов ползунков */
-input[type="range"] {
-    -webkit-appearance: none;
-    appearance: none;
-    background: transparent;
-    cursor: pointer;
-}
-
 /* Стили для горизонтального слайдера */
 #horizontalRangeSlider {
     width: 100%; /* Обеспечивает, что слайдер растягивается на всю длину контейнера */
@@ -68,21 +51,28 @@ input[type="range"] {
     background: black;
 }
 
-/* Стили для вертикального слайдера */
+/* Стилизация вертикального слайдера */
+#verticalSlider {
+    position: absolute;
+    left: 25%; /* Отступ слева 1/4 ширины экрана */
+    bottom: 20%; /* Отступ от низа экрана 1/5 высоты экрана */
+    width: 75vh; /* Длина слайдера равна 3/4 высоты экрана (горизонтально, до поворота) */
+    height: 10px; /* Толщина полосы */
+    background-color: black; /* Цвет слайдера */
+    transform: rotate(-90deg); /* Поворачиваем слайдер */
+    transform-origin: bottom left; /* Устанавливаем точку поворота */
+}
+
 #verticalRangeSlider {
-    writing-mode: bt-lr; /* Вертикальное движение ползунка */
-    -webkit-appearance: none;
     width: 100%; /* Обеспечивает, что слайдер растягивается на всю длину контейнера */
-    height: 100%; /* Обеспечивает, что слайдер растягивается на всю длину контейнера */
 }
 
 #verticalRangeSlider::-webkit-slider-thumb {
     -webkit-appearance: none;
-    width: 15px; /* Высота ползунка */
-    height: 30px; /* Ширина ползунка */
+    width: 15px; /* Ширина ползунка */
+    height: 30px; /* Высота ползунка */
     background: black;
     cursor: pointer;
-    transform: rotate(-90deg); /* Поворачиваем ползунок для вертикального движения */
 }
 
 #verticalRangeSlider::-moz-range-thumb {
@@ -90,7 +80,6 @@ input[type="range"] {
     height: 30px;
     background: black;
     cursor: pointer;
-    transform: rotate(-90deg); /* Поворачиваем ползунок для вертикального движения */
 }
 
 #verticalRangeSlider::-ms-thumb {
@@ -98,7 +87,6 @@ input[type="range"] {
     height: 30px;
     background: black;
     cursor: pointer;
-    transform: rotate(-90deg); /* Поворачиваем ползунок для вертикального движения */
 }
 
 /* Стили для дорожки вертикального слайдера */
@@ -106,8 +94,12 @@ input[type="range"] {
 #verticalRangeSlider::-moz-range-track,
 #verticalRangeSlider::-ms-track {
     width: 100%;
-    height: 100%;
+    height: 10px;
     background: black;
 }
 
+/* Убираем фокусную рамку, которая может появляться вокруг ползунка при клике */
+input[type="range"]:focus {
+    outline: none;
+}
 
