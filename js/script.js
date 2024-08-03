@@ -66,14 +66,7 @@ window.onload = function() {
         handleSliderMovement(this);
     });
 
-    // Удаляем вертикальный слайдер, так как он не нужен
-    // const verticalSlider = document.getElementById('verticalRangeSlider');
-    // verticalSlider.addEventListener('input', function() {
-    //     handleSliderMovement(this);
-    // });
-
     // Изначально скрываем контейнер с изображением
     imageContainer.style.display = 'none';
 };
-
 
