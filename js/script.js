@@ -16,7 +16,13 @@ window.onload = function() {
     const imageContainer = document.getElementById('imageContainer');
     const randomImage = document.getElementById('randomImage');
 
+    let imagesCache = null;
+
     function loadImages(callback) {
+        if (imagesCache) {
+            callback(imagesCache);
+            return;
+        }
         fetch('images.json')
             .then(response => {
                 if (!response.ok) {
@@ -24,7 +30,10 @@ window.onload = function() {
                 }
                 return response.json();
             })
-            .then(data => callback(data))
+            .then(data => {
+                imagesCache = data;
+                callback(data);
+            })
             .catch(error => {
                 console.error('Error loading images:', error);
                 alert('Error loading images.json: ' + error.message);
@@ -78,3 +87,4 @@ window.onload = function() {
         imageContainer.style.display = 'block';
     });
 };
+
