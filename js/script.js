@@ -11,7 +11,7 @@ window.onload = function() {
         return;
     }
 
-    // Настройка цвета очистки на черный (поменяно на белый для консистентности)
+    // Настройка цвета очистки на белый
     gl.clearColor(1.0, 1.0, 1.0, 1.0);  // Очищаем белым цветом
     gl.clear(gl.COLOR_BUFFER_BIT);
 
@@ -19,15 +19,36 @@ window.onload = function() {
     const horizontalSlider = document.getElementById('horizontalRangeSlider');
     const verticalSlider = document.getElementById('verticalRangeSlider');
 
-    // Обработка движения горизонтального слайдера
-    horizontalSlider.addEventListener('input', function() {
-        console.log('Horizontal slider value:', this.value);
-        // Здесь можно добавить дополнительную логику, например, влияющую на WebGL
+    // Контейнер для изображения
+    const imageContainer = document.getElementById('imageContainer');
+    const randomImage = document.getElementById('randomImage');
+
+    // Функция для загрузки JSON файла
+    function loadImages(callback) {
+        fetch('images.json')
+            .then(response => response.json())
+            .then(data => callback(data))
+            .catch(error => console.error('Error loading images:', error));
+    }
+
+    // Функция для выбора случайного изображения
+    function getRandomImage(images) {
+        const randomIndex = Math.floor(Math.random() * images.length);
+        return images[randomIndex];
+    }
+
+    // Обработка остановки горизонтального слайдера
+    horizontalSlider.addEventListener('change', function() {
+        loadImages(function(images) {
+            const randomImagePath = getRandomImage(images);
+            randomImage.src = randomImagePath;
+            imageContainer.style.display = 'block';
+        });
     });
 
     // Обработка движения вертикального слайдера
     verticalSlider.addEventListener('input', function() {
         console.log('Vertical slider value:', this.value);
-        // Здесь можно добавить дополнительную логику, например, влияющую на WebGL
+        // Дополнительная логика для WebGL (если необходимо)
     });
 };
