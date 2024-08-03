@@ -55,11 +55,9 @@ window.onload = function() {
 
         const speed = deltaValue / deltaTime;
 
-        if (speed === 0) { // Если скорость равна 0, то считаем что ползунок остановился
-            if (imageContainer.style.display === 'none') {
-                displayRandomImage();
-            }
-        } else {
+        if (speed === 0 && imageContainer.style.display === 'none') { // Если скорость равна 0, то считаем что ползунок остановился
+            displayRandomImage();
+        } else if (speed > 0) {
             imageContainer.style.display = 'none';
         }
 
@@ -80,5 +78,4 @@ window.onload = function() {
     // Загружаем случайное изображение при загрузке страницы
     displayRandomImage();
 };
-
 
