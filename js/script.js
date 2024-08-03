@@ -45,7 +45,6 @@ window.onload = function() {
 
     let previousValue = 0;
     let previousTime = Date.now();
-    let loadTimeout = null;
 
     function handleSliderMovement(slider) {
         const currentValue = parseInt(slider.value);
@@ -60,7 +59,7 @@ window.onload = function() {
         if (speed === 0) { // Если скорость равна 0, то считаем что ползунок остановился
             console.log("Slider stopped, loading random image");
             loadImages(function(images) {
-                const randomImagePath = `goticheskaya/${getRandomImage(images)}`;
+                const randomImagePath = goticheskaya/${getRandomImage(images)};
                 randomImage.src = randomImagePath;
                 imageContainer.style.display = 'block';
             });
@@ -81,6 +80,12 @@ window.onload = function() {
     verticalSlider.addEventListener('input', function() {
         handleSliderMovement(this);
     });
-};
 
+    // Загружаем случайное изображение при загрузке страницы
+    loadImages(function(images) {
+        const randomImagePath = goticheskaya/${getRandomImage(images)};
+        randomImage.src = randomImagePath;
+        imageContainer.style.display = 'block';
+    });
+};
 
