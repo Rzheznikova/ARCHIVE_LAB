@@ -66,7 +66,6 @@ window.onload = function() {
         handleSliderMovement(this);
     });
 
-    // Удаляем обработчик для вертикального слайдера, так как он не нужен
     const verticalSlider = document.getElementById('verticalRangeSlider');
     verticalSlider.addEventListener('input', function() {
         handleSliderMovement(horizontalSlider);
@@ -82,6 +81,7 @@ window.onload = function() {
         imageContainer.style.display = 'block';
     });
 };
+
 
 
 
