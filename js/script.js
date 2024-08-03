@@ -1,6 +1,4 @@
 window.onload = function() {
-    console.log("Page loaded");
-
     const canvas = document.getElementById('glCanvas');
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
@@ -19,7 +17,6 @@ window.onload = function() {
     const randomImage = document.getElementById('randomImage');
 
     function loadImages(callback) {
-        console.log("Loading images");
         fetch('images.json')
             .then(response => {
                 if (!response.ok) {
@@ -27,10 +24,7 @@ window.onload = function() {
                 }
                 return response.json();
             })
-            .then(data => {
-                console.log("Images loaded:", data);
-                callback(data);
-            })
+            .then(data => callback(data))
             .catch(error => {
                 console.error('Error loading images:', error);
                 alert('Error loading images.json: ' + error.message);
@@ -39,7 +33,6 @@ window.onload = function() {
 
     function getRandomImage(images) {
         const randomIndex = Math.floor(Math.random() * images.length);
-        console.log("Random image index:", randomIndex);
         return images[randomIndex];
     }
 
@@ -54,12 +47,9 @@ window.onload = function() {
 
         const speed = deltaValue / deltaTime;
 
-        console.log("Slider speed:", speed);
-
         if (speed === 0) { // Если скорость равна 0, то считаем что ползунок остановился
-            console.log("Slider stopped, loading random image");
             loadImages(function(images) {
-                const randomImagePath = goticheskaya/${getRandomImage(images)};
+                const randomImagePath = `goticheskaya/${getRandomImage(images)}`;
                 randomImage.src = randomImagePath;
                 imageContainer.style.display = 'block';
             });
@@ -83,9 +73,8 @@ window.onload = function() {
 
     // Загружаем случайное изображение при загрузке страницы
     loadImages(function(images) {
-        const randomImagePath = goticheskaya/${getRandomImage(images)};
+        const randomImagePath = `goticheskaya/${getRandomImage(images)}`;
         randomImage.src = randomImagePath;
         imageContainer.style.display = 'block';
     });
 };
-
