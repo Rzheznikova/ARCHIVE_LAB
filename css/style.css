@@ -30,38 +30,79 @@ input[type="range"] {
     appearance: none;
     background: transparent;
     cursor: pointer;
+}
+
+/* Стили для горизонтального слайдера */
+#horizontalRangeSlider {
     width: 100%; /* Обеспечивает, что слайдер растягивается на всю длину контейнера */
 }
 
-/* Стили для ползунка */
-input[type="range"]::-webkit-slider-thumb {
+#horizontalRangeSlider::-webkit-slider-thumb {
     -webkit-appearance: none;
-    margin-top: -7.5px; /* Выравниваем ползунок по центру */
+    width: 30px; /* Ширина ползунка */
+    height: 15px; /* Высота ползунка */
+    background: black;
+    cursor: pointer;
+}
+
+#horizontalRangeSlider::-moz-range-thumb {
     width: 30px;
     height: 15px;
     background: black;
     cursor: pointer;
 }
 
-input[type="range"]::-moz-range-thumb {
+#horizontalRangeSlider::-ms-thumb {
     width: 30px;
     height: 15px;
     background: black;
     cursor: pointer;
 }
 
-input[type="range"]::-ms-thumb {
-    width: 30px;
-    height: 15px;
-    background: black;
-    cursor: pointer;
-}
-
-/* Стили для дорожки слайдера */
-input[type="range"]::-webkit-slider-runnable-track,
-input[type="range"]::-moz-range-track,
-input[type="range"]::-ms-track {
+/* Стили для дорожки горизонтального слайдера */
+#horizontalRangeSlider::-webkit-slider-runnable-track,
+#horizontalRangeSlider::-moz-range-track,
+#horizontalRangeSlider::-ms-track {
     width: 100%;
     height: 10px;
     background: black;
 }
+
+/* Стили для вертикального слайдера */
+#verticalRangeSlider {
+    height: 100%;
+    writing-mode: bt-lr; /* Вертикальное движение ползунка */
+    -webkit-appearance: none;
+}
+
+#verticalRangeSlider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 15px; /* Высота ползунка */
+    height: 30px; /* Ширина ползунка */
+    background: black;
+    cursor: pointer;
+}
+
+#verticalRangeSlider::-moz-range-thumb {
+    width: 15px;
+    height: 30px;
+    background: black;
+    cursor: pointer;
+}
+
+#verticalRangeSlider::-ms-thumb {
+    width: 15px;
+    height: 30px;
+    background: black;
+    cursor: pointer;
+}
+
+/* Стили для дорожки вертикального слайдера */
+#verticalRangeSlider::-webkit-slider-runnable-track,
+#verticalRangeSlider::-moz-range-track,
+#verticalRangeSlider::-ms-track {
+    height: 100%;
+    width: 10px; /* Толщина дорожки */
+    background: black;
+}
+
