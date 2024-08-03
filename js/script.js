@@ -3,7 +3,7 @@ window.onload = function() {
     const randomImage = document.getElementById('randomImage');
 
     function loadImages(callback) {
-        fetch('images.json')
+        fetch('/images.json')
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok ' + response.statusText);
