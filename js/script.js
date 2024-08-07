@@ -81,8 +81,19 @@ window.onload = function() {
         });
     }
 
-    let previousValue = 0;
-    let stopTimer;
+    randomImage.addEventListener('click', function() {
+        playRandomAudio();
+    });
+
+    const horizontalSlider = document.getElementById('horizontalRangeSlider');
+    horizontalSlider.addEventListener('input', function() {
+        handleSliderMovement(this);
+    });
+
+    const verticalSlider = document.getElementById('verticalRangeSlider');
+    verticalSlider.addEventListener('input', function() {
+        handleSliderMovement(this);
+    });
 
     function handleSliderMovement(slider) {
         const currentValue = parseInt(slider.value);
@@ -96,29 +107,6 @@ window.onload = function() {
         previousValue = currentValue;
     }
 
-    function handleAudioSliderMovement(slider) {
-        const currentValue = parseInt(slider.value);
-
-        clearTimeout(stopTimer);
-
-        stopTimer = setTimeout(() => {
-            playRandomAudio();
-        }, 500); // Проверка через 500 мс
-
-        previousValue = currentValue;
-    }
-
-    const horizontalSlider = document.getElementById('horizontalRangeSlider');
-    horizontalSlider.addEventListener('input', function() {
-        handleSliderMovement(this);
-    });
-
-    const verticalSlider = document.getElementById('verticalRangeSlider');
-    verticalSlider.addEventListener('input', function() {
-        handleAudioSliderMovement(this);
-    });
-
     // Загружаем случайное изображение при загрузке страницы
     displayRandomImage();
 };
-
