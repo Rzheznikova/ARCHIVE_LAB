@@ -93,7 +93,7 @@ window.onload = function() {
 
     function playRandomAudio() {
         loadAudios(function(audios) {
-            const randomAudioPath = `audiobase/${getRandomAudio(audios)}`;
+            const randomAudioPath = `baseaudio/${getRandomAudio(audios)}`;
             console.log('Playing audio:', randomAudioPath);
             audio.src = randomAudioPath;
             audio.play().catch(error => {
