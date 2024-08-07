@@ -50,15 +50,10 @@ window.onload = function() {
     function handleSliderMovement(slider) {
         const currentValue = parseInt(slider.value);
 
-        if (currentValue !== previousValue) { // Ползунок движется
-            clearTimeout(stopTimer);
-            imageContainer.style.display = 'none';
-        }
+        clearTimeout(stopTimer);
 
         stopTimer = setTimeout(() => {
-            if (currentValue === previousValue) { // Ползунок остановился
-                displayRandomImage();
-            }
+            displayRandomImage();
         }, 500); // Проверка через 500 мс
 
         previousValue = currentValue;
