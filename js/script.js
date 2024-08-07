@@ -67,14 +67,19 @@ window.onload = function() {
     const audio = new Audio();
 
     function loadAudios(callback) {
+        console.log('Attempting to load baseaudio.json');
         fetch('baseaudio.json')
             .then(response => {
+                console.log('Response status:', response.status);
                 if (!response.ok) {
                     throw new Error('Network response was not ok ' + response.statusText);
                 }
                 return response.json();
             })
-            .then(data => callback(data))
+            .then(data => {
+                console.log('Audio data loaded:', data);
+                callback(data);
+            })
             .catch(error => {
                 console.error('Error loading audios:', error);
                 alert('Error loading baseaudio.json: ' + error.message);
@@ -89,8 +94,12 @@ window.onload = function() {
     function playRandomAudio() {
         loadAudios(function(audios) {
             const randomAudioPath = `audiobase/${getRandomAudio(audios)}`;
+            console.log('Playing audio:', randomAudioPath);
             audio.src = randomAudioPath;
-            audio.play();
+            audio.play().catch(error => {
+                console.error('Error playing audio:', error);
+                alert('Error playing audio: ' + error.message);
+            });
         });
     }
 
@@ -121,4 +130,3 @@ window.onload = function() {
     // Загружаем случайное изображение при загрузке страницы
     displayRandomImage();
 };
-
