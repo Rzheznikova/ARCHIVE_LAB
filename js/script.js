@@ -15,6 +15,7 @@ window.onload = function() {
 
     const imageContainer = document.getElementById('imageContainer');
     const randomImage = document.getElementById('randomImage');
+    const audioElement = new Audio();
 
     function loadImages(callback) {
         fetch('images.json')
@@ -31,46 +32,85 @@ window.onload = function() {
             });
     }
 
-    function getRandomImage(images) {
-        const randomIndex = Math.floor(Math.random() * images.length);
-        return images[randomIndex];
+    function loadAudio(callback) {
+        fetch('baseaudio.json')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(data => callback(data))
+            .catch(error => {
+                console.error('Error loading audio:', error);
+                alert('Error loading baseaudio.json: ' + error.message);
+            });
     }
 
-    function displayRandomImage() {
-        loadImages(function(images) {
-            const randomImagePath = `goticheskaya/${getRandomImage(images)}`;
-            randomImage.src = randomImagePath;
-            imageContainer.style.display = 'block';
-        });
+    function getRandomItem(items) {
+        const randomIndex = Math.floor(Math.random() * items.length);
+        return items[randomIndex];
     }
 
     let previousValue = 0;
-    let stopTimer;
+    let previousTime = Date.now();
 
-    function handleSliderMovement(slider) {
+    function handleSliderMovement(slider, type) {
         const currentValue = parseInt(slider.value);
+        const currentTime = Date.now();
+        const deltaValue = Math.abs(currentValue - previousValue);
+        const deltaTime = currentTime - previousTime;
 
-        clearTimeout(stopTimer);
+        const speed = deltaValue / deltaTime;
 
-        stopTimer = setTimeout(() => {
-            displayRandomImage();
-        }, 500); // Проверка через 500 мс
+        if (speed === 0) { // Если скорость равна 0, то считаем что ползунок остановился
+            if (type === 'image') {
+                loadImages(function(images) {
+                    const randomImagePath = `goticheskaya/${getRandomItem(images)}`;
+                    randomImage.src = randomImagePath;
+                    imageContainer.style.display = 'block';
+                });
+            } else if (type === 'audio') {
+                loadAudio(function(audios) {
+                    const randomAudioPath = `baseaudio/${getRandomItem(audios)}`;
+                    audioElement.src = randomAudioPath;
+                    audioElement.play();
+                });
+            }
+        } else {
+            if (type === 'image') {
+                imageContainer.style.display = 'none';
+            } else if (type === 'audio') {
+                audioElement.pause();
+            }
+        }
 
         previousValue = currentValue;
+        previousTime = currentTime;
     }
 
     const horizontalSlider = document.getElementById('horizontalRangeSlider');
     horizontalSlider.addEventListener('input', function() {
-        handleSliderMovement(this);
+        handleSliderMovement(this, 'image');
     });
 
     const verticalSlider = document.getElementById('verticalRangeSlider');
     verticalSlider.addEventListener('input', function() {
-        handleSliderMovement(this);
+        handleSliderMovement(this, 'audio');
+    });
+
+    verticalSlider.addEventListener('mousedown', function() {
+        loadAudio(function(audios) {
+            const randomAudioPath = `baseaudio/${getRandomItem(audios)}`;
+            audioElement.src = randomAudioPath;
+            audioElement.play();
+        });
     });
 
     // Загружаем случайное изображение при загрузке страницы
-    displayRandomImage();
+    loadImages(function(images) {
+        const randomImagePath = `goticheskaya/${getRandomItem(images)}`;
+        randomImage.src = randomImagePath;
+        imageContainer.style.display = 'block';
+    });
 };
-
-
