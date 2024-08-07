@@ -44,28 +44,6 @@ window.onload = function() {
         });
     }
 
-    let previousValue = 0;
-    let stopTimer;
-
-    function handleSliderMovement(slider) {
-        const currentValue = parseInt(slider.value);
-
-        clearTimeout(stopTimer);
-
-        stopTimer = setTimeout(() => {
-            displayRandomImage();
-        }, 500); // Проверка через 500 мс
-
-        previousValue = currentValue;
-    }
-
-    const horizontalSlider = document.getElementById('horizontalRangeSlider');
-    horizontalSlider.addEventListener('input', function() {
-        handleSliderMovement(this);
-    });
-
-    const audio = new Audio();
-
     function loadAudios(callback) {
         console.log('Attempting to load baseaudio.json');
         fetch('baseaudio.json')
@@ -95,7 +73,7 @@ window.onload = function() {
         loadAudios(function(audios) {
             const randomAudioPath = `baseaudio/${getRandomAudio(audios)}`;
             console.log('Playing audio:', randomAudioPath);
-            audio.src = randomAudioPath;
+            const audio = new Audio(randomAudioPath);
             audio.play().catch(error => {
                 console.error('Error playing audio:', error);
                 alert('Error playing audio: ' + error.message);
@@ -103,29 +81,31 @@ window.onload = function() {
         });
     }
 
-    let verticalPreviousValue = null;
-    let verticalStopTimer;
+    randomImage.addEventListener('click', function() {
+        playRandomAudio();
+    });
 
-    function handleVerticalSliderMovement(slider) {
-        const currentValue = parseInt(slider.value);
-
-        if (verticalPreviousValue !== null && verticalPreviousValue !== currentValue) {
-            clearTimeout(verticalStopTimer);
-
-            verticalStopTimer = setTimeout(() => {
-                if (currentValue === 0) {
-                    playRandomAudio();
-                }
-            }, 500); // Проверка через 500 мс
-        }
-
-        verticalPreviousValue = currentValue;
-    }
+    const horizontalSlider = document.getElementById('horizontalRangeSlider');
+    horizontalSlider.addEventListener('input', function() {
+        handleSliderMovement(this);
+    });
 
     const verticalSlider = document.getElementById('verticalRangeSlider');
     verticalSlider.addEventListener('input', function() {
-        handleVerticalSliderMovement(this);
+        handleSliderMovement(this);
     });
+
+    function handleSliderMovement(slider) {
+        const currentValue = parseInt(slider.value);
+
+        clearTimeout(stopTimer);
+
+        stopTimer = setTimeout(() => {
+            displayRandomImage();
+        }, 500); // Проверка через 500 мс
+
+        previousValue = currentValue;
+    }
 
     // Загружаем случайное изображение при загрузке страницы
     displayRandomImage();
