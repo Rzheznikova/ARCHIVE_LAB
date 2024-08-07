@@ -5,20 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
     <title>ARCHIVE_LAB</title>
+    <style>
+        #verticalRangeSlider {
+            writing-mode: bt-lr; /* для вертикальной ориентации слайдера */
+            -webkit-appearance: slider-vertical; /* для некоторых браузеров */
+            width: 8px;
+            height: 200px;
+        }
+    </style>
 </head>
 <body>
     <canvas id="glCanvas"></canvas>
     <div id="sliders">
-        <!-- РљРѕРЅС‚РµР№РЅРµСЂ РґР»СЏ РіРѕСЂРёР·РѕРЅС‚Р°Р»СЊРЅРѕРіРѕ СЃР»Р°Р№РґРµСЂР° -->
+        <!-- Контейнер для горизонтального слайдера -->
         <div id="horizontalSlider">
             <input type="range" id="horizontalRangeSlider" min="0" max="100" step="1">
         </div>
-        <!-- РљРѕРЅС‚РµР№РЅРµСЂ РґР»СЏ РІРµСЂС‚РёРєР°Р»СЊРЅРѕРіРѕ СЃР»Р°Р№РґРµСЂР° -->
+        <!-- Контейнер для вертикального слайдера -->
         <div id="verticalSlider">
-            <input type="range" id="verticalRangeSlider" min="0" max="100" step="1" orient="vertical">
+            <input type="range" id="verticalRangeSlider" min="0" max="100" step="1">
         </div>
     </div>
-    <!-- РљРѕРЅС‚РµР№РЅРµСЂ РґР»СЏ РёР·РѕР±СЂР°Р¶РµРЅРёСЏ -->
+    <!-- Контейнер для изображения -->
     <div id="imageContainer" style="display: none; text-align: center; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
         <img id="randomImage" src="" alt="Random Image" style="max-width: 50%; height: auto;">
     </div>
