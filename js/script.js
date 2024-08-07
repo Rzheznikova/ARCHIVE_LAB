@@ -64,11 +64,59 @@ window.onload = function() {
         handleSliderMovement(this);
     });
 
+    const audio = new Audio();
+
+    function loadAudios(callback) {
+        fetch('audios.json')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(data => callback(data))
+            .catch(error => {
+                console.error('Error loading audios:', error);
+                alert('Error loading audios.json: ' + error.message);
+            });
+    }
+
+    function getRandomAudio(audios) {
+        const randomIndex = Math.floor(Math.random() * audios.length);
+        return audios[randomIndex];
+    }
+
+    function playRandomAudio() {
+        loadAudios(function(audios) {
+            const randomAudioPath = `audiobase/${getRandomAudio(audios)}`;
+            audio.src = randomAudioPath;
+            audio.play();
+        });
+    }
+
+    let verticalPreviousValue = null;
+    let verticalStopTimer;
+
+    function handleVerticalSliderMovement(slider) {
+        const currentValue = parseInt(slider.value);
+
+        if (verticalPreviousValue !== null && verticalPreviousValue !== currentValue) {
+            clearTimeout(verticalStopTimer);
+
+            verticalStopTimer = setTimeout(() => {
+                playRandomAudio();
+            }, 500); // Проверка через 500 мс
+        }
+
+        verticalPreviousValue = currentValue;
+    }
+
     const verticalSlider = document.getElementById('verticalRangeSlider');
     verticalSlider.addEventListener('input', function() {
-        handleSliderMovement(this);
+        handleVerticalSliderMovement(this);
     });
 
     // Загружаем случайное изображение при загрузке страницы
     displayRandomImage();
 };
+
