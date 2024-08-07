@@ -67,7 +67,7 @@ window.onload = function() {
     const audio = new Audio();
 
     function loadAudios(callback) {
-        fetch('audios.json')
+        fetch('baseaudio.json')
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok ' + response.statusText);
@@ -77,7 +77,7 @@ window.onload = function() {
             .then(data => callback(data))
             .catch(error => {
                 console.error('Error loading audios:', error);
-                alert('Error loading audios.json: ' + error.message);
+                alert('Error loading baseaudio.json: ' + error.message);
             });
     }
 
@@ -104,7 +104,9 @@ window.onload = function() {
             clearTimeout(verticalStopTimer);
 
             verticalStopTimer = setTimeout(() => {
-                playRandomAudio();
+                if (currentValue === 0) {
+                    playRandomAudio();
+                }
             }, 500); // Проверка через 500 мс
         }
 
