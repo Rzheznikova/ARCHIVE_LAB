@@ -118,8 +118,22 @@ window.onload = function() {
 
     verticalSlider.addEventListener('mousedown', function(event) {
         if (event.button === 0) {  // Левая кнопка мыши
+            console.log('Vertical slider clicked');
             audioEnabled = true;
-            handleSliderMovement(this, true);  // Запускаем воспроизведение сразу после нажатия
+        }
+    });
+
+    verticalSlider.addEventListener('mouseup', function(event) {
+        if (event.button === 0) {  // Левая кнопка мыши
+            console.log('Vertical slider released');
+            handleSliderMovement(this, true);
+        }
+    });
+
+    verticalSlider.addEventListener('mousemove', function(event) {
+        if (audioEnabled) {
+            console.log('Vertical slider moved');
+            handleSliderMovement(this, true);
         }
     });
 
@@ -132,5 +146,6 @@ window.onload = function() {
         console.log('Loaded audio files:', audioFiles);
     });
 };
+
 
 
