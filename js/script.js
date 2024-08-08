@@ -59,7 +59,7 @@ window.onload = function() {
 
     function displayRandomImage() {
         loadImages(function(images) {
-            const randomImagePath = goticheskaya/${getRandomElement(images)};
+            const randomImagePath = `goticheskaya/${getRandomElement(images)}`;
             randomImage.src = randomImagePath;
             imageContainer.style.display = 'block';
         });
@@ -69,8 +69,8 @@ window.onload = function() {
         if (audioFiles.length === 0) return;
 
         currentAudioIndex = Math.floor(Math.random() * audioFiles.length);
-        const randomAudioPath = baseaudio/${audioFiles[currentAudioIndex]};
-        console.log(Playing random audio: ${randomAudioPath});
+        const randomAudioPath = `baseaudio/${audioFiles[currentAudioIndex]}`;
+        console.log(`Playing random audio: ${randomAudioPath}`);
         audioPlayer.src = randomAudioPath;
 
         playPromise = audioPlayer.play();
