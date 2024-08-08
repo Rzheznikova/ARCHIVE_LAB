@@ -18,6 +18,7 @@ window.onload = function() {
     const audioPlayer = document.getElementById('audioPlayer');
     let audioFiles = [];
     let currentAudioIndex = -1;
+    let audioEnabled = false;
 
     function loadImages(callback) {
         fetch('images.json')
@@ -91,7 +92,7 @@ window.onload = function() {
             }, 500); // Проверка через 500 мс
 
             previousValue = currentValue;
-        } else {
+        } else if (audioEnabled) {
             if (currentValue === previousValue && currentValue === 0) {
                 playRandomAudio();
             } else {
@@ -115,6 +116,13 @@ window.onload = function() {
         handleSliderMovement(this, true);
     });
 
+    verticalSlider.addEventListener('mousedown', function(event) {
+        if (event.button === 0) {  // Левая кнопка мыши
+            audioEnabled = true;
+            handleSliderMovement(this, true);  // Запускаем воспроизведение сразу после нажатия
+        }
+    });
+
     // Загружаем случайное изображение при загрузке страницы
     displayRandomImage();
 
@@ -124,4 +132,5 @@ window.onload = function() {
         console.log('Loaded audio files:', audioFiles);
     });
 };
+
 
