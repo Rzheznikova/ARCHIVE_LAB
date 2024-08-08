@@ -15,6 +15,9 @@ window.onload = function() {
 
     const imageContainer = document.getElementById('imageContainer');
     const randomImage = document.getElementById('randomImage');
+    const audioPlayer = document.getElementById('audioPlayer');
+    let audioFiles = [];
+    let currentAudioIndex = -1;
 
     function loadImages(callback) {
         fetch('images.json')
@@ -31,29 +34,46 @@ window.onload = function() {
             });
     }
 
-    function getRandomImage(images) {
-        const randomIndex = Math.floor(Math.random() * images.length);
-        return images[randomIndex];
+    function loadAudioFiles(callback) {
+        fetch('baseaudio.json')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(data => callback(data))
+            .catch(error => {
+                console.error('Error loading audio files:', error);
+                alert('Error loading baseaudio.json: ' + error.message);
+            });
+    }
+
+    function getRandomElement(arr) {
+        const randomIndex = Math.floor(Math.random() * arr.length);
+        return arr[randomIndex];
     }
 
     function displayRandomImage() {
         loadImages(function(images) {
-            const randomImagePath = `goticheskaya/${getRandomImage(images)}`;
+            const randomImagePath = `goticheskaya/${getRandomElement(images)}`;
             randomImage.src = randomImagePath;
             imageContainer.style.display = 'block';
         });
     }
 
-    let previousValue = 0;
-    let stopTimer;
+    function playNextAudio() {
+        if (audioFiles.length === 0) return;
+
+        currentAudioIndex = (currentAudioIndex + 1) % audioFiles.length;
+        audioPlayer.src = `baseaudio/${audioFiles[currentAudioIndex]}`;
+        audioPlayer.play();
+    }
 
     function handleSliderMovement(slider) {
         const currentValue = parseInt(slider.value);
-
-        if (currentValue !== previousValue) { // Ползунок движется
-            clearTimeout(stopTimer);
-            imageContainer.style.display = 'none';
-        }
+        clearTimeout(stopTimer);
+        imageContainer.style.display = 'none';
 
         stopTimer = setTimeout(() => {
             if (currentValue === previousValue) { // Ползунок остановился
@@ -63,6 +83,9 @@ window.onload = function() {
 
         previousValue = currentValue;
     }
+
+    let previousValue = 0;
+    let stopTimer;
 
     const horizontalSlider = document.getElementById('horizontalRangeSlider');
     horizontalSlider.addEventListener('input', function() {
@@ -74,6 +97,22 @@ window.onload = function() {
         handleSliderMovement(this);
     });
 
+    randomImage.addEventListener('contextmenu', function(event) {
+        event.preventDefault(); // Предотвращаем стандартное контекстное меню
+        if (audioPlayer.paused) {
+            playNextAudio();
+        } else {
+            audioPlayer.pause();
+            playNextAudio();
+        }
+    });
+
     // Загружаем случайное изображение при загрузке страницы
     displayRandomImage();
+
+    // Загружаем список аудиофайлов при загрузке страницы
+    loadAudioFiles(function(files) {
+        audioFiles = files;
+    });
 };
+
