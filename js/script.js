@@ -112,19 +112,6 @@ window.onload = function() {
             }, 500); // Проверка через 500 мс
 
             previousValue = currentValue;
-        } else if (audioEnabled) {
-            if (currentValue !== previousValue) {
-                stopAudio();
-                playRandomAudio(audioFilesFilter);
-            }
-
-            stopTimer = setTimeout(() => {
-                if (currentValue === previousValue) { // Ползунок остановился
-                    playRandomAudio(audioFilesBase);
-                }
-            }, 500);
-
-            previousValue = currentValue;
         }
     }
 
@@ -153,17 +140,16 @@ window.onload = function() {
         if (event.button === 0) {  // Левая кнопка мыши
             console.log('Vertical slider clicked');
             audioEnabled = true;
-            if (!hasInteracted) {
-                playRandomAudio(audioFilesBase);
-                hasInteracted = true;
-            }
+            stopAudio();
+            playRandomAudio(audioFilesFilter);
         }
     });
 
     verticalSlider.addEventListener('mouseup', function(event) {
         if (event.button === 0) {  // Левая кнопка мыши
             console.log('Vertical slider released');
-            handleSliderMovement(this, true);
+            stopAudio();
+            playRandomAudio(audioFilesBase);
         }
     });
 
