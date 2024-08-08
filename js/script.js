@@ -114,14 +114,23 @@ window.onload = function() {
 
     let previousValue = 0;
     let stopTimer;
+    let hasInteracted = false; // Флаг для проверки первого взаимодействия
 
     const horizontalSlider = document.getElementById('horizontalRangeSlider');
     horizontalSlider.addEventListener('input', function() {
+        if (!hasInteracted) {
+            playRandomAudio();
+            hasInteracted = true;
+        }
         handleSliderMovement(this, false);
     });
 
     const verticalSlider = document.getElementById('verticalRangeSlider');
     verticalSlider.addEventListener('input', function() {
+        if (!hasInteracted) {
+            playRandomAudio();
+            hasInteracted = true;
+        }
         handleSliderMovement(this, true);
     });
 
