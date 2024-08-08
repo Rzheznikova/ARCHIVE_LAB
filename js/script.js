@@ -70,7 +70,14 @@ window.onload = function() {
         const randomAudioPath = `baseaudio/${audioFiles[currentAudioIndex]}`;
         console.log(`Playing random audio: ${randomAudioPath}`);
         audioPlayer.src = randomAudioPath;
-        audioPlayer.play();
+
+        audioPlayer.play()
+            .then(() => {
+                console.log('Audio is playing');
+            })
+            .catch(error => {
+                console.error('Error playing audio:', error);
+            });
     }
 
     function stopAudio() {
@@ -146,6 +153,7 @@ window.onload = function() {
         console.log('Loaded audio files:', audioFiles);
     });
 };
+
 
 
 
