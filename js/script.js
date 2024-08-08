@@ -16,8 +16,7 @@ window.onload = function() {
     const imageContainer = document.getElementById('imageContainer');
     const randomImage = document.getElementById('randomImage');
     const audioPlayer = document.getElementById('audioPlayer');
-    let audioFilesBase = [];
-    let audioFilesFilter = [];
+    let audioFiles = [];
     let currentAudioIndex = -1;
     let audioEnabled = false;
     let hasInteracted = false; // Флаг для проверки первого взаимодействия
@@ -38,8 +37,8 @@ window.onload = function() {
             });
     }
 
-    function loadAudioFiles(filePath, callback) {
-        fetch(filePath)
+    function loadAudioFiles(callback) {
+        fetch('baseaudio.json')
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok ' + response.statusText);
@@ -49,7 +48,7 @@ window.onload = function() {
             .then(data => callback(data))
             .catch(error => {
                 console.error('Error loading audio files:', error);
-                alert(`Error loading ${filePath}: ` + error.message);
+                alert('Error loading baseaudio.json: ' + error.message);
             });
     }
 
@@ -60,18 +59,18 @@ window.onload = function() {
 
     function displayRandomImage() {
         loadImages(function(images) {
-            const randomImagePath = `goticheskaya/${getRandomElement(images)}`;
+            const randomImagePath = goticheskaya/${getRandomElement(images)};
             randomImage.src = randomImagePath;
             imageContainer.style.display = 'block';
         });
     }
 
-    function playRandomAudio(audioFiles) {
+    function playRandomAudio() {
         if (audioFiles.length === 0) return;
 
         currentAudioIndex = Math.floor(Math.random() * audioFiles.length);
-        const randomAudioPath = `${audioFiles[currentAudioIndex]}`;
-        console.log(`Playing random audio: ${randomAudioPath}`);
+        const randomAudioPath = baseaudio/${audioFiles[currentAudioIndex]};
+        console.log(Playing random audio: ${randomAudioPath});
         audioPlayer.src = randomAudioPath;
 
         playPromise = audioPlayer.play();
@@ -87,10 +86,14 @@ window.onload = function() {
     }
 
     function stopAudio() {
-        if (audioPlayer.src) {
-            console.log('Stopping audio');
-            audioPlayer.pause();
-            audioPlayer.currentTime = 0;
+        if (playPromise !== undefined) {
+            playPromise.then(() => {
+                console.log('Stopping audio');
+                audioPlayer.pause();
+                audioPlayer.currentTime = 0;
+            }).catch(error => {
+                console.error('Error stopping audio:', error);
+            });
         }
     }
 
@@ -108,12 +111,16 @@ window.onload = function() {
             }, 500); // Проверка через 500 мс
 
             previousValue = currentValue;
-        } else {
+        } else if (audioEnabled) {
+            if (currentValue !== previousValue) {
+                stopAudio();
+            }
+
             stopTimer = setTimeout(() => {
                 if (currentValue === previousValue) { // Ползунок остановился
-                    playRandomAudio(audioFilesBase);
+                    playRandomAudio();
                 }
-            }, 500); // Проверка через 500 мс
+            }, 500);
 
             previousValue = currentValue;
         }
@@ -124,9 +131,54 @@ window.onload = function() {
 
     const horizontalSlider = document.getElementById('horizontalRangeSlider');
     horizontalSlider.addEventListener('input', function() {
+        if (!hasInteracted) {
+            playRandomAudio();
+            hasInteracted = true;
+        }
         handleSliderMovement(this, false);
     });
 
     const verticalSlider = document.getElementById('verticalRangeSlider');
+    verticalSlider.addEventListener('input', function() {
+        if (!hasInteracted) {
+            playRandomAudio();
+            hasInteracted = true;
+        }
+        handleSliderMovement(this, true);
+    });
 
+    verticalSlider.addEventListener('mousedown', function(event) {
+        if (event.button === 0) {  // Левая кнопка мыши
+            console.log('Vertical slider clicked');
+            audioEnabled = true;
+            if (!hasInteracted) {
+                playRandomAudio();
+                hasInteracted = true;
+            }
+        }
+    });
+
+    verticalSlider.addEventListener('mouseup', function(event) {
+        if (event.button === 0) {  // Левая кнопка мыши
+            console.log('Vertical slider released');
+            handleSliderMovement(this, true);
+        }
+    });
+
+    verticalSlider.addEventListener('mousemove', function(event) {
+        if (audioEnabled) {
+            console.log('Vertical slider moved');
+            handleSliderMovement(this, true);
+        }
+    });
+
+    // Загружаем случайное изображение при загрузке страницы
+    displayRandomImage();
+
+    // Загружаем список аудиофайлов при загрузке страницы
+    loadAudioFiles(function(files) {
+        audioFiles = files;
+        console.log('Loaded audio files:', audioFiles);
+    });
+};
 
