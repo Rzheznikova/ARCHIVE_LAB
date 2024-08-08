@@ -20,6 +20,7 @@ window.onload = function() {
     let currentAudioIndex = -1;
     let audioEnabled = false;
     let hasInteracted = false; // Флаг для проверки первого взаимодействия
+    let playPromise;
 
     function loadImages(callback) {
         fetch('images.json')
@@ -72,7 +73,7 @@ window.onload = function() {
         console.log(`Playing random audio: ${randomAudioPath}`);
         audioPlayer.src = randomAudioPath;
 
-        let playPromise = audioPlayer.play();
+        playPromise = audioPlayer.play();
 
         if (playPromise !== undefined) {
             playPromise.then(() => {
@@ -85,9 +86,15 @@ window.onload = function() {
     }
 
     function stopAudio() {
-        console.log('Stopping audio');
-        audioPlayer.pause();
-        audioPlayer.currentTime = 0;
+        if (playPromise !== undefined) {
+            playPromise.then(() => {
+                console.log('Stopping audio');
+                audioPlayer.pause();
+                audioPlayer.currentTime = 0;
+            }).catch(error => {
+                console.error('Error stopping audio:', error);
+            });
+        }
     }
 
     function handleSliderMovement(slider, isVertical) {
@@ -174,4 +181,3 @@ window.onload = function() {
         console.log('Loaded audio files:', audioFiles);
     });
 };
-
