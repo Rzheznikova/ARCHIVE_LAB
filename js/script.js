@@ -87,14 +87,35 @@ window.onload = function() {
     }
 
     function stopAudio() {
-        if (playPromise !== undefined) {
-            playPromise.then(() => {
-                console.log('Stopping audio');
-                audioPlayer.pause();
-                audioPlayer.currentTime = 0;
-            }).catch(error => {
-                console.error('Error stopping audio:', error);
-            });
+        if (audioPlayer.src) {
+            console.log('Stopping audio');
+            audioPlayer.pause();
+            audioPlayer.currentTime = 0;
+        }
+    }
+
+    function handleSliderMovement(slider, isVertical) {
+        const currentValue = parseInt(slider.value);
+        clearTimeout(stopTimer);
+
+        if (!isVertical) {
+            imageContainer.style.display = 'none';
+
+            stopTimer = setTimeout(() => {
+                if (currentValue === previousValue) { // Ползунок остановился
+                    displayRandomImage();
+                }
+            }, 500); // Проверка через 500 мс
+
+            previousValue = currentValue;
+        } else {
+            stopTimer = setTimeout(() => {
+                if (currentValue === previousValue) { // Ползунок остановился
+                    playRandomAudio(audioFilesBase);
+                }
+            }, 500); // Проверка через 500 мс
+
+            previousValue = currentValue;
         }
     }
 
@@ -103,57 +124,9 @@ window.onload = function() {
 
     const horizontalSlider = document.getElementById('horizontalRangeSlider');
     horizontalSlider.addEventListener('input', function() {
-        if (!hasInteracted) {
-            playRandomAudio(audioFilesBase);
-            hasInteracted = true;
-        }
         handleSliderMovement(this, false);
     });
 
     const verticalSlider = document.getElementById('verticalRangeSlider');
-    verticalSlider.addEventListener('input', function() {
-        if (!hasInteracted) {
-            playRandomAudio(audioFilesBase);
-            hasInteracted = true;
-        }
-    });
 
-    verticalSlider.addEventListener('mousedown', function(event) {
-        if (event.button === 0) {  // Левая кнопка мыши
-            console.log('Vertical slider clicked');
-            audioEnabled = true;
-            stopAudio();
-            playRandomAudio(audioFilesFilter);
-        }
-    });
-
-    verticalSlider.addEventListener('mouseup', function(event) {
-        if (event.button === 0) {  // Левая кнопка мыши
-            console.log('Vertical slider released');
-            stopAudio();
-            playRandomAudio(audioFilesBase);
-        }
-    });
-
-    verticalSlider.addEventListener('mousemove', function(event) {
-        if (audioEnabled) {
-            console.log('Vertical slider moved');
-        }
-    });
-
-    // Загружаем случайное изображение при загрузке страницы
-    displayRandomImage();
-
-    // Загружаем список аудиофайлов из baseaudio при загрузке страницы
-    loadAudioFiles('baseaudio.json', function(files) {
-        audioFilesBase = files.map(file => `baseaudio/${file}`);
-        console.log('Loaded base audio files:', audioFilesBase);
-    });
-
-    // Загружаем список аудиофайлов из filter при загрузке страницы
-    loadAudioFiles('filter.json', function(files) {
-        audioFilesFilter = files.map(file => `filter/${file}`);
-        console.log('Loaded filter audio files:', audioFilesFilter);
-    });
-};
 
