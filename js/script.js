@@ -72,12 +72,16 @@ window.onload = function() {
         console.log(`Playing random audio: ${randomAudioPath}`);
         audioPlayer.src = randomAudioPath;
 
-        audioPlayer.play().then(() => {
-            console.log('Audio is playing');
-        }).catch(error => {
-            console.error('Error playing audio:', error);
-            alert('Error playing audio: ' + error.message);
-        });
+        let playPromise = audioPlayer.play();
+
+        if (playPromise !== undefined) {
+            playPromise.then(() => {
+                console.log('Audio is playing');
+            }).catch(error => {
+                console.error('Error playing audio:', error);
+                alert('Error playing audio: ' + error.message);
+            });
+        }
     }
 
     function stopAudio() {
@@ -106,8 +110,6 @@ window.onload = function() {
                 playRandomAudio();
             } else if (currentValue !== previousValue) {
                 console.log('Slider moving');
-                // Если вы хотите, чтобы аудио не останавливалось при движении, уберите строку ниже
-                // stopAudio();
             }
 
             previousValue = currentValue;
@@ -169,6 +171,7 @@ window.onload = function() {
         console.log('Loaded audio files:', audioFiles);
     });
 };
+
 
 
 
