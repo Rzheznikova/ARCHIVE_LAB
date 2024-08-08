@@ -71,16 +71,16 @@ window.onload = function() {
         console.log(`Playing random audio: ${randomAudioPath}`);
         audioPlayer.src = randomAudioPath;
 
-        audioPlayer.play()
-            .then(() => {
-                console.log('Audio is playing');
-            })
-            .catch(error => {
-                console.error('Error playing audio:', error);
-            });
+        audioPlayer.play().then(() => {
+            console.log('Audio is playing');
+        }).catch(error => {
+            console.error('Error playing audio:', error);
+            alert('Error playing audio: ' + error.message);
+        });
     }
 
     function stopAudio() {
+        console.log('Stopping audio');
         audioPlayer.pause();
         audioPlayer.currentTime = 0;
     }
@@ -101,8 +101,10 @@ window.onload = function() {
             previousValue = currentValue;
         } else if (audioEnabled) {
             if (currentValue === previousValue && currentValue === 0) {
+                console.log('Slider stopped, playing random audio');
                 playRandomAudio();
             } else {
+                console.log('Slider moving, stopping audio');
                 stopAudio();
             }
 
