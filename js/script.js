@@ -79,7 +79,7 @@ window.onload = function() {
                 console.log('Audio is playing');
             }).catch(error => {
                 console.error('Error playing audio:', error);
-                alert('Error playing audio: ' + error.message);
+                // Handle the error here if necessary
             });
         }
     }
