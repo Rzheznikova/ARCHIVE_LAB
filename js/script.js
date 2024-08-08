@@ -48,7 +48,7 @@ window.onload = function() {
             })
             .then(data => callback(data))
             .catch(error => {
-                console.error('Error loading audio files:', error);
+                console.error(`Error loading ${filePath}: ` + error.message);
                 alert(`Error loading ${filePath}: ` + error.message);
             });
     }
@@ -87,14 +87,10 @@ window.onload = function() {
     }
 
     function stopAudio() {
-        if (playPromise !== undefined) {
-            playPromise.then(() => {
-                console.log('Stopping audio');
-                audioPlayer.pause();
-                audioPlayer.currentTime = 0;
-            }).catch(error => {
-                console.error('Error stopping audio:', error);
-            });
+        if (audioPlayer.src) {
+            console.log('Stopping audio');
+            audioPlayer.pause();
+            audioPlayer.currentTime = 0;
         }
     }
 
@@ -157,13 +153,16 @@ window.onload = function() {
                 playRandomAudio(audioFilesBase);
                 hasInteracted = true;
             }
+            stopAudio();
+            playRandomAudio(audioFilesFilter);
         }
     });
 
     verticalSlider.addEventListener('mouseup', function(event) {
         if (event.button === 0) {  // Левая кнопка мыши
             console.log('Vertical slider released');
-            handleSliderMovement(this, true);
+            stopAudio();
+            playRandomAudio(audioFilesBase);
         }
     });
 
@@ -189,3 +188,4 @@ window.onload = function() {
         console.log('Loaded filter audio files:', audioFilesFilter);
     });
 };
+
