@@ -16,7 +16,8 @@ window.onload = function() {
     const imageContainer = document.getElementById('imageContainer');
     const randomImage = document.getElementById('randomImage');
     const audioPlayer = document.getElementById('audioPlayer');
-    let audioFiles = [];
+    let audioFilesBase = [];
+    let audioFilesFilter = [];
     let currentAudioIndex = -1;
     let audioEnabled = false;
     let hasInteracted = false; // Флаг для проверки первого взаимодействия
@@ -37,8 +38,8 @@ window.onload = function() {
             });
     }
 
-    function loadAudioFiles(callback) {
-        fetch('baseaudio.json')
+    function loadAudioFiles(filePath, callback) {
+        fetch(filePath)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok ' + response.statusText);
@@ -48,7 +49,7 @@ window.onload = function() {
             .then(data => callback(data))
             .catch(error => {
                 console.error('Error loading audio files:', error);
-                alert('Error loading baseaudio.json: ' + error.message);
+                alert(`Error loading ${filePath}: ` + error.message);
             });
     }
 
@@ -65,11 +66,11 @@ window.onload = function() {
         });
     }
 
-    function playRandomAudio() {
+    function playRandomAudio(audioFiles) {
         if (audioFiles.length === 0) return;
 
         currentAudioIndex = Math.floor(Math.random() * audioFiles.length);
-        const randomAudioPath = `baseaudio/${audioFiles[currentAudioIndex]}`;
+        const randomAudioPath = `${audioFiles[currentAudioIndex]}`;
         console.log(`Playing random audio: ${randomAudioPath}`);
         audioPlayer.src = randomAudioPath;
 
@@ -114,11 +115,12 @@ window.onload = function() {
         } else if (audioEnabled) {
             if (currentValue !== previousValue) {
                 stopAudio();
+                playRandomAudio(audioFilesFilter);
             }
 
             stopTimer = setTimeout(() => {
                 if (currentValue === previousValue) { // Ползунок остановился
-                    playRandomAudio();
+                    playRandomAudio(audioFilesBase);
                 }
             }, 500);
 
@@ -132,7 +134,7 @@ window.onload = function() {
     const horizontalSlider = document.getElementById('horizontalRangeSlider');
     horizontalSlider.addEventListener('input', function() {
         if (!hasInteracted) {
-            playRandomAudio();
+            playRandomAudio(audioFilesBase);
             hasInteracted = true;
         }
         handleSliderMovement(this, false);
@@ -141,7 +143,7 @@ window.onload = function() {
     const verticalSlider = document.getElementById('verticalRangeSlider');
     verticalSlider.addEventListener('input', function() {
         if (!hasInteracted) {
-            playRandomAudio();
+            playRandomAudio(audioFilesBase);
             hasInteracted = true;
         }
         handleSliderMovement(this, true);
@@ -152,7 +154,7 @@ window.onload = function() {
             console.log('Vertical slider clicked');
             audioEnabled = true;
             if (!hasInteracted) {
-                playRandomAudio();
+                playRandomAudio(audioFilesBase);
                 hasInteracted = true;
             }
         }
@@ -175,9 +177,15 @@ window.onload = function() {
     // Загружаем случайное изображение при загрузке страницы
     displayRandomImage();
 
-    // Загружаем список аудиофайлов при загрузке страницы
-    loadAudioFiles(function(files) {
-        audioFiles = files;
-        console.log('Loaded audio files:', audioFiles);
+    // Загружаем список аудиофайлов из baseaudio при загрузке страницы
+    loadAudioFiles('baseaudio.json', function(files) {
+        audioFilesBase = files.map(file => `baseaudio/${file}`);
+        console.log('Loaded base audio files:', audioFilesBase);
+    });
+
+    // Загружаем список аудиофайлов из filter при загрузке страницы
+    loadAudioFiles('filter.json', function(files) {
+        audioFilesFilter = files.map(file => `filter/${file}`);
+        console.log('Loaded filter audio files:', audioFilesFilter);
     });
 };
