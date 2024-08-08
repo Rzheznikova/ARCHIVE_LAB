@@ -105,13 +105,11 @@ window.onload = function() {
 
             previousValue = currentValue;
         } else if (audioEnabled) {
-            if (currentValue === previousValue && currentValue === 0) {
-                console.log('Slider stopped, playing random audio');
+            if (currentValue !== previousValue) {
+                console.log('Slider moving, changing audio');
+                stopAudio();
                 playRandomAudio();
-            } else if (currentValue !== previousValue) {
-                console.log('Slider moving');
             }
-
             previousValue = currentValue;
         }
     }
