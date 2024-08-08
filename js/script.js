@@ -115,16 +115,6 @@ window.onload = function() {
         handleSliderMovement(this, true);
     });
 
-    randomImage.addEventListener('contextmenu', function(event) {
-        event.preventDefault(); // Предотвращаем стандартное контекстное меню
-        if (audioPlayer.paused) {
-            playRandomAudio();
-        } else {
-            stopAudio();
-            playRandomAudio();
-        }
-    });
-
     // Загружаем случайное изображение при загрузке страницы
     displayRandomImage();
 
