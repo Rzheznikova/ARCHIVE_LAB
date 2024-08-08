@@ -98,23 +98,6 @@ window.onload = function() {
         }
     }
 
-    function handleSliderMovement(slider, isVertical) {
-        const currentValue = parseInt(slider.value);
-        clearTimeout(stopTimer);
-
-        if (!isVertical) {
-            imageContainer.style.display = 'none';
-
-            stopTimer = setTimeout(() => {
-                if (currentValue === previousValue) { // Ползунок остановился
-                    displayRandomImage();
-                }
-            }, 500); // Проверка через 500 мс
-
-            previousValue = currentValue;
-        }
-    }
-
     let previousValue = 0;
     let stopTimer;
 
@@ -133,7 +116,6 @@ window.onload = function() {
             playRandomAudio(audioFilesBase);
             hasInteracted = true;
         }
-        handleSliderMovement(this, true);
     });
 
     verticalSlider.addEventListener('mousedown', function(event) {
@@ -156,7 +138,6 @@ window.onload = function() {
     verticalSlider.addEventListener('mousemove', function(event) {
         if (audioEnabled) {
             console.log('Vertical slider moved');
-            handleSliderMovement(this, true);
         }
     });
 
@@ -175,3 +156,4 @@ window.onload = function() {
         console.log('Loaded filter audio files:', audioFilesFilter);
     });
 };
+
