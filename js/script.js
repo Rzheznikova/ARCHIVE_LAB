@@ -87,10 +87,14 @@ window.onload = function() {
     }
 
     function stopAudio() {
-        if (audioPlayer.src) {
-            console.log('Stopping audio');
-            audioPlayer.pause();
-            audioPlayer.currentTime = 0;
+        if (playPromise !== undefined) {
+            playPromise.then(() => {
+                console.log('Stopping audio');
+                audioPlayer.pause();
+                audioPlayer.currentTime = 0;
+            }).catch(error => {
+                console.error('Error stopping audio:', error);
+            });
         }
     }
 
@@ -152,3 +156,4 @@ window.onload = function() {
         console.log('Loaded filter audio files:', audioFilesFilter);
     });
 };
+
