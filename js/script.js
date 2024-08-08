@@ -62,26 +62,44 @@ window.onload = function() {
         });
     }
 
-    function playNextAudio() {
+    function playRandomAudio() {
         if (audioFiles.length === 0) return;
 
-        currentAudioIndex = (currentAudioIndex + 1) % audioFiles.length;
-        audioPlayer.src = `baseaudio/${audioFiles[currentAudioIndex]}`;
+        currentAudioIndex = Math.floor(Math.random() * audioFiles.length);
+        const randomAudioPath = `baseaudio/${audioFiles[currentAudioIndex]}`;
+        console.log(`Playing random audio: ${randomAudioPath}`);
+        audioPlayer.src = randomAudioPath;
         audioPlayer.play();
     }
 
-    function handleSliderMovement(slider) {
+    function stopAudio() {
+        audioPlayer.pause();
+        audioPlayer.currentTime = 0;
+    }
+
+    function handleSliderMovement(slider, isVertical) {
         const currentValue = parseInt(slider.value);
         clearTimeout(stopTimer);
-        imageContainer.style.display = 'none';
 
-        stopTimer = setTimeout(() => {
-            if (currentValue === previousValue) { // Ползунок остановился
-                displayRandomImage();
+        if (!isVertical) {
+            imageContainer.style.display = 'none';
+
+            stopTimer = setTimeout(() => {
+                if (currentValue === previousValue) { // Ползунок остановился
+                    displayRandomImage();
+                }
+            }, 500); // Проверка через 500 мс
+
+            previousValue = currentValue;
+        } else {
+            if (currentValue === previousValue && currentValue === 0) {
+                playRandomAudio();
+            } else {
+                stopAudio();
             }
-        }, 500); // Проверка через 500 мс
 
-        previousValue = currentValue;
+            previousValue = currentValue;
+        }
     }
 
     let previousValue = 0;
@@ -89,21 +107,21 @@ window.onload = function() {
 
     const horizontalSlider = document.getElementById('horizontalRangeSlider');
     horizontalSlider.addEventListener('input', function() {
-        handleSliderMovement(this);
+        handleSliderMovement(this, false);
     });
 
     const verticalSlider = document.getElementById('verticalRangeSlider');
     verticalSlider.addEventListener('input', function() {
-        handleSliderMovement(this);
+        handleSliderMovement(this, true);
     });
 
     randomImage.addEventListener('contextmenu', function(event) {
         event.preventDefault(); // Предотвращаем стандартное контекстное меню
         if (audioPlayer.paused) {
-            playNextAudio();
+            playRandomAudio();
         } else {
-            audioPlayer.pause();
-            playNextAudio();
+            stopAudio();
+            playRandomAudio();
         }
     });
 
@@ -113,6 +131,7 @@ window.onload = function() {
     // Загружаем список аудиофайлов при загрузке страницы
     loadAudioFiles(function(files) {
         audioFiles = files;
+        console.log('Loaded audio files:', audioFiles);
     });
 };
 
