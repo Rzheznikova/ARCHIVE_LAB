@@ -105,12 +105,15 @@ window.onload = function() {
 
             previousValue = currentValue;
         } else if (audioEnabled) {
-            if (currentValue === previousValue && currentValue === 0) {
-                console.log('Slider stopped, playing random audio');
-                playRandomAudio();
-            } else if (currentValue !== previousValue) {
-                console.log('Slider moving');
+            if (currentValue !== previousValue) {
+                stopAudio();
             }
+
+            stopTimer = setTimeout(() => {
+                if (currentValue === previousValue) { // Ползунок остановился
+                    playRandomAudio();
+                }
+            }, 500);
 
             previousValue = currentValue;
         }
@@ -171,3 +174,4 @@ window.onload = function() {
         console.log('Loaded audio files:', audioFiles);
     });
 };
+
