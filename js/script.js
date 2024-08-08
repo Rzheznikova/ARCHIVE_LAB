@@ -19,6 +19,7 @@ window.onload = function() {
     let audioFiles = [];
     let currentAudioIndex = -1;
     let audioEnabled = false;
+    let hasInteracted = false; // Флаг для проверки первого взаимодействия
 
     function loadImages(callback) {
         fetch('images.json')
@@ -103,9 +104,10 @@ window.onload = function() {
             if (currentValue === previousValue && currentValue === 0) {
                 console.log('Slider stopped, playing random audio');
                 playRandomAudio();
-            } else {
-                console.log('Slider moving, stopping audio');
-                stopAudio();
+            } else if (currentValue !== previousValue) {
+                console.log('Slider moving');
+                // Если вы хотите, чтобы аудио не останавливалось при движении, уберите строку ниже
+                // stopAudio();
             }
 
             previousValue = currentValue;
@@ -114,7 +116,6 @@ window.onload = function() {
 
     let previousValue = 0;
     let stopTimer;
-    let hasInteracted = false; // Флаг для проверки первого взаимодействия
 
     const horizontalSlider = document.getElementById('horizontalRangeSlider');
     horizontalSlider.addEventListener('input', function() {
@@ -138,6 +139,10 @@ window.onload = function() {
         if (event.button === 0) {  // Левая кнопка мыши
             console.log('Vertical slider clicked');
             audioEnabled = true;
+            if (!hasInteracted) {
+                playRandomAudio();
+                hasInteracted = true;
+            }
         }
     });
 
@@ -164,6 +169,7 @@ window.onload = function() {
         console.log('Loaded audio files:', audioFiles);
     });
 };
+
 
 
 
