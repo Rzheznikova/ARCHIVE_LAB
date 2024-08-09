@@ -15,6 +15,15 @@ body {
     background-color: black; /* Цвет слайдера */
 }
 
+#horizontalSlider2 {
+    position: absolute;
+    top: 10%; /* Отступ от верхнего края экрана равен 10% высоты экрана */
+    left: 12.5%; /* Отступ слева 1/8 ширины экрана */
+    width: 75%; /* Ширина слайдера 3/4 от доступного пространства */
+    height: 10px; /* Толщина полосы */
+    background-color: black; /* Цвет слайдера */
+}
+
 #verticalSlider {
     position: absolute;
     left: 15%; /* Отступ слева 1/4 ширины экрана */
@@ -36,7 +45,8 @@ input[type="range"] {
 }
 
 /* Стили для ползунка горизонтального слайдера */
-#horizontalRangeSlider::-webkit-slider-thumb {
+#horizontalRangeSlider::-webkit-slider-thumb,
+#horizontalRangeSlider2::-webkit-slider-thumb {
     -webkit-appearance: none;
     width: 15px; /* Ширина ползунка */
     height: 30px; /* Высота ползунка */
@@ -44,14 +54,16 @@ input[type="range"] {
     cursor: pointer;
 }
 
-#horizontalRangeSlider::-moz-range-thumb {
+#horizontalRangeSlider::-moz-range-thumb,
+#horizontalRangeSlider2::-moz-range-thumb {
     width: 30px;
     height: 15px;
     background: black;
     cursor: pointer;
 }
 
-#horizontalRangeSlider::-ms-thumb {
+#horizontalRangeSlider::-ms-thumb,
+#horizontalRangeSlider2::-ms-thumb {
     width: 30px;
     height: 15px;
     background: black;
@@ -60,8 +72,11 @@ input[type="range"] {
 
 /* Стили для дорожки горизонтального слайдера */
 #horizontalRangeSlider::-webkit-slider-runnable-track,
+#horizontalRangeSlider2::-webkit-slider-runnable-track,
 #horizontalRangeSlider::-moz-range-track,
-#horizontalRangeSlider::-ms-track {
+#horizontalRangeSlider2::-moz-range-track,
+#horizontalRangeSlider::-ms-track,
+#horizontalRangeSlider2::-ms-track {
     width: 100%;
     height: 10px;
     background: black;
