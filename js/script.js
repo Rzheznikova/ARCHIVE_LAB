@@ -111,4 +111,70 @@ window.onload = function() {
         } else if (audioEnabled) {
             if (currentValue !== previousValue) {
                 stopAudio();
-                play
+                playRandomAudio(audioFilesFilter);
+            }
+
+            stopTimer = setTimeout(() => {
+                if (currentValue === previousValue) { // Ползунок остановился
+                    playRandomAudio(audioFilesBase);
+                }
+            }, 500);
+
+            previousValue = currentValue;
+        }
+    }
+
+    let previousValue = 0;
+    let stopTimer;
+
+    const horizontalSlider = document.getElementById('horizontalRangeSlider');
+    horizontalSlider.addEventListener('input', function() {
+        if (!hasInteracted) {
+            playRandomAudio(audioFilesBase);
+            hasInteracted = true;
+        }
+        handleSliderMovement(this, false);
+    });
+
+    const verticalSlider = document.getElementById('verticalRangeSlider');
+    verticalSlider.addEventListener('input', function() {
+        if (!hasInteracted) {
+            playRandomAudio(audioFilesBase);
+            hasInteracted = true;
+        }
+        handleSliderMovement(this, true);
+    });
+
+    verticalSlider.addEventListener('mousedown', function(event) {
+        if (event.button === 0) {  // Левая кнопка мыши
+            console.log('Vertical slider clicked');
+            audioEnabled = true;
+            if (!hasInteracted) {
+                playRandomAudio(audioFilesBase);
+                hasInteracted = true;
+            }
+            stopAudio();
+            playRandomAudio(audioFilesFilter);
+        }
+    });
+
+    verticalSlider.addEventListener('mouseup', function(event) {
+        if (event.button === 0) {  // Левая кнопка мыши
+            console.log('Vertical slider released');
+            stopAudio();
+            playRandomAudio(audioFilesBase);
+        }
+    });
+
+    verticalSlider.addEventListener('mousemove', function(event) {
+        if (audioEnabled) {
+            console.log('Vertical slider moved');
+            handleSliderMovement(this, true);
+        }
+    });
+
+    // Загружаем случайное изображение при загрузке страницы
+    displayRandomImage();
+
+    // Загружаем список аудиофайлов из base
+
