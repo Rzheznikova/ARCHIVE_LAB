@@ -72,4 +72,43 @@ window.onload = function() {
         currentAudioIndex = Math.floor(Math.random() * audioFiles.length);
         const randomAudioPath = `${audioFiles[currentAudioIndex]}`;
         console.log(`Playing random audio: ${randomAudioPath}`);
-        audio
+        audioPlayer.src = randomAudioPath;
+
+        playPromise = audioPlayer.play();
+
+        if (playPromise !== undefined) {
+            playPromise.then(() => {
+                console.log('Audio is playing');
+            }).catch(error => {
+                console.error('Error playing audio:', error);
+                // Handle the error here if necessary
+            });
+        }
+    }
+
+    function stopAudio() {
+        if (audioPlayer.src) {
+            console.log('Stopping audio');
+            audioPlayer.pause();
+            audioPlayer.currentTime = 0;
+        }
+    }
+
+    function handleSliderMovement(slider, isVertical) {
+        const currentValue = parseInt(slider.value);
+        clearTimeout(stopTimer);
+
+        if (!isVertical) {
+            imageContainer.style.display = 'none';
+
+            stopTimer = setTimeout(() => {
+                if (currentValue === previousValue) { // Ползунок остановился
+                    displayRandomImage();
+                }
+            }, 500); // Проверка через 500 мс
+
+            previousValue = currentValue;
+        } else if (audioEnabled) {
+            if (currentValue !== previousValue) {
+                stopAudio();
+                play
