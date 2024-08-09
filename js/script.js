@@ -50,7 +50,7 @@ window.onload = function() {
         let jsonFilePath;
 
         if (sliderPercentage <= 51) {
-            jsonFilePath = 'goticheskaya.json';
+            jsonFilePath = 'images.json';  // Используем images.json для папки goticheskaya
             imagePathPrefix = 'goticheskaya/';
         } else {
             jsonFilePath = 'drugoe.json';
@@ -207,3 +207,4 @@ window.onload = function() {
         console.log('Loaded filter audio files:', audioFilesFilter);
     });
 };
+
