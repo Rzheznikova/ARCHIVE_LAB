@@ -34,6 +34,15 @@ body {
     background-color: white; /* Цвет слайдера - белый */
 }
 
+/* Стили для всех типов ползунков */
+input[type="range"] {
+    -webkit-appearance: none; /* Убираем стандартный стиль для всех браузеров */
+    appearance: none;
+    background: transparent; /* Фон слайдера делаем прозрачным */
+    cursor: pointer;
+    width: 100%; /* Обеспечивает, что слайдер растягивается на всю длину контейнера */
+}
+
 /* Стили для ползунка горизонтального слайдера 2 */
 #horizontalRangeSlider2::-webkit-slider-thumb {
     -webkit-appearance: none;
