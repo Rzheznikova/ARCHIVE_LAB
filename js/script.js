@@ -48,7 +48,7 @@ window.onload = function() {
             })
             .then(data => callback(data))
             .catch(error => {
-                console.error(`Error loading ${filePath}: ` + error.message);
+                console.error('Error loading audio files:', error);
                 alert(`Error loading ${filePath}: ` + error.message);
             });
     }
@@ -87,10 +87,14 @@ window.onload = function() {
     }
 
     function stopAudio() {
-        if (audioPlayer.src) {
-            console.log('Stopping audio');
-            audioPlayer.pause();
-            audioPlayer.currentTime = 0;
+        if (playPromise !== undefined) {
+            playPromise.then(() => {
+                console.log('Stopping audio');
+                audioPlayer.pause();
+                audioPlayer.currentTime = 0;
+            }).catch(error => {
+                console.error('Error stopping audio:', error);
+            });
         }
     }
 
@@ -153,16 +157,13 @@ window.onload = function() {
                 playRandomAudio(audioFilesBase);
                 hasInteracted = true;
             }
-            stopAudio();
-            playRandomAudio(audioFilesFilter);
         }
     });
 
     verticalSlider.addEventListener('mouseup', function(event) {
         if (event.button === 0) {  // Левая кнопка мыши
             console.log('Vertical slider released');
-            stopAudio();
-            playRandomAudio(audioFilesBase);
+            handleSliderMovement(this, true);
         }
     });
 
@@ -176,5 +177,15 @@ window.onload = function() {
     // Загружаем случайное изображение при загрузке страницы
     displayRandomImage();
 
-    // Загружаем список аудиофайлов из base
+    // Загружаем список аудиофайлов из baseaudio при загрузке страницы
+    loadAudioFiles('baseaudio.json', function(files) {
+        audioFilesBase = files.map(file => `baseaudio/${file}`);
+        console.log('Loaded base audio files:', audioFilesBase);
+    });
 
+    // Загружаем список аудиофайлов из filter при загрузке страницы
+    loadAudioFiles('filter.json', function(files) {
+        audioFilesFilter = files.map(file => `filter/${file}`);
+        console.log('Loaded filter audio files:', audioFilesFilter);
+    });
+};
