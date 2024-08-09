@@ -23,8 +23,8 @@ window.onload = function() {
     let hasInteracted = false; // Флаг для проверки первого взаимодействия
     let playPromise;
 
-    function loadImages(callback) {
-        fetch('images.json')
+    function loadImages(filePath, callback) {
+        fetch(filePath)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok ' + response.statusText);
@@ -34,7 +34,7 @@ window.onload = function() {
             .then(data => callback(data))
             .catch(error => {
                 console.error('Error loading images:', error);
-                alert('Error loading images.json: ' + error.message);
+                alert('Error loading ' + filePath + ': ' + error.message);
             });
     }
 
@@ -58,9 +58,19 @@ window.onload = function() {
         return arr[randomIndex];
     }
 
-    function displayRandomImage() {
-        loadImages(function(images) {
-            const randomImagePath = `goticheskaya/${getRandomElement(images)}`;
+    function displayRandomImage(sliderValue) {
+        let filePath, folderPath;
+
+        if (sliderValue <= 51) {
+            filePath = 'images.json';
+            folderPath = 'goticheskaya';
+        } else {
+            filePath = 'drygoe.json';
+            folderPath = 'drygoe';
+        }
+
+        loadImages(filePath, function(images) {
+            const randomImagePath = `${folderPath}/${getRandomElement(images)}`;
             randomImage.src = randomImagePath;
             imageContainer.style.display = 'block';
         });
@@ -107,7 +117,7 @@ window.onload = function() {
 
             stopTimer = setTimeout(() => {
                 if (currentValue === previousValue) { // Ползунок остановился
-                    displayRandomImage();
+                    displayRandomImage(currentValue);
                 }
             }, 500); // Проверка через 500 мс
 
@@ -140,14 +150,13 @@ window.onload = function() {
         handleSliderMovement(this, false);
     });
 
-    // Код для горизонтального слайдера 2
     const horizontalSlider2 = document.getElementById('horizontalRangeSlider2');
     horizontalSlider2.addEventListener('input', function() {
         if (!hasInteracted) {
-            playRandomAudio(audioFilesBase);  // Воспроизводим базовые аудио файлы при первом взаимодействии
+            playRandomAudio(audioFilesBase);
             hasInteracted = true;
         }
-        handleSliderMovement(this, true); // Горизонтальный слайдер 2 работает как вертикальный слайдер для аудио
+        handleSliderMovement(this, true); // Теперь горизонтальный слайдер 2 работает как вертикальный
     });
 
     horizontalSlider2.addEventListener('mousedown', function(event) {
@@ -177,40 +186,27 @@ window.onload = function() {
 
     const verticalSlider = document.getElementById('verticalRangeSlider');
     verticalSlider.addEventListener('input', function() {
-        if (!hasInteracted) {
-            playRandomAudio(audioFilesBase);
-            hasInteracted = true;
-        }
-        handleSliderMovement(this, true);
+        handleSliderMovement(this, false); // Вертикальный слайдер теперь управляет только изображениями
     });
 
     verticalSlider.addEventListener('mousedown', function(event) {
         if (event.button === 0) {  // Левая кнопка мыши
             console.log('Vertical slider clicked');
-            audioEnabled = true;
-            if (!hasInteracted) {
-                playRandomAudio(audioFilesBase);
-                hasInteracted = true;
-            }
         }
     });
 
     verticalSlider.addEventListener('mouseup', function(event) {
         if (event.button === 0) {  // Левая кнопка мыши
             console.log('Vertical slider released');
-            handleSliderMovement(this, true);
         }
     });
 
     verticalSlider.addEventListener('mousemove', function(event) {
-        if (audioEnabled) {
-            console.log('Vertical slider moved');
-            handleSliderMovement(this, true);
-        }
+        console.log('Vertical slider moved');
     });
 
     // Загружаем случайное изображение при загрузке страницы
-    displayRandomImage();
+    displayRandomImage(horizontalSlider.value);
 
     // Загружаем список аудиофайлов из baseaudio при загрузке страницы
     loadAudioFiles('baseaudio.json', function(files) {
@@ -224,3 +220,4 @@ window.onload = function() {
         console.log('Loaded filter audio files:', audioFilesFilter);
     });
 };
+
