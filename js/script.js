@@ -63,7 +63,10 @@ window.onload = function() {
     }
 
     function playRandomAudio(audioFiles) {
-        if (audioFiles.length === 0) return;
+        if (audioFiles.length === 0) {
+            console.warn("No audio files to play.");
+            return;
+        }
 
         currentAudioIndex = Math.floor(Math.random() * audioFiles.length);
         const randomAudioPath = `${audioFiles[currentAudioIndex]}`;
@@ -77,7 +80,7 @@ window.onload = function() {
                 console.log('Audio is playing');
             }).catch(error => {
                 console.error('Error playing audio:', error);
-                // Handle the error here if necessary
+                alert('Error playing audio: ' + error.message);
             });
         }
     }
@@ -196,15 +199,22 @@ window.onload = function() {
 
     // Загружаем список аудиофайлов из baseaudio при загрузке страницы
     loadAudioFiles('baseaudio.json', function(files) {
-        audioFilesBase = files.map(file => `baseaudio/${file}`);
-        console.log('Loaded base audio files:', audioFilesBase);
+        if (files && files.length > 0) {
+            audioFilesBase = files.map(file => `baseaudio/${file}`);
+            console.log('Loaded base audio files:', audioFilesBase);
+        } else {
+            console.error('No audio files loaded from baseaudio.json');
+        }
     });
 
     // Загружаем список аудиофайлов из filter при загрузке страницы
     loadAudioFiles('filter.json', function(files) {
-        audioFilesFilter = files.map(file => `filter/${file}`);
-        console.log('Loaded filter audio files:', audioFilesFilter);
+        if (files && files.length > 0) {
+            audioFilesFilter = files.map(file => `filter/${file}`);
+            console.log('Loaded filter audio files:', audioFilesFilter);
+        } else {
+            console.error('No audio files loaded from filter.json');
+        }
     });
 };
-
 
