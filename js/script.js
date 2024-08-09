@@ -53,8 +53,8 @@ window.onload = function() {
             jsonFilePath = 'images.json';  // Используем images.json для папки goticheskaya
             imagePathPrefix = 'goticheskaya/';
         } else {
-            jsonFilePath = 'drugoe.json';
-            imagePathPrefix = 'drugoe/';
+            jsonFilePath = 'drygoe.json';  // Используем drygoe.json для папки drygoe
+            imagePathPrefix = 'drygoe/';
         }
 
         loadImages(jsonFilePath, function(images) {
