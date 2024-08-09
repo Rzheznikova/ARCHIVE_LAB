@@ -23,8 +23,8 @@ window.onload = function() {
     let hasInteracted = false; // Флаг для проверки первого взаимодействия
     let playPromise;
 
-    function loadImages(filePath, callback) {
-        fetch(filePath)
+    function loadImages(callback) {
+        fetch('images.json')
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok ' + response.statusText);
@@ -34,7 +34,22 @@ window.onload = function() {
             .then(data => callback(data))
             .catch(error => {
                 console.error('Error loading images:', error);
-                alert('Error loading ' + filePath + ': ' + error.message);
+                alert('Error loading images.json: ' + error.message);
+            });
+    }
+
+    function loadAudioFiles(filePath, callback) {
+        fetch(filePath)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(data => callback(data))
+            .catch(error => {
+                console.error('Error loading audio files:', error);
+                alert(`Error loading ${filePath}: ` + error.message);
             });
     }
 
@@ -44,29 +59,15 @@ window.onload = function() {
     }
 
     function displayRandomImage() {
-        const sliderValue = parseInt(horizontalSlider.value);
-        let filePath, folder;
-
-        if (sliderValue <= 51) {
-            filePath = 'images.json';
-            folder = 'goticheskaya';
-        } else {
-            filePath = 'drygoe.json';
-            folder = 'drygoe';
-        }
-
-        loadImages(filePath, function(images) {
-            const randomImagePath = `${folder}/${getRandomElement(images)}`;
+        loadImages(function(images) {
+            const randomImagePath = `goticheskaya/${getRandomElement(images)}`;
             randomImage.src = randomImagePath;
             imageContainer.style.display = 'block';
         });
     }
 
     function playRandomAudio(audioFiles) {
-        if (audioFiles.length === 0) {
-            console.warn("No audio files to play.");
-            return;
-        }
+        if (audioFiles.length === 0) return;
 
         currentAudioIndex = Math.floor(Math.random() * audioFiles.length);
         const randomAudioPath = `${audioFiles[currentAudioIndex]}`;
@@ -80,7 +81,7 @@ window.onload = function() {
                 console.log('Audio is playing');
             }).catch(error => {
                 console.error('Error playing audio:', error);
-                alert('Error playing audio: ' + error.message);
+                // Handle the error here if necessary
             });
         }
     }
@@ -139,13 +140,14 @@ window.onload = function() {
         handleSliderMovement(this, false);
     });
 
+    // Код для горизонтального слайдера 2
     const horizontalSlider2 = document.getElementById('horizontalRangeSlider2');
     horizontalSlider2.addEventListener('input', function() {
         if (!hasInteracted) {
-            playRandomAudio(audioFilesBase);
+            playRandomAudio(audioFilesBase);  // Воспроизводим базовые аудио файлы при первом взаимодействии
             hasInteracted = true;
         }
-        handleSliderMovement(this, true); // Горизонтальный слайдер 2 работает как вертикальный в плане аудио
+        handleSliderMovement(this, true); // Горизонтальный слайдер 2 работает как вертикальный слайдер для аудио
     });
 
     horizontalSlider2.addEventListener('mousedown', function(event) {
@@ -175,23 +177,36 @@ window.onload = function() {
 
     const verticalSlider = document.getElementById('verticalRangeSlider');
     verticalSlider.addEventListener('input', function() {
-        handleSliderMovement(this, false); // Вертикальный слайдер теперь управляет только изображениями
+        if (!hasInteracted) {
+            playRandomAudio(audioFilesBase);
+            hasInteracted = true;
+        }
+        handleSliderMovement(this, true);
     });
 
     verticalSlider.addEventListener('mousedown', function(event) {
         if (event.button === 0) {  // Левая кнопка мыши
             console.log('Vertical slider clicked');
+            audioEnabled = true;
+            if (!hasInteracted) {
+                playRandomAudio(audioFilesBase);
+                hasInteracted = true;
+            }
         }
     });
 
     verticalSlider.addEventListener('mouseup', function(event) {
         if (event.button === 0) {  // Левая кнопка мыши
             console.log('Vertical slider released');
+            handleSliderMovement(this, true);
         }
     });
 
     verticalSlider.addEventListener('mousemove', function(event) {
-        console.log('Vertical slider moved');
+        if (audioEnabled) {
+            console.log('Vertical slider moved');
+            handleSliderMovement(this, true);
+        }
     });
 
     // Загружаем случайное изображение при загрузке страницы
@@ -199,22 +214,13 @@ window.onload = function() {
 
     // Загружаем список аудиофайлов из baseaudio при загрузке страницы
     loadAudioFiles('baseaudio.json', function(files) {
-        if (files && files.length > 0) {
-            audioFilesBase = files.map(file => `baseaudio/${file}`);
-            console.log('Loaded base audio files:', audioFilesBase);
-        } else {
-            console.error('No audio files loaded from baseaudio.json');
-        }
+        audioFilesBase = files.map(file => `baseaudio/${file}`);
+        console.log('Loaded base audio files:', audioFilesBase);
     });
 
     // Загружаем список аудиофайлов из filter при загрузке страницы
     loadAudioFiles('filter.json', function(files) {
-        if (files && files.length > 0) {
-            audioFilesFilter = files.map(file => `filter/${file}`);
-            console.log('Loaded filter audio files:', audioFilesFilter);
-        } else {
-            console.error('No audio files loaded from filter.json');
-        }
+        audioFilesFilter = files.map(file => `filter/${file}`);
+        console.log('Loaded filter audio files:', audioFilesFilter);
     });
 };
-
