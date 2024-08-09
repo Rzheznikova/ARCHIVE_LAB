@@ -5,6 +5,16 @@ body {
     background-color: white; /* Установка белого фона для сайта */
 }
 
+/* Стилизация синего прямоугольника */
+#blueRectangle {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 15%; /* 15% от высоты экрана */
+    background-color: blue; /* Синий цвет прямоугольника */
+}
+
 /* Стилизация основных слайдеров */
 #horizontalSlider {
     position: absolute;
