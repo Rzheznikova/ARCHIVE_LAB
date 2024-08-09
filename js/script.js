@@ -23,22 +23,7 @@ window.onload = function() {
     let hasInteracted = false; // Флаг для проверки первого взаимодействия
     let playPromise;
 
-    function loadImages(callback) {
-        fetch('images.json')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok ' + response.statusText);
-                }
-                return response.json();
-            })
-            .then(data => callback(data))
-            .catch(error => {
-                console.error('Error loading images:', error);
-                alert('Error loading images.json: ' + error.message);
-            });
-    }
-
-    function loadAudioFiles(filePath, callback) {
+    function loadImages(filePath, callback) {
         fetch(filePath)
             .then(response => {
                 if (!response.ok) {
@@ -48,8 +33,8 @@ window.onload = function() {
             })
             .then(data => callback(data))
             .catch(error => {
-                console.error('Error loading audio files:', error);
-                alert(`Error loading ${filePath}: ` + error.message);
+                console.error('Error loading images:', error);
+                alert('Error loading ' + filePath + ': ' + error.message);
             });
     }
 
@@ -58,9 +43,22 @@ window.onload = function() {
         return arr[randomIndex];
     }
 
-    function displayRandomImage() {
-        loadImages(function(images) {
-            const randomImagePath = `goticheskaya/${getRandomElement(images)}`;
+    function displayRandomImage(sliderValue) {
+        const sliderPercentage = sliderValue; // Текущий процент слайдера
+
+        let imagePathPrefix;
+        let jsonFilePath;
+
+        if (sliderPercentage <= 51) {
+            jsonFilePath = 'goticheskaya.json';
+            imagePathPrefix = 'goticheskaya/';
+        } else {
+            jsonFilePath = 'drugoe.json';
+            imagePathPrefix = 'drugoe/';
+        }
+
+        loadImages(jsonFilePath, function(images) {
+            const randomImagePath = `${imagePathPrefix}${getRandomElement(images)}`;
             randomImage.src = randomImagePath;
             imageContainer.style.display = 'block';
         });
@@ -81,7 +79,6 @@ window.onload = function() {
                 console.log('Audio is playing');
             }).catch(error => {
                 console.error('Error playing audio:', error);
-                // Handle the error here if necessary
             });
         }
     }
@@ -107,7 +104,7 @@ window.onload = function() {
 
             stopTimer = setTimeout(() => {
                 if (currentValue === previousValue) { // Ползунок остановился
-                    displayRandomImage();
+                    displayRandomImage(currentValue);
                 }
             }, 500); // Проверка через 500 мс
 
@@ -196,7 +193,7 @@ window.onload = function() {
     });
 
     // Загружаем случайное изображение при загрузке страницы
-    displayRandomImage();
+    displayRandomImage(horizontalSlider.value);
 
     // Загружаем список аудиофайлов из baseaudio при загрузке страницы
     loadAudioFiles('baseaudio.json', function(files) {
@@ -210,4 +207,3 @@ window.onload = function() {
         console.log('Loaded filter audio files:', audioFilesFilter);
     });
 };
-
