@@ -142,7 +142,7 @@ window.onload = function() {
             playRandomAudio(audioFilesBase);
             hasInteracted = true;
         }
-        handleSliderMovement(this, true); // Теперь горизонтальный слайдер 2 работает как вертикальный
+        handleSliderMovement(this, true); // Горизонтальный слайдер 2 работает как вертикальный в плане аудио
     });
 
     horizontalSlider2.addEventListener('mousedown', function(event) {
