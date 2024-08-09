@@ -140,6 +140,15 @@ window.onload = function() {
         handleSliderMovement(this, false);
     });
 
+    const horizontalSlider2 = document.getElementById('horizontalRangeSlider2');
+    horizontalSlider2.addEventListener('input', function() {
+        if (!hasInteracted) {
+            playRandomAudio(audioFilesBase);
+            hasInteracted = true;
+        }
+        handleSliderMovement(this, false);
+    });
+
     const verticalSlider = document.getElementById('verticalRangeSlider');
     verticalSlider.addEventListener('input', function() {
         if (!hasInteracted) {
