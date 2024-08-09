@@ -23,8 +23,8 @@ window.onload = function() {
     let hasInteracted = false; // Флаг для проверки первого взаимодействия
     let playPromise;
 
-    function loadImages(filePath, callback) {
-        fetch(filePath)
+    function loadImages(callback, jsonFile) {
+        fetch(jsonFile)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok ' + response.statusText);
@@ -34,7 +34,22 @@ window.onload = function() {
             .then(data => callback(data))
             .catch(error => {
                 console.error('Error loading images:', error);
-                alert('Error loading ' + filePath + ': ' + error.message);
+                alert('Error loading ' + jsonFile + ': ' + error.message);
+            });
+    }
+
+    function loadAudioFiles(filePath, callback) {
+        fetch(filePath)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(data => callback(data))
+            .catch(error => {
+                console.error('Error loading audio files:', error);
+                alert(`Error loading ${filePath}: ` + error.message);
             });
     }
 
@@ -43,25 +58,24 @@ window.onload = function() {
         return arr[randomIndex];
     }
 
-    function displayRandomImage(sliderValue) {
-        const sliderPercentage = sliderValue; // Текущий процент слайдера
+    function displayRandomImage() {
+        const sliderValue = horizontalSlider.value; // Получаем текущее значение ползунка
+        let jsonFile;
+        let folder;
 
-        let imagePathPrefix;
-        let jsonFilePath;
-
-        if (sliderPercentage <= 51) {
-            jsonFilePath = 'images.json';  // Используем images.json для папки goticheskaya
-            imagePathPrefix = 'goticheskaya/';
+        if (sliderValue <= 51) {
+            jsonFile = 'goticheskaya.json';
+            folder = 'goticheskaya';
         } else {
-            jsonFilePath = 'drygoe.json';  // Используем drygoe.json для папки drygoe
-            imagePathPrefix = 'drygoe/';
+            jsonFile = 'drygoe.json';
+            folder = 'drygoe';
         }
 
-        loadImages(jsonFilePath, function(images) {
-            const randomImagePath = `${imagePathPrefix}${getRandomElement(images)}`;
+        loadImages(function(images) {
+            const randomImagePath = `${folder}/${getRandomElement(images)}`;
             randomImage.src = randomImagePath;
             imageContainer.style.display = 'block';
-        });
+        }, jsonFile);
     }
 
     function playRandomAudio(audioFiles) {
@@ -79,6 +93,7 @@ window.onload = function() {
                 console.log('Audio is playing');
             }).catch(error => {
                 console.error('Error playing audio:', error);
+                // Handle the error here if necessary
             });
         }
     }
@@ -104,7 +119,7 @@ window.onload = function() {
 
             stopTimer = setTimeout(() => {
                 if (currentValue === previousValue) { // Ползунок остановился
-                    displayRandomImage(currentValue);
+                    displayRandomImage();
                 }
             }, 500); // Проверка через 500 мс
 
@@ -193,7 +208,7 @@ window.onload = function() {
     });
 
     // Загружаем случайное изображение при загрузке страницы
-    displayRandomImage(horizontalSlider.value);
+    displayRandomImage();
 
     // Загружаем список аудиофайлов из baseaudio при загрузке страницы
     loadAudioFiles('baseaudio.json', function(files) {
@@ -207,4 +222,5 @@ window.onload = function() {
         console.log('Loaded filter audio files:', audioFilesFilter);
     });
 };
+
 
