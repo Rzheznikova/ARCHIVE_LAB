@@ -25,6 +25,39 @@ body {
     background-color: black; /* Цвет слайдера */
 }
 
+/* Стили для ползунка горизонтального слайдера 1 */
+#horizontalRangeSlider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 15px; /* Ширина ползунка */
+    height: 30px; /* Высота ползунка */
+    background: black; /* Цвет ползунка */
+    cursor: pointer;
+}
+
+#horizontalRangeSlider::-moz-range-thumb {
+    width: 15px;
+    height: 30px;
+    background: black; /* Цвет ползунка */
+    cursor: pointer;
+}
+
+#horizontalRangeSlider::-ms-thumb {
+    width: 15px;
+    height: 30px;
+    background: black; /* Цвет ползунка */
+    cursor: pointer;
+}
+
+/* Стили для дорожки горизонтального слайдера 1 */
+#horizontalRangeSlider::-webkit-slider-runnable-track,
+#horizontalRangeSlider::-moz-range-track,
+#horizontalRangeSlider::-ms-track {
+    width: 100%;
+    height: 10px;
+    background: black;
+}
+
+/* Стили для горизонтального слайдера 2 */
 #horizontalSlider2 {
     position: absolute;
     top: calc(7.5% - 5px); /* Позиционирование по центру синего прямоугольника (центр по оси Y) */
@@ -32,15 +65,6 @@ body {
     width: 75%; /* Ширина слайдера 3/4 от доступного пространства */
     height: 10px; /* Толщина полосы */
     background-color: white; /* Цвет слайдера - белый */
-}
-
-/* Стили для всех типов ползунков */
-input[type="range"] {
-    -webkit-appearance: none; /* Убираем стандартный стиль для всех браузеров */
-    appearance: none;
-    background: transparent; /* Фон слайдера делаем прозрачным */
-    cursor: pointer;
-    width: 100%; /* Обеспечивает, что слайдер растягивается на всю длину контейнера */
 }
 
 /* Стили для ползунка горизонтального слайдера 2 */
@@ -125,4 +149,3 @@ input[type="range"] {
 input[type="range"]:focus {
     outline: none;
 }
-
