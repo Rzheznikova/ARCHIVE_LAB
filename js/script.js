@@ -176,36 +176,23 @@ window.onload = function() {
 
     const verticalSlider = document.getElementById('verticalRangeSlider');
     verticalSlider.addEventListener('input', function() {
-        if (!hasInteracted) {
-            playRandomAudio(audioFilesBase);
-            hasInteracted = true;
-        }
-        handleSliderMovement(this, true);
+        handleSliderMovement(this, false); // Вертикальный слайдер теперь управляет только изображениями
     });
 
     verticalSlider.addEventListener('mousedown', function(event) {
         if (event.button === 0) {  // Левая кнопка мыши
             console.log('Vertical slider clicked');
-            audioEnabled = true;
-            if (!hasInteracted) {
-                playRandomAudio(audioFilesBase);
-                hasInteracted = true;
-            }
         }
     });
 
     verticalSlider.addEventListener('mouseup', function(event) {
         if (event.button === 0) {  // Левая кнопка мыши
             console.log('Vertical slider released');
-            handleSliderMovement(this, true);
         }
     });
 
     verticalSlider.addEventListener('mousemove', function(event) {
-        if (audioEnabled) {
-            console.log('Vertical slider moved');
-            handleSliderMovement(this, true);
-        }
+        console.log('Vertical slider moved');
     });
 
     // Загружаем случайное изображение при загрузке страницы
