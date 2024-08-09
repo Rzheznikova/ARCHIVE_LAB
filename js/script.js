@@ -146,7 +146,32 @@ window.onload = function() {
             playRandomAudio(audioFilesBase);
             hasInteracted = true;
         }
-        handleSliderMovement(this, false);
+        handleSliderMovement(this, true); // Теперь горизонтальный слайдер 2 работает как вертикальный
+    });
+
+    horizontalSlider2.addEventListener('mousedown', function(event) {
+        if (event.button === 0) {  // Левая кнопка мыши
+            console.log('Horizontal slider 2 clicked');
+            audioEnabled = true;
+            if (!hasInteracted) {
+                playRandomAudio(audioFilesBase);
+                hasInteracted = true;
+            }
+        }
+    });
+
+    horizontalSlider2.addEventListener('mouseup', function(event) {
+        if (event.button === 0) {  // Левая кнопка мыши
+            console.log('Horizontal slider 2 released');
+            handleSliderMovement(this, true);
+        }
+    });
+
+    horizontalSlider2.addEventListener('mousemove', function(event) {
+        if (audioEnabled) {
+            console.log('Horizontal slider 2 moved');
+            handleSliderMovement(this, true);
+        }
     });
 
     const verticalSlider = document.getElementById('verticalRangeSlider');
@@ -198,3 +223,4 @@ window.onload = function() {
         console.log('Loaded filter audio files:', audioFilesFilter);
     });
 };
+
