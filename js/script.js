@@ -23,22 +23,7 @@ window.onload = function() {
     let hasInteracted = false; // Флаг для проверки первого взаимодействия
     let playPromise;
 
-    function loadImages(callback, jsonFile) {
-        fetch(jsonFile)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok ' + response.statusText);
-                }
-                return response.json();
-            })
-            .then(data => callback(data))
-            .catch(error => {
-                console.error('Error loading images:', error);
-                alert('Error loading ' + jsonFile + ': ' + error.message);
-            });
-    }
-
-    function loadAudioFiles(filePath, callback) {
+    function loadImages(filePath, callback) {
         fetch(filePath)
             .then(response => {
                 if (!response.ok) {
@@ -48,8 +33,8 @@ window.onload = function() {
             })
             .then(data => callback(data))
             .catch(error => {
-                console.error('Error loading audio files:', error);
-                alert(`Error loading ${filePath}: ` + error.message);
+                console.error('Error loading images:', error);
+                alert('Error loading ' + filePath + ': ' + error.message);
             });
     }
 
@@ -59,23 +44,22 @@ window.onload = function() {
     }
 
     function displayRandomImage() {
-        const sliderValue = horizontalSlider.value; // Получаем текущее значение ползунка
-        let jsonFile;
-        let folder;
+        const sliderValue = parseInt(horizontalSlider.value);
+        let filePath, folder;
 
         if (sliderValue <= 51) {
-            jsonFile = 'goticheskaya.json';
+            filePath = 'images.json';
             folder = 'goticheskaya';
         } else {
-            jsonFile = 'drygoe.json';
+            filePath = 'drugoe.json';
             folder = 'drygoe';
         }
 
-        loadImages(function(images) {
+        loadImages(filePath, function(images) {
             const randomImagePath = `${folder}/${getRandomElement(images)}`;
             randomImage.src = randomImagePath;
             imageContainer.style.display = 'block';
-        }, jsonFile);
+        });
     }
 
     function playRandomAudio(audioFiles) {
