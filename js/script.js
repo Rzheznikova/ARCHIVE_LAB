@@ -51,7 +51,7 @@ window.onload = function() {
             filePath = 'images.json';
             folder = 'goticheskaya';
         } else {
-            filePath = 'drugoe.json';
+            filePath = 'drygoe.json';
             folder = 'drygoe';
         }
 
