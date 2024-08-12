@@ -229,27 +229,42 @@ window.onload = function() {
         console.log('Loaded filter audio files:', audioFilesFilter);
         });
 
-    // Добавляем функцию для позиционирования подписи
-    function positionCaption() {
+      // Добавляем функцию для позиционирования всех подписей
+        function positionCaptions() {
         const horizontalSlider = document.getElementById('horizontalRangeSlider');
-        const caption = document.getElementById('caption');
+        
+        const captionGoticheskaya = document.getElementById('caption-goticheskaya');
+        const captionMasterskaya = document.getElementById('caption-masterskaya');
+        const captionBelyiZal = document.getElementById('caption-belyi-zal');
+        const captionKurilka = document.getElementById('caption-kurilka');
+        const captionIeshcheVsyakoeRaznoe = document.getElementById('caption-i-eshche-vsyakoe-raznoe');
 
-        // Позиционируем по оси X: 10% от ширины слайдера (центр надписи должен быть на этой точке)
         const sliderRect = horizontalSlider.getBoundingClientRect();
         const sliderWidth = sliderRect.width;
-        const captionX = sliderRect.left + sliderWidth * 0.1; // 10% от ширины слайдера
-        caption.style.left = `${captionX}px`;
-        caption.style.transform = "translateX(-50%)"; // Центрируем надпись относительно этой точки
 
-        // Позиционируем по оси Y: Между нижним слайдером и нижней частью экрана
+        // Позиционируем по оси X
+        const baseX = sliderRect.left + sliderWidth * 0.1; // 10% от ширины слайдера
+
+        captionGoticheskaya.style.left = `${baseX}px`;
+
+        captionMasterskaya.style.left = `${baseX + sliderWidth * 0.2}px`; // 20% вправо от "готическая"
+        captionBelyiZal.style.left = `${baseX + sliderWidth * 0.4}px`; // 40% вправо от "готическая"
+        captionKurilka.style.left = `${baseX + sliderWidth * 0.6}px`; // 60% вправо от "готическая"
+        captionIeshcheVsyakoeRaznoe.style.left = `${baseX + sliderWidth * 0.8}px`; // 80% вправо от "готическая"
+
+        // Позиционируем по оси Y для всех подписей
         const sliderBottom = sliderRect.bottom;
         const windowHeight = window.innerHeight;
         const captionY = (windowHeight + sliderBottom) / 2; // середина между слайдером и низом экрана
-        caption.style.top = `${captionY}px`;
+
+        captionGoticheskaya.style.top = `${captionY}px`;
+        captionMasterskaya.style.top = `${captionY}px`;
+        captionBelyiZal.style.top = `${captionY}px`;
+        captionKurilka.style.top = `${captionY}px`;
+        captionIeshcheVsyakoeRaznoe.style.top = `${captionY}px`;
     }
 
     // Обновляем позицию при загрузке страницы и изменении размера окна
-    positionCaption();
-    window.onresize = positionCaption;
+    positionCaptions();
+    window.onresize = positionCaptions;
 };
-
