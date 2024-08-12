@@ -229,8 +229,8 @@ window.onload = function() {
         console.log('Loaded filter audio files:', audioFilesFilter);
         });
 
-      // Добавляем функцию для позиционирования всех подписей
-        function positionCaptions() {
+// Добавляем функцию для позиционирования всех подписей
+    function positionCaptions() {
         const horizontalSlider = document.getElementById('horizontalRangeSlider');
         
         const captionGoticheskaya = document.getElementById('caption-goticheskaya');
@@ -239,6 +239,11 @@ window.onload = function() {
         const captionKurilka = document.getElementById('caption-kurilka');
         const captionIeshcheVsyakoeRaznoe = document.getElementById('caption-i-eshche-vsyakoe-raznoe');
 
+        if (!captionGoticheskaya || !captionMasterskaya || !captionBelyiZal || !captionKurilka || !captionIeshcheVsyakoeRaznoe) {
+            console.error("One or more caption elements not found.");
+            return;
+        }
+
         const sliderRect = horizontalSlider.getBoundingClientRect();
         const sliderWidth = sliderRect.width;
 
@@ -246,7 +251,6 @@ window.onload = function() {
         const baseX = sliderRect.left + sliderWidth * 0.1; // 10% от ширины слайдера
 
         captionGoticheskaya.style.left = `${baseX}px`;
-
         captionMasterskaya.style.left = `${baseX + sliderWidth * 0.2}px`; // 20% вправо от "готическая"
         captionBelyiZal.style.left = `${baseX + sliderWidth * 0.4}px`; // 40% вправо от "готическая"
         captionKurilka.style.left = `${baseX + sliderWidth * 0.6}px`; // 60% вправо от "готическая"
