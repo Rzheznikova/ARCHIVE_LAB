@@ -157,3 +157,13 @@ input[type="range"] {
 input[type="range"]:focus {
     outline: none;
 }
+/* Стили для подписи "готическая" */
+#caption {
+    position: absolute;
+    font-size: 14px;
+    font-family: 'Helvetica', sans-serif;
+    color: black;
+    text-align: center;
+    transform: translateX(-50%);
+    bottom: calc(10% + 20px); /* 10% от нижнего края экрана + отступ от слайдера */
+}
