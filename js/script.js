@@ -235,11 +235,12 @@ window.onload = function() {
         const horizontalSlider = document.getElementById('horizontalRangeSlider');
         const caption = document.getElementById('caption');
 
-        // Позиционируем по оси X: 10% от ширины слайдера
-        const sliderRect = horizontalSlider.getBoundingClientRect();
-        const sliderWidth = sliderRect.width;
-        const captionX = sliderRect.left + sliderWidth * 0.1; // 10% от ширины слайдера
-        caption.style.left = `${captionX}px`;
+    // Позиционируем по оси X: 10% от ширины слайдера (центр надписи должен быть на этой точке)
+    const sliderRect = horizontalSlider.getBoundingClientRect();
+    const sliderWidth = sliderRect.width;
+    const captionWidth = caption.offsetWidth;
+    const captionX = sliderRect.left + sliderWidth * 0.1 - captionWidth / 2; // Центр надписи на 10% от ширины слайдера
+    caption.style.left = `${captionX}px`;
 
         // Позиционируем по оси Y: Между нижним слайдером и нижней частью экрана
         const sliderBottom = sliderRect.bottom;
