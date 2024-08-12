@@ -168,7 +168,7 @@ input[type="range"]:focus {
     border-bottom: calc(70% * 0.5) solid transparent; /* Нижний край треугольника */
     background: none;
     cursor: pointer;
-    top: calc((15% / 2) + 50%); /* Центрирование по оси Y внутри черного прямоугольника */
+    top: 50%; /* Центрирование по оси Y внутри черного прямоугольника */
     left: 10%; /* 10% от левого края экрана */
     transform: translate(-50%, -50%);
     transition: all 0.3s ease;
@@ -201,6 +201,7 @@ input[type="range"]:focus {
 #playPauseButton.paused::after {
     right: 0; /* Вторая полоса справа */
 }
+
 
 
 
