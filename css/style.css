@@ -21,7 +21,7 @@ body {
     bottom: 20%; /* Отступ от нижнего края экрана равен 1/5 высоты экрана */
     left: 12.5%; /* Отступ слева 1/8 ширины экрана */
     width: 75%; /* Ширина слайдера 3/4 от доступного пространства */
-    height: 10px; /* Толщина полосы */
+    height: 5px; /* Толщина полосы */
     background-color: black; /* Цвет слайдера */
 }
 
@@ -30,7 +30,7 @@ body {
     top: calc(7.5% - 5px); /* Позиционирование по центру синего прямоугольника (центр по оси Y) */
     left: 12.5%; /* Отступ слева 1/8 ширины экрана */
     width: 75%; /* Ширина слайдера 3/4 от доступного пространства */
-    height: 10px; /* Толщина полосы */
+    height: 5px; /* Толщина полосы */
     background-color: white; /* Цвет слайдера - белый */
 }
 
@@ -48,7 +48,7 @@ input[type="range"] {
     -webkit-appearance: none;
     width: 15px; /* Ширина ползунка */
     height: 30px; /* Высота ползунка */
-    background: white; /* Цвет ползунка - белый */
+    background: black; /* Цвет ползунка - белый */
     cursor: pointer;
 }
 
@@ -71,7 +71,7 @@ input[type="range"] {
 #horizontalRangeSlider::-moz-range-track,
 #horizontalRangeSlider::-ms-track {
     width: 100%;
-    height: 10px;
+    height: 5px;
     background: black; /* Цвет дорожки - черный, как и было для дорожки */
 }
 
