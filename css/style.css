@@ -113,7 +113,7 @@ input[type="range"] {
     left: 15%; /* Отступ слева 1/4 ширины экрана */
     bottom: 15%; /* Отступ от низа экрана 1/5 высоты экрана */
     width: 75vh; /* Длина слайдера равна 3/4 высоты экрана (горизонтально, до поворота) */
-    height: 10px; /* Толщина полосы */
+    height: 5px; /* Толщина полосы */
     background-color: black; /* Цвет слайдера */
     transform: rotate(-90deg); /* Поворачиваем слайдер */
     transform-origin: bottom left; /* Устанавливаем точку поворота */
@@ -164,7 +164,7 @@ input[type="range"]:focus {
 #caption-kurilka,
 #caption-i-eshche-vsyakoe-raznoe {
     position: absolute;
-    font-size: 14px;
+    font-size: 16px;
     font-family: 'Helvetica', sans-serif;
     color: black;
     text-align: center;
