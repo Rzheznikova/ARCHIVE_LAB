@@ -59,21 +59,30 @@ window.onload = function() {
     }
 
     function displayRandomImage(sliderValue) {
-        let filePath, folderPath;
+    let filePath, folderPath;
 
-        if (sliderValue <= 51) {
-            filePath = 'images.json';
-            folderPath = 'goticheskaya';
-        } else {
-            filePath = 'drygoe.json';
-            folderPath = 'drygoe';
-        }
+    if (sliderValue <= 20) {
+        filePath = 'goticheskaya/images.json';
+        folderPath = 'goticheskaya';
+    } else if (sliderValue > 20 && sliderValue <= 40) {
+        filePath = 'masterskaya/masterskaya.json';
+        folderPath = 'masterskaya';
+    } else if (sliderValue > 40 && sliderValue <= 60) {
+        filePath = 'beliizal/beliizal.json';
+        folderPath = 'beliizal';
+    } else if (sliderValue > 60 && sliderValue <= 80) {
+        filePath = 'kurilka/kurilka.json';
+        folderPath = 'kurilka';
+    } else {
+        filePath = 'drygoe.json';
+        folderPath = 'drygoe';
+    }
 
-        loadImages(filePath, function(images) {
-            const randomImagePath = `${folderPath}/${getRandomElement(images)}`;
-            randomImage.src = randomImagePath;
-            imageContainer.style.display = 'block';
-        });
+    loadImages(filePath, function(images) {
+        const randomImagePath = `${folderPath}/${getRandomElement(images)}`;
+        randomImage.src = randomImagePath;
+        imageContainer.style.display = 'block';
+    });
     }
 
     function playRandomAudio(audioFiles) {
