@@ -259,7 +259,7 @@ window.onload = function() {
         // Позиционируем по оси Y для всех подписей
         const sliderBottom = sliderRect.bottom;
         const windowHeight = window.innerHeight;
-        const captionY = (windowHeight + sliderBottom) / 3; // середина между слайдером и низом экрана
+        const captionY = (windowHeight + sliderBottom) / 4; // середина между слайдером и низом экрана
 
         captionGoticheskaya.style.top = `${captionY}px`;
         captionMasterskaya.style.top = `${captionY}px`;
