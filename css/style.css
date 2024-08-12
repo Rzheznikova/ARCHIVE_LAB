@@ -158,3 +158,30 @@ input[type="range"]:focus {
     outline: none;
 }
 
+/* Стили для кнопки Play/Pause */
+#playPauseButton {
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-left: 35px solid white; /* Размеры треугольника Play */
+    border-top: 60px solid transparent;
+    border-bottom: 60px solid transparent;
+    background: none;
+    cursor: pointer;
+    top: 50%; /* Центрирование по оси Y */
+    left: 10%; /* 10% от левого края экрана */
+    transform: translate(-50%, -50%);
+    transition: all 0.3s ease;
+}
+
+/* Стили для кнопки Pause (две вертикальные полосы) */
+#playPauseButton.paused {
+    border: none;
+    width: 40px; /* Ширина полос */
+    height: 70px; /* Высота полос */
+    background: none;
+    border-left: 15px solid white;
+    border-right: 15px solid white;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
