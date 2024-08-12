@@ -16,7 +16,6 @@ window.onload = function() {
     const imageContainer = document.getElementById('imageContainer');
     const randomImage = document.getElementById('randomImage');
     const audioPlayer = document.getElementById('audioPlayer');
-    const playPauseButton = document.getElementById('playPauseButton');
     let audioFilesBase = [];
     let audioFilesFilter = [];
     let currentAudioIndex = -1;
@@ -204,17 +203,6 @@ window.onload = function() {
 
     verticalSlider.addEventListener('mousemove', function(event) {
         console.log('Vertical slider moved');
-    });
-
-    // Кнопка Play/Pause
-    playPauseButton.addEventListener('click', function() {
-        if (audioPlayer.paused) {
-            audioPlayer.play();
-            playPauseButton.classList.add('paused');
-        } else {
-            audioPlayer.pause();
-            playPauseButton.classList.remove('paused');
-        }
     });
 
     // Загружаем случайное изображение при загрузке страницы
