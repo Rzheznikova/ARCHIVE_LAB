@@ -62,7 +62,7 @@ window.onload = function() {
     let filePath, folderPath;
 
     if (sliderValue <= 20) {
-        filePath = 'goticheskaya.json';
+        filePath = 'images.json';
         folderPath = 'goticheskaya';
     } else if (sliderValue > 20 && sliderValue <= 40) {
         filePath = 'masterskaya/masterskaya.json';
