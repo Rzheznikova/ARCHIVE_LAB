@@ -163,9 +163,9 @@ input[type="range"]:focus {
     position: absolute;
     width: 0;
     height: 0;
-    border-left: 35px solid white; /* Размеры треугольника Play */
-    border-top: calc(70% / 2) solid transparent; /* Верхний край треугольника */
-    border-bottom: calc(70% / 2) solid transparent; /* Нижний край треугольника */
+    border-left: calc(70% * 0.7) solid white; /* Размеры треугольника Play, 70% от высоты черного прямоугольника */
+    border-top: calc(70% * 0.35) solid transparent; /* Верхний край треугольника */
+    border-bottom: calc(70% * 0.35) solid transparent; /* Нижний край треугольника */
     background: none;
     cursor: pointer;
     top: 50%; /* Центрирование по оси Y в черном прямоугольнике */
@@ -176,19 +176,28 @@ input[type="range"]:focus {
 
 /* Стили для кнопки Pause (две вертикальные полосы) */
 #playPauseButton.paused {
-    width: calc(70% / 5); /* Ширина одной полосы */
+    width: calc(70% * 0.25); /* Общая ширина кнопки Pause */
     height: 70%; /* Высота полосы равна 70% от высоты черного прямоугольника */
     border: none;
     background: none;
-    display: flex;
-    justify-content: space-between;
+    position: relative; /* Для правильного позиционирования полос */
 }
 
 #playPauseButton.paused::before,
 #playPauseButton.paused::after {
     content: '';
-    width: 100%; /* Ширина каждой полосы */
+    position: absolute;
+    width: calc(70% * 0.1); /* Ширина каждой полосы - 10% от высоты черного прямоугольника */
     height: 100%;
     background-color: white;
 }
+
+#playPauseButton.paused::before {
+    left: 0; /* Первая полоса слева */
+}
+
+#playPauseButton.paused::after {
+    right: 0; /* Вторая полоса справа */
+}
+
 
