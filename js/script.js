@@ -228,7 +228,6 @@ window.onload = function() {
         audioFilesFilter = files.map(file => `filter/${file}`);
         console.log('Loaded filter audio files:', audioFilesFilter);
     });
- });
 
     // Добавляем функцию для позиционирования подписи
     function positionCaption() {
