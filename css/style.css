@@ -158,49 +158,19 @@ input[type="range"]:focus {
     outline: none;
 }
 
-/* Стили для кнопки Play/Pause */
-#playPauseButton {
+#customButton {
     position: absolute;
-    width: 0;
-    height: 0;
-    border-left: calc(70% * 1) solid white; /* Треугольник Play: 70% от высоты черного прямоугольника */
-    border-top: calc(70% * 0.5) solid transparent; /* Верхний край треугольника */
-    border-bottom: calc(70% * 0.5) solid transparent; /* Нижний край треугольника */
-    background: none;
-    cursor: pointer;
-    top: 50%; /* Центрирование по оси Y внутри черного прямоугольника */
-    left: 10%; /* 10% от левого края экрана */
-    transform: translate(-50%, -50%);
-    transition: all 0.3s ease;
+    top: 7.5%; /* Отступ сверху 7.5% от высоты экрана */
+    left: 10%; /* Центральная точка находится в 10% ширины экрана от левого края */
+    width: calc(70vh * 0.7); /* Ширина кнопки равна 70% от высоты черного прямоугольника */
+    height: calc(70vh * 0.7); /* Высота кнопки равна 70% от высоты черного прямоугольника */
+    background-color: white; /* Цвет кнопки - белый */
+    transform: translate(-50%, 0); /* Сдвигаем кнопку, чтобы она была центрирована по оси X */
+    cursor: pointer; /* Указываем, что это кнопка */
+    border: none; /* Без рамки */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Легкая тень для визуального эффекта */
 }
 
-/* Стили для кнопки Pause (две вертикальные полосы) */
-#playPauseButton.paused {
-    border-left: none;
-    border-top: none;
-    border-bottom: none;
-    width: calc(70% * 0.25); /* Общая ширина кнопки Pause (полосы + расстояние между ними) */
-    height: 70%; /* Высота полосы: 70% от высоты черного прямоугольника */
-    background: none;
-    position: relative;
-}
-
-#playPauseButton.paused::before,
-#playPauseButton.paused::after {
-    content: '';
-    position: absolute;
-    width: 35%; /* Ширина каждой полосы */
-    height: 100%;
-    background-color: white;
-}
-
-#playPauseButton.paused::before {
-    left: 0; /* Первая полоса слева */
-}
-
-#playPauseButton.paused::after {
-    right: 0; /* Вторая полоса справа */
-}
 
 
 
