@@ -103,7 +103,7 @@ input[type="range"] {
 #horizontalRangeSlider2::-moz-range-track,
 #horizontalRangeSlider2::-ms-track {
     width: 100%;
-    height: 10px;
+    height: 5px;
     background: white; /* Цвет дорожки - белый */
 }
 
@@ -149,7 +149,7 @@ input[type="range"] {
 #verticalRangeSlider::-moz-range-track,
 #verticalRangeSlider::-ms-track {
     width: 100%;
-    height: 10px;
+    height: 5px;
     background: black;
 }
 
