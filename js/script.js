@@ -242,11 +242,12 @@ window.onload = function() {
     const captionX = sliderRect.left + sliderWidth * 0.1 - captionWidth / 2; // Центр надписи на 10% от ширины слайдера
     caption.style.left = `${captionX}px`;
 
-        // Позиционируем по оси Y: Между нижним слайдером и нижней частью экрана
-        const sliderBottom = sliderRect.bottom;
-        const windowHeight = window.innerHeight;
-        const captionY = (windowHeight + sliderBottom) / 2; // середина между слайдером и низом экрана
-        caption.style.bottom = `${windowHeight - captionY}px`;
+     // Позиционируем по оси X: 10% от ширины слайдера (центр надписи должен быть на этой точке)
+    const sliderRect = horizontalSlider.getBoundingClientRect();
+    const sliderWidth = sliderRect.width;
+    const captionX = sliderRect.left + sliderWidth * 0.1; // 10% от ширины слайдера
+    caption.style.left = `${captionX}px`;
+    caption.style.transform = "translateX(-50%)"; // Центрируем надпись относительно этой точки
     }
 
     // Обновляем позицию при загрузке страницы и изменении размера окна
