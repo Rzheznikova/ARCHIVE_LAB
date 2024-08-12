@@ -228,4 +228,27 @@ window.onload = function() {
         audioFilesFilter = files.map(file => `filter/${file}`);
         console.log('Loaded filter audio files:', audioFilesFilter);
     });
+ });
+
+    // Добавляем функцию для позиционирования подписи
+    function positionCaption() {
+        const horizontalSlider = document.getElementById('horizontalRangeSlider');
+        const caption = document.getElementById('caption');
+
+        // Позиционируем по оси X: 10% от ширины слайдера
+        const sliderRect = horizontalSlider.getBoundingClientRect();
+        const sliderWidth = sliderRect.width;
+        const captionX = sliderRect.left + sliderWidth * 0.1; // 10% от ширины слайдера
+        caption.style.left = `${captionX}px`;
+
+        // Позиционируем по оси Y: Между нижним слайдером и нижней частью экрана
+        const sliderBottom = sliderRect.bottom;
+        const windowHeight = window.innerHeight;
+        const captionY = (windowHeight + sliderBottom) / 2; // середина между слайдером и низом экрана
+        caption.style.bottom = `${windowHeight - captionY}px`;
+    }
+
+    // Обновляем позицию при загрузке страницы и изменении размера окна
+    positionCaption();
+    window.onresize = positionCaption;
 };
