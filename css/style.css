@@ -161,14 +161,13 @@ input[type="range"]:focus {
 /* Стили для кнопки Play/Pause */
 #playPauseButton {
     position: absolute;
+    border-left: calc(15% * 0.7) solid white; /* Треугольник Play: 70% от высоты черного прямоугольника */
+    border-top: calc(15% * 0.35) solid transparent; /* Верхний край треугольника */
+    border-bottom: calc(15% * 0.35) solid transparent; /* Нижний край треугольника */
     width: 0;
     height: 0;
-    border-left: calc(70% * 0.7) solid white; /* Размеры треугольника Play, 70% от высоты черного прямоугольника */
-    border-top: calc(70% * 0.35) solid transparent; /* Верхний край треугольника */
-    border-bottom: calc(70% * 0.35) solid transparent; /* Нижний край треугольника */
-    background: none;
     cursor: pointer;
-    top: 50%; /* Центрирование по оси Y в черном прямоугольнике */
+    top: calc(15% / 2); /* Центрирование по оси Y в черном прямоугольнике */
     left: 10%; /* 10% от левого края экрана */
     transform: translate(-50%, -50%);
     transition: all 0.3s ease;
@@ -176,28 +175,29 @@ input[type="range"]:focus {
 
 /* Стили для кнопки Pause (две вертикальные полосы) */
 #playPauseButton.paused {
-    width: calc(70% * 0.25); /* Общая ширина кнопки Pause */
-    height: 70%; /* Высота полосы равна 70% от высоты черного прямоугольника */
-    border: none;
+    width: calc(15% * 0.25); /* Общая ширина кнопки Pause */
+    height: calc(15% * 0.7); /* Высота полосы: 70% от высоты черного прямоугольника */
     background: none;
-    position: relative; /* Для правильного позиционирования полос */
+    border: none;
+    position: relative;
 }
 
 #playPauseButton.paused::before,
 #playPauseButton.paused::after {
     content: '';
     position: absolute;
-    width: calc(70% * 0.1); /* Ширина каждой полосы - 10% от высоты черного прямоугольника */
+    width: 35%; /* Ширина каждой полосы */
     height: 100%;
     background-color: white;
 }
 
 #playPauseButton.paused::before {
-    left: 0; /* Первая полоса слева */
+    left: 0;
 }
 
 #playPauseButton.paused::after {
-    right: 0; /* Вторая полоса справа */
+    right: 0;
 }
+
 
 
