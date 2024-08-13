@@ -273,8 +273,14 @@ window.onload = function() {
     window.onresize = positionCaptions;
 
 
+window.onload = function() {
     function toggleButton() {
         var button = document.querySelector('.audio-button');
         button.classList.toggle('pause');
     }
-};
+
+    // Привязываем событие к кнопке, чтобы избежать ошибок
+    document.querySelector('.audio-button').addEventListener('click', toggleButton);
+
+    // Остальной код...
+}; // <-- Убираем одну лишнюю скобку
