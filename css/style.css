@@ -170,3 +170,61 @@ input[type="range"]:focus {
     text-align: center;
     transform: translateX(-50%);
 }
+
+.audio-button {
+    position: absolute;
+    top: 20px;
+    left: 70px;
+    width: 80px;
+    height: 80px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.audio-button-icon {
+    width: 0;
+    height: 0;
+    border-left: 40px solid white;
+    border-top: 20px solid transparent;
+    border-bottom: 20px solid transparent;
+    pointer-events: none;
+}
+
+.audio-button.pause .audio-button-icon {
+    width: 24px;
+    height: 40px;
+    border-left: none;
+    border-top: none;
+    border-bottom: none;
+    background-color: transparent;
+    position: relative;
+}
+
+.audio-button.pause .audio-button-icon::before,
+.audio-button.pause .audio-button-icon::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    width: 10px;
+    height: 40px;
+    background-color: white;
+}
+
+.audio-button.pause .audio-button-icon::before {
+    left: 0;
+}
+
+.audio-button.pause .audio-button-icon::after {
+    right: 0;
+}
+
+@media (max-width: 768px) {
+    .audio-button {
+        left: calc(70px - 40px); /* Смещение влево на половину размера кнопки */
+    }
+}
