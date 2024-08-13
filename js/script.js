@@ -271,4 +271,10 @@ window.onload = function() {
     // Обновляем позицию при загрузке страницы и изменении размера окна
     positionCaptions();
     window.onresize = positionCaptions;
+
+
+    function toggleButton() {
+        var button = document.querySelector('.audio-button');
+        button.classList.toggle('pause');
+    }
 };
