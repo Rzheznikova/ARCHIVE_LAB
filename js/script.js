@@ -272,15 +272,10 @@ window.onload = function() {
     positionCaptions();
     window.onresize = positionCaptions;
 
-
-
+    // Функция для переключения состояния кнопки
     function toggleButton() {
         var button = document.querySelector('.audio-button');
         button.classList.toggle('pause');
     }
 
-    // Привязываем событие к кнопке, чтобы избежать ошибок
-    document.querySelector('.audio-button').addEventListener('click', toggleButton);
-
-    // Остальной код...
-}; // <-- Убираем одну лишнюю скобку
+}; // Закрывающая скобка и точка с запятой для завершения функции window.onload
