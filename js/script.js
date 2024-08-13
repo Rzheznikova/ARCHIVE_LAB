@@ -273,7 +273,7 @@ window.onload = function() {
     window.onresize = positionCaptions;
 
 
-window.onload = function() {
+
     function toggleButton() {
         var button = document.querySelector('.audio-button');
         button.classList.toggle('pause');
