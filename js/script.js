@@ -277,8 +277,8 @@ window.onload = function() {
         button.classList.toggle('pause');
     }
 
-    // Назначаем обработчик события кнопке
+    // Назначаем обработчик события клика для кнопки
     document.querySelector('.audio-button').addEventListener('click', toggleButton);
 
-    // Остальной код...
+    // Остальной ваш код...
 };
