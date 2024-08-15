@@ -268,14 +268,13 @@ window.onload = function() {
         captionIeshcheVsyakoeRaznoe.style.top = `${captionY}px`;
     }
 
-    // Обновляем позицию при загрузке страницы и изменении размера окна
-    positionCaptions();
-    window.onresize = positionCaptions;
+    // Вынесите определение функции из window.onload
+function toggleButton() {
+    var button = document.querySelector('.audio-button');
+    button.classList.toggle('pause');
+}
 
-    // Функция для переключения состояния кнопки
-    function toggleButton() {
-        var button = document.querySelector('.audio-button');
-        button.classList.toggle('pause');
-    }
+window.onload = function() {
+    // ваш существующий код
+};
 
-}; // Закрывающая скобка и точка с запятой для завершения функции window.onload
