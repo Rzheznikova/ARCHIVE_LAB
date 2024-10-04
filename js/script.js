@@ -20,7 +20,10 @@ window.onload = function() {
     let audioFilesFilter = [];
     let currentAudioIndex = -1;
     let isAudioEnabled = false; // Отвечает за состояние кнопки Play/Pause
+    let hasInteracted = false; // Флаг для проверки первого взаимодействия
     let playPromise;
+    let previousValue = 0;
+    let stopTimer;
 
     function loadImages(filePath, callback) {
         fetch(filePath)
@@ -84,6 +87,7 @@ window.onload = function() {
         });
     }
 
+    // Функция для воспроизведения случайного аудио
     function playRandomAudio(audioFiles) {
         if (audioFiles.length === 0) return;
 
@@ -103,6 +107,7 @@ window.onload = function() {
         }
     }
 
+    // Функция для остановки аудио
     function stopAudio() {
         if (playPromise !== undefined) {
             playPromise.then(() => {
@@ -115,7 +120,7 @@ window.onload = function() {
         }
     }
 
-    // Обработчик кнопки Play/Pause
+    // Функция для обработки нажатия кнопки Play/Pause
     function toggleButton() {
         const button = document.querySelector('.audio-button');
         button.classList.toggle('pause');
@@ -143,7 +148,7 @@ window.onload = function() {
         }
     });
 
-    // Обработчики других слайдеров
+    // Обработчик для других слайдеров
     const horizontalSlider = document.getElementById('horizontalRangeSlider');
     horizontalSlider.addEventListener('input', function() {
         handleSliderMovement(this, false);
@@ -151,10 +156,38 @@ window.onload = function() {
 
     const verticalSlider = document.getElementById('verticalRangeSlider');
     verticalSlider.addEventListener('input', function() {
-        handleSliderMovement(this, false); // Вертикальный слайдер теперь управляет только изображениями
+        handleSliderMovement(this, false);
     });
 
-    // Остальные обработчики и логика взаимодействия...
+    function handleSliderMovement(slider, isVertical) {
+        const currentValue = parseInt(slider.value);
+        clearTimeout(stopTimer);
+
+        if (!isVertical) {
+            imageContainer.style.display = 'none';
+
+            stopTimer = setTimeout(() => {
+                if (currentValue === previousValue) {
+                    displayRandomImage(currentValue);
+                }
+            }, 500);
+
+            previousValue = currentValue;
+        } else if (isAudioEnabled) {
+            if (currentValue !== previousValue) {
+                stopAudio();
+                playRandomAudio(audioFilesFilter);
+            }
+
+            stopTimer = setTimeout(() => {
+                if (currentValue === previousValue) {
+                    playRandomAudio(audioFilesBase);
+                }
+            }, 500);
+
+            previousValue = currentValue;
+        }
+    }
 
     // Загружаем случайное изображение при загрузке страницы
     displayRandomImage(horizontalSlider.value);
@@ -171,12 +204,42 @@ window.onload = function() {
         console.log('Loaded filter audio files:', audioFilesFilter);
     });
 
-    // Добавляем функцию для позиционирования всех подписей
+    // Функция для позиционирования подписей
     function positionCaptions() {
-        // Логика для позиционирования подписей...
+        const horizontalSlider = document.getElementById('horizontalRangeSlider');
+        const captionGoticheskaya = document.getElementById('caption-goticheskaya');
+        const captionMasterskaya = document.getElementById('caption-masterskaya');
+        const captionBelyiZal = document.getElementById('caption-belyi-zal');
+        const captionKurilka = document.getElementById('caption-kurilka');
+        const captionIeshcheVsyakoeRaznoe = document.getElementById('caption-i-eshche-vsyakoe-raznoe');
+
+        if (!captionGoticheskaya || !captionMasterskaya || !captionBelyiZal || !captionKurilka || !captionIeshcheVsyakoeRaznoe) {
+            console.error("One or more caption elements not found.");
+            return;
+        }
+
+        const sliderRect = horizontalSlider.getBoundingClientRect();
+        const sliderWidth = sliderRect.width;
+
+        const baseX = sliderRect.left + sliderWidth * 0.1;
+
+        captionGoticheskaya.style.left = `${baseX}px`;
+        captionMasterskaya.style.left = `${baseX + sliderWidth * 0.2}px`;
+        captionBelyiZal.style.left = `${baseX + sliderWidth * 0.4}px`;
+        captionKurilka.style.left = `${baseX + sliderWidth * 0.6}px`;
+        captionIeshcheVsyakoeRaznoe.style.left = `${baseX + sliderWidth * 0.8}px`;
+
+        const sliderBottom = sliderRect.bottom;
+        const windowHeight = window.innerHeight;
+        const captionY = (windowHeight + sliderBottom) / 2;
+
+        captionGoticheskaya.style.top = `${captionY}px`;
+        captionMasterskaya.style.top = `${captionY}px`;
+        captionBelyiZal.style.top = `${captionY}px`;
+        captionKurilka.style.top = `${captionY}px`;
+        captionIeshcheVsyakoeRaznoe.style.top = `${captionY}px`;
     }
 
-    // Обновляем позицию при загрузке страницы и изменении размера окна
     positionCaptions();
     window.onresize = positionCaptions;
 };
