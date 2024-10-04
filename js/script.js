@@ -91,6 +91,10 @@ window.onload = function() {
     function playRandomAudio(audioFiles) {
         if (audioFiles.length === 0) return;
 
+        if (!audioPlayer.paused) {
+            stopAudio(); // Останавливаем текущий аудиофайл перед воспроизведением нового
+        }
+
         currentAudioIndex = Math.floor(Math.random() * audioFiles.length);
         const randomAudioPath = `${audioFiles[currentAudioIndex]}`;
         console.log(`Playing random audio: ${randomAudioPath}`);
@@ -109,14 +113,10 @@ window.onload = function() {
 
     // Функция для остановки аудио
     function stopAudio() {
-        if (playPromise !== undefined) {
-            playPromise.then(() => {
-                console.log('Stopping audio');
-                audioPlayer.pause();
-                audioPlayer.currentTime = 0;
-            }).catch(error => {
-                console.error('Error stopping audio:', error);
-            });
+        if (!audioPlayer.paused) {
+            audioPlayer.pause();
+            audioPlayer.currentTime = 0; // Сбрасываем текущее воспроизведение на начало
+            console.log('Stopping audio');
         }
     }
 
@@ -158,7 +158,7 @@ window.onload = function() {
             // Управление музыкой (для горизонтального слайдера 2)
             if (currentValue !== previousValue) {
                 // Слайдер двигается - проигрываем аудио из папки filter
-                stopAudio(); // Сначала останавливаем текущее воспроизведение
+                stopAudio(); // Останавливаем текущее воспроизведение
                 playRandomAudio(audioFilesFilter);
             }
 
