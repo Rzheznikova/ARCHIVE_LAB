@@ -138,32 +138,13 @@ window.onload = function() {
     // Назначаем обработчик события клика для кнопки
     document.querySelector('.audio-button').addEventListener('click', toggleButton);
 
-    // Обработчик слайдера, который будет менять музыку, если аудио включено
-    const horizontalSlider2 = document.getElementById('horizontalRangeSlider2');
-    horizontalSlider2.addEventListener('input', function() {
-        if (isAudioEnabled) {
-            // Переключаем музыку только если кнопка Play активирована
-            stopAudio(); // Останавливаем текущее аудио перед воспроизведением следующего
-            playRandomAudio(audioFilesFilter);
-        }
-    });
-
-    // Обработчик для других слайдеров
-    const horizontalSlider = document.getElementById('horizontalRangeSlider');
-    horizontalSlider.addEventListener('input', function() {
-        handleSliderMovement(this, false);
-    });
-
-    const verticalSlider = document.getElementById('verticalRangeSlider');
-    verticalSlider.addEventListener('input', function() {
-        handleSliderMovement(this, false);
-    });
-
+    // Обработчик для управления слайдером и воспроизведением аудио
     function handleSliderMovement(slider, isVertical) {
         const currentValue = parseInt(slider.value);
         clearTimeout(stopTimer);
 
         if (!isVertical) {
+            // Управление изображениями (для горизонтального слайдера 1 и вертикального)
             imageContainer.style.display = 'none';
 
             stopTimer = setTimeout(() => {
@@ -174,13 +155,17 @@ window.onload = function() {
 
             previousValue = currentValue;
         } else if (isAudioEnabled) {
+            // Управление музыкой (для горизонтального слайдера 2)
             if (currentValue !== previousValue) {
-                stopAudio();
+                // Слайдер двигается - проигрываем аудио из папки filter
+                stopAudio(); // Сначала останавливаем текущее воспроизведение
                 playRandomAudio(audioFilesFilter);
             }
 
             stopTimer = setTimeout(() => {
                 if (currentValue === previousValue) {
+                    // Слайдер остановился - проигрываем аудио из папки baseaudio
+                    stopAudio(); // Сначала останавливаем текущее воспроизведение
                     playRandomAudio(audioFilesBase);
                 }
             }, 500);
@@ -188,6 +173,26 @@ window.onload = function() {
             previousValue = currentValue;
         }
     }
+
+    // Обработчик для горизонтального слайдера 1
+    const horizontalSlider = document.getElementById('horizontalRangeSlider');
+    horizontalSlider.addEventListener('input', function() {
+        handleSliderMovement(this, false);
+    });
+
+    // Обработчик для горизонтального слайдера 2 (управление музыкой)
+    const horizontalSlider2 = document.getElementById('horizontalRangeSlider2');
+    horizontalSlider2.addEventListener('input', function() {
+        if (isAudioEnabled) {
+            handleSliderMovement(this, true);
+        }
+    });
+
+    // Обработчик для вертикального слайдера
+    const verticalSlider = document.getElementById('verticalRangeSlider');
+    verticalSlider.addEventListener('input', function() {
+        handleSliderMovement(this, false);
+    });
 
     // Загружаем случайное изображение при загрузке страницы
     displayRandomImage(horizontalSlider.value);
