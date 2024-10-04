@@ -248,3 +248,4 @@ window.onload = function() {
     positionCaptions();
     window.onresize = positionCaptions;
 };
+
