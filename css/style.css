@@ -179,8 +179,8 @@ input[type="range"]:focus {
     text-align: center; /* Текст выравнивается по центру для корректного отображения */
     transform: translateY(-50%); /* Центрирование текста по оси Y относительно его позиции */
     white-space: nowrap; /* Чтобы текст не переносился на новую строку */
+    z-index: 10; /* Поднимает подпись над другими элементами */
 }
-
 .audio-button {
     position: absolute;
     top: 20px;
