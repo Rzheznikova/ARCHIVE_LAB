@@ -245,39 +245,44 @@ window.onload = function() {
         captionIeshcheVsyakoeRaznoe.style.top = `${captionY}px`;
     }
     function positionVerticalCaptions() {
-    const verticalSlider = document.getElementById('verticalRangeSlider');
-    const captions = [
-        document.getElementById('caption-course1'),
-        document.getElementById('caption-course2'),
-        document.getElementById('caption-course3'),
-        document.getElementById('caption-course4'),
-        document.getElementById('caption-course5')
-    ];
+        const verticalSlider = document.getElementById('verticalRangeSlider');
+        const captions = [
+            document.getElementById('caption-course1'),
+            document.getElementById('caption-course2'),
+            document.getElementById('caption-course3'),
+            document.getElementById('caption-course4'),
+            document.getElementById('caption-course5')
+        ];
 
-    if (!verticalSlider || captions.includes(null)) {
-        console.error("One or more vertical caption elements not found.");
-        return;
+        if (!verticalSlider || captions.includes(null)) {
+            console.error("One or more vertical caption elements not found.");
+            return;
+        }
+
+        const sliderRect = verticalSlider.getBoundingClientRect();
+        const sliderHeight = sliderRect.height;
+        const baseY = sliderRect.top;
+
+        // Расчет позиции по оси X — центральная точка между слайдером и левым краем страницы
+        const middleX = sliderRect.left / 2;
+
+        // Позиционируем каждую подпись на нужной высоте и по оси X
+        captions.forEach((caption, index) => {
+            // Позиции: 10%, 30%, 50%, 70%, 90%
+            const percentageY = 0.1 + index * 0.2;
+            const captionY = baseY + sliderHeight * percentageY;
+
+            caption.style.top = `${captionY}px`;
+            caption.style.left = `${middleX}px`; // Позиция по X — центральная точка между слайдером и левым краем
+            caption.style.display = 'block'; // Убедитесь, что элементы видимы
+        });
     }
 
-    const sliderRect = verticalSlider.getBoundingClientRect();
-    const sliderHeight = sliderRect.height;
-    const baseY = sliderRect.top;
-
-    // Расчет позиции по оси X — центральная точка между слайдером и левым краем страницы
-    const middleX = sliderRect.left / 2;
-
-    // Позиционируем каждую подпись на нужной высоте и по оси X
-    captions.forEach((caption, index) => {
-        // Позиции: 10%, 30%, 50%, 70%, 90%
-        const percentageY = 0.1 + index * 0.2;
-        const captionY = baseY + sliderHeight * percentageY;
-
-        caption.style.top = `${captionY}px`;
-        caption.style.left = `${middleX}px`; // Позиция по X — центральная точка между слайдером и левым краем
-    });
-}
-
-    positionCaptions();
-    window.onresize = positionCaptions;
+    // Вызов функций позиционирования при загрузке страницы и изменении размера окна
+    positionCaptions(); // Позиционируем подписи горизонтального слайдера
+    positionVerticalCaptions(); // Позиционируем подписи вертикального слайдера
+    window.onresize = function() {
+        positionCaptions(); // Обновляем позиции горизонтальных подписей
+        positionVerticalCaptions(); // Обновляем позиции вертикальных подписей
+    };
 };
-
