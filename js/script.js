@@ -74,8 +74,13 @@ window.onload = function() {
         filePath = 'beliizal/beliizal.json';
         folderPath = 'beliizal';
     } else if (horizontalSliderValue > 60 && horizontalSliderValue <= 80) {
-        // Специальная логика для "kurilka" в зависимости от значения вертикального слайдера
-        if (verticalSliderValue >= 48 && verticalSliderValue < 64) {
+        // Логика для "kurilka" в зависимости от значения вертикального слайдера
+        if (verticalSliderValue >= 0 && verticalSliderValue < 48) {
+            // Если вертикальный слайдер находится в диапазоне 0-48%, не показываем картинку
+            console.log("Vertical slider value is in range 0-48%, not displaying any image.");
+            imageContainer.style.display = 'none';
+            return;
+        } else if (verticalSliderValue >= 48 && verticalSliderValue < 64) {
             filePath = '3kurskurilka/kurilkakurs3.json';
             folderPath = '3kurskurilka';
         } else if (verticalSliderValue >= 64 && verticalSliderValue < 80) {
@@ -84,10 +89,6 @@ window.onload = function() {
         } else if (verticalSliderValue >= 80 && verticalSliderValue <= 100) {
             filePath = '5kurskurilka/kurilkakurs5.json';
             folderPath = '5kurskurilka';
-        } else {
-            // Если вертикальный слайдер находится вне определенного диапазона
-            console.error("Invalid vertical slider value for kurilka folder");
-            return;
         }
     } else {
         filePath = 'drygoe.json';
