@@ -282,6 +282,5 @@ window.onload = function() {
     };
 };
 
-};
 
 
