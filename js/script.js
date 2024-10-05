@@ -244,7 +244,7 @@ window.onload = function() {
         captionKurilka.style.top = `${captionY}px`;
         captionIeshcheVsyakoeRaznoe.style.top = `${captionY}px`;
     }
-   function positionVerticalCaptions() {
+function positionVerticalCaptions() {
     const verticalSlider = document.getElementById('verticalRangeSlider');
     const horizontalSlider = document.getElementById('horizontalRangeSlider');
     const captions = [
@@ -265,54 +265,25 @@ window.onload = function() {
     const verticalSliderRect = verticalSlider.getBoundingClientRect();
     const horizontalSliderRect = horizontalSlider.getBoundingClientRect();
 
-    // Определение точки пересечения по оси Y
-    const intersectionY = Math.min(verticalSliderRect.bottom, horizontalSliderRect.bottom);
+    // Определяем точку пересечения по оси Y (нижняя граница горизонтального слайдера и вертикального слайдера)
+    const intersectionY = Math.max(verticalSliderRect.top, horizontalSliderRect.top);
     console.log("Intersection Y:", intersectionY);
 
     const sliderHeight = verticalSliderRect.height;
 
-    // Расчет позиций для подписей в соответствии с ТЗ
+    // Позиционируем каждую подпись на нужной высоте и по оси X
     captions.forEach((caption, index) => {
-        // Определение положения по оси Y для каждой подписи
-        let percentageY;
-        switch (index) {
-            case 0:
-                percentageY = 0.3; // 30%
-                break;
-            case 1:
-                percentageY = 0.1; // 10%
-                break;
-            case 2:
-                percentageY = 0.5; // 50%
-                break;
-            case 3:
-                percentageY = 0.7; // 70%
-                break;
-            case 4:
-                percentageY = 0.9; // 90%
-                break;
-            default:
-                percentageY = 0;
-        }
-
-        // Рассчитываем координату Y для размещения подписи
+        // Определение положения по оси Y для каждой подписи с учетом смещения от точки пересечения
+        const percentageY = 0.1 + index * 0.2;  // Смещения на 10%, 30%, 50%, 70%, 90% вверх от точки пересечения
         const captionY = intersectionY - (sliderHeight * percentageY);
+
+        // Расположение подписи по оси Y с учетом центральной точки
         caption.style.top = `${captionY}px`;
-        caption.style.left = `${verticalSliderRect.left - 100}px`; // Немного влево от слайдера для читаемости
+        caption.style.left = `${verticalSliderRect.left - 50}px`; // Немного влево от слайдера для читаемости
         caption.style.display = 'block';
 
         // Отладочный вывод для проверки
-        console.log(`Caption ${index + 1} positioned at: Top = ${captionY}px, Left = ${verticalSliderRect.left - 100}px`);
+        console.log(`Caption ${index + 1} positioned at: Top = ${captionY}px, Left = ${verticalSliderRect.left - 50}px`);
     });
 }
 
-// Вызов функции в window.onload и при изменении размеров окна
-window.onload = function() {
-    positionCaptions(); // Позиционируем подписи горизонтального слайдера
-    positionVerticalCaptions(); // Позиционируем подписи вертикального слайдера
-
-    window.onresize = function() {
-        positionCaptions(); // Обновляем позиции горизонтальных подписей
-        positionVerticalCaptions(); // Обновляем позиции вертикальных подписей
-    };
-};
