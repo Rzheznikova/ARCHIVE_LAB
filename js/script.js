@@ -60,25 +60,39 @@ window.onload = function() {
         return arr[randomIndex];
     }
 
-    function displayRandomImage(sliderValue) {
-        let filePath, folderPath;
+    function displayRandomImage(horizontalSliderValue, verticalSliderValue) {
+    let filePath, folderPath;
 
-        if (sliderValue <= 20) {
-            filePath = 'images.json';
-            folderPath = 'goticheskaya';
-        } else if (sliderValue > 20 && sliderValue <= 40) {
-            filePath = 'masterskaya/masterskaya.json';
-            folderPath = 'masterskaya';
-        } else if (sliderValue > 40 && sliderValue <= 60) {
-            filePath = 'beliizal/beliizal.json';
-            folderPath = 'beliizal';
-        } else if (sliderValue > 60 && sliderValue <= 80) {
-            filePath = 'kurilka/kurilka.json';
-            folderPath = 'kurilka';
+    // Проверяем значение горизонтального слайдера
+    if (horizontalSliderValue <= 20) {
+        filePath = 'images.json';
+        folderPath = 'goticheskaya';
+    } else if (horizontalSliderValue > 20 && horizontalSliderValue <= 40) {
+        filePath = 'masterskaya/masterskaya.json';
+        folderPath = 'masterskaya';
+    } else if (horizontalSliderValue > 40 && horizontalSliderValue <= 60) {
+        filePath = 'beliizal/beliizal.json';
+        folderPath = 'beliizal';
+    } else if (horizontalSliderValue > 60 && horizontalSliderValue <= 80) {
+        // Специальная логика для "kurilka" в зависимости от значения вертикального слайдера
+        if (verticalSliderValue >= 48 && verticalSliderValue < 64) {
+            filePath = '3kurskurilka/kurilkakurs3.json';
+            folderPath = '3kurskurilka';
+        } else if (verticalSliderValue >= 64 && verticalSliderValue < 80) {
+            filePath = '4kurskurilka/kurilkakurs4.json';
+            folderPath = '4kurskurilka';
+        } else if (verticalSliderValue >= 80 && verticalSliderValue <= 100) {
+            filePath = '5kurskurilka/kurilkakurs5.json';
+            folderPath = '5kurskurilka';
         } else {
-            filePath = 'drygoe.json';
-            folderPath = 'drygoe';
+            // Если вертикальный слайдер находится вне определенного диапазона
+            console.error("Invalid vertical slider value for kurilka folder");
+            return;
         }
+    } else {
+        filePath = 'drygoe.json';
+        folderPath = 'drygoe';
+    }
 
         loadImages(filePath, function(images) {
             const randomImagePath = `${folderPath}/${getRandomElement(images)}`;
@@ -195,7 +209,7 @@ window.onload = function() {
     });
 
     // Загружаем случайное изображение при загрузке страницы
-    displayRandomImage(horizontalSlider.value);
+    displayRandomImage(horizontalSlider.value, verticalSlider.value);
 
     // Загружаем список аудиофайлов из baseaudio при загрузке страницы
     loadAudioFiles('baseaudio.json', function(files) {
