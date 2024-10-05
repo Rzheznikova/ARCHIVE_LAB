@@ -244,43 +244,73 @@ window.onload = function() {
         captionKurilka.style.top = `${captionY}px`;
         captionIeshcheVsyakoeRaznoe.style.top = `${captionY}px`;
     }
-    function positionVerticalCaptions() {
-        const verticalSlider = document.getElementById('verticalRangeSlider');
-        const captions = [
-            document.getElementById('caption-course1'),
-            document.getElementById('caption-course2'),
-            document.getElementById('caption-course3'),
-            document.getElementById('caption-course4'),
-            document.getElementById('caption-course5')
-        ];
+   function positionVerticalCaptions() {
+    const verticalSlider = document.getElementById('verticalRangeSlider');
+    const horizontalSlider = document.getElementById('horizontalRangeSlider');
+    const captions = [
+        document.getElementById('caption-course1'),
+        document.getElementById('caption-course2'),
+        document.getElementById('caption-course3'),
+        document.getElementById('caption-course4'),
+        document.getElementById('caption-course5')
+    ];
 
-        if (!verticalSlider || captions.includes(null)) {
-            console.error("One or more vertical caption elements not found.");
-            return;
-        }
-
-        const sliderRect = verticalSlider.getBoundingClientRect();
-        const sliderHeight = sliderRect.height;
-        const baseY = sliderRect.top;
-
-        // Расчет позиции по оси X — центральная точка между слайдером и левым краем страницы
-        const middleX = sliderRect.left / 2;
-
-        // Позиционируем каждую подпись на нужной высоте и по оси X
-        captions.forEach((caption, index) => {
-            // Позиции: 10%, 30%, 50%, 70%, 90%
-            const percentageY = 0.1 + index * 0.2;
-            const captionY = baseY + sliderHeight * percentageY;
-
-            caption.style.top = `${captionY}px`;
-            caption.style.left = `${middleX}px`; // Позиция по X — центральная точка между слайдером и левым краем
-            caption.style.display = 'block'; // Убедитесь, что элементы видимы
-        });
+    // Проверка наличия всех элементов
+    if (!verticalSlider || !horizontalSlider || captions.includes(null)) {
+        console.error("One or more required elements not found.");
+        return;
     }
 
-    // Вызов функций позиционирования при загрузке страницы и изменении размера окна
+    // Получение координат вертикального и горизонтального слайдеров
+    const verticalSliderRect = verticalSlider.getBoundingClientRect();
+    const horizontalSliderRect = horizontalSlider.getBoundingClientRect();
+
+    // Определение точки пересечения по оси Y
+    const intersectionY = Math.min(verticalSliderRect.bottom, horizontalSliderRect.bottom);
+    console.log("Intersection Y:", intersectionY);
+
+    const sliderHeight = verticalSliderRect.height;
+
+    // Расчет позиций для подписей в соответствии с ТЗ
+    captions.forEach((caption, index) => {
+        // Определение положения по оси Y для каждой подписи
+        let percentageY;
+        switch (index) {
+            case 0:
+                percentageY = 0.3; // 30%
+                break;
+            case 1:
+                percentageY = 0.1; // 10%
+                break;
+            case 2:
+                percentageY = 0.5; // 50%
+                break;
+            case 3:
+                percentageY = 0.7; // 70%
+                break;
+            case 4:
+                percentageY = 0.9; // 90%
+                break;
+            default:
+                percentageY = 0;
+        }
+
+        // Рассчитываем координату Y для размещения подписи
+        const captionY = intersectionY - (sliderHeight * percentageY);
+        caption.style.top = `${captionY}px`;
+        caption.style.left = `${verticalSliderRect.left - 100}px`; // Немного влево от слайдера для читаемости
+        caption.style.display = 'block';
+
+        // Отладочный вывод для проверки
+        console.log(`Caption ${index + 1} positioned at: Top = ${captionY}px, Left = ${verticalSliderRect.left - 100}px`);
+    });
+}
+
+// Вызов функции в window.onload и при изменении размеров окна
+window.onload = function() {
     positionCaptions(); // Позиционируем подписи горизонтального слайдера
     positionVerticalCaptions(); // Позиционируем подписи вертикального слайдера
+
     window.onresize = function() {
         positionCaptions(); // Обновляем позиции горизонтальных подписей
         positionVerticalCaptions(); // Обновляем позиции вертикальных подписей
