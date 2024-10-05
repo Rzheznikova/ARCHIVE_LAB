@@ -209,76 +209,45 @@ window.onload = function() {
         console.log('Loaded filter audio files:', audioFilesFilter);
     });
 
-function positionVerticalCaptions() {
-    const verticalSlider = document.getElementById('verticalRangeSlider');
-    const horizontalSlider = document.getElementById('horizontalRangeSlider');
-    const captions = [
-        document.getElementById('caption-course1'),
-        document.getElementById('caption-course2'),
-        document.getElementById('caption-course3'),
-        document.getElementById('caption-course4'),
-        document.getElementById('caption-course5')
-    ];
+    // Функция для позиционирования подписей
+    function positionCaptions() {
+        const horizontalSlider = document.getElementById('horizontalRangeSlider');
+        const captionGoticheskaya = document.getElementById('caption-goticheskaya');
+        const captionMasterskaya = document.getElementById('caption-masterskaya');
+        const captionBelyiZal = document.getElementById('caption-belyi-zal');
+        const captionKurilka = document.getElementById('caption-kurilka');
+        const captionIeshcheVsyakoeRaznoe = document.getElementById('caption-i-eshche-vsyakoe-raznoe');
 
-    // Проверка наличия всех элементов
-    if (!verticalSlider || !horizontalSlider || captions.includes(null)) {
-        console.error("One or more required elements not found.");
-        return;
-    }
-
-    // Получение координат вертикального и горизонтального слайдеров
-    const verticalSliderRect = verticalSlider.getBoundingClientRect();
-    const horizontalSliderRect = horizontalSlider.getBoundingClientRect();
-
-    // Определение точки пересечения по оси Y
-    const intersectionY = Math.min(verticalSliderRect.bottom, horizontalSliderRect.bottom);
-    console.log("Intersection Y:", intersectionY);
-
-    const sliderHeight = verticalSliderRect.height;
-
-    // Расчет позиций для подписей в соответствии с ТЗ
-    captions.forEach((caption, index) => {
-        // Определение положения по оси Y для каждой подписи
-        let percentageY;
-        switch (index) {
-            case 0:
-                percentageY = 0.3; // 30%
-                break;
-            case 1:
-                percentageY = 0.1; // 10%
-                break;
-            case 2:
-                percentageY = 0.5; // 50%
-                break;
-            case 3:
-                percentageY = 0.7; // 70%
-                break;
-            case 4:
-                percentageY = 0.9; // 90%
-                break;
-            default:
-                percentageY = 0;
+        if (!captionGoticheskaya || !captionMasterskaya || !captionBelyiZal || !captionKurilka || !captionIeshcheVsyakoeRaznoe) {
+            console.error("One or more caption elements not found.");
+            return;
         }
 
-        // Рассчитываем координату Y для размещения подписи
-        const captionY = intersectionY - (sliderHeight * percentageY);
-        caption.style.top = `${captionY}px`;
-        caption.style.left = `${verticalSliderRect.left - 100}px`; // Немного влево от слайдера для читаемости
-        caption.style.display = 'block';
+        const sliderRect = horizontalSlider.getBoundingClientRect();
+        const sliderWidth = sliderRect.width;
 
-        // Отладочный вывод для проверки
-        console.log(`Caption ${index + 1} positioned at: Top = ${captionY}px, Left = ${verticalSliderRect.left - 100}px`);
-    });
-}
+        const baseX = sliderRect.left + sliderWidth * 0.1;
 
-window.onload = function() {
-    positionCaptions(); // Позиционируем подписи горизонтального слайдера
-    positionVerticalCaptions(); // Позиционируем подписи вертикального слайдера
+        captionGoticheskaya.style.left = `${baseX}px`;
+        captionMasterskaya.style.left = `${baseX + sliderWidth * 0.2}px`;
+        captionBelyiZal.style.left = `${baseX + sliderWidth * 0.4}px`;
+        captionKurilka.style.left = `${baseX + sliderWidth * 0.6}px`;
+        captionIeshcheVsyakoeRaznoe.style.left = `${baseX + sliderWidth * 0.8}px`;
 
-    window.onresize = function() {
-        positionCaptions(); // Обновляем позиции горизонтальных подписей
-        positionVerticalCaptions(); // Обновляем позиции вертикальных подписей
-    };
-}; // <-- Закрывающая скобка для window.onload
+        const sliderBottom = sliderRect.bottom;
+        const windowHeight = window.innerHeight;
+        const captionY = (windowHeight + sliderBottom) / 2;
+
+        captionGoticheskaya.style.top = `${captionY}px`;
+        captionMasterskaya.style.top = `${captionY}px`;
+        captionBelyiZal.style.top = `${captionY}px`;
+        captionKurilka.style.top = `${captionY}px`;
+        captionIeshcheVsyakoeRaznoe.style.top = `${captionY}px`;
+    }
+
+    positionCaptions();
+    window.onresize = positionCaptions;
+};
+
 
 
