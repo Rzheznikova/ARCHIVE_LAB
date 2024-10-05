@@ -171,6 +171,16 @@ input[type="range"]:focus {
     transform: translateX(-50%);
 }
 
+.vertical-caption {
+    position: absolute; /* Позиция абсолютно относительно контейнера слайдера */
+    font-size: 16px; /* Размер шрифта такой же, как у горизонтальных подписей */
+    font-family: 'Helvetica', sans-serif; /* Шрифт такой же */
+    color: black; /* Цвет текста чёрный */
+    text-align: left; /* Текст выравнивается по левому краю, т.к. подписи располагаются справа от слайдера */
+    transform: translateY(-50%); /* Центрирование текста относительно его высоты */
+    white-space: nowrap; /* Чтобы текст не переносился на новую строку */
+}
+
 .audio-button {
     position: absolute;
     top: 20px;
