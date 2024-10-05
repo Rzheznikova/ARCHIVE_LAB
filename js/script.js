@@ -263,16 +263,20 @@ window.onload = function() {
     const sliderHeight = sliderRect.height;
     const baseY = sliderRect.top;
 
-    // Позиционируем каждую подпись на нужной высоте
+    // Расчет позиции по оси X — центральная точка между слайдером и левым краем страницы
+    const middleX = sliderRect.left / 2;
+
+    // Позиционируем каждую подпись на нужной высоте и по оси X
     captions.forEach((caption, index) => {
         // Позиции: 10%, 30%, 50%, 70%, 90%
         const percentageY = 0.1 + index * 0.2;
         const captionY = baseY + sliderHeight * percentageY;
 
         caption.style.top = `${captionY}px`;
-        caption.style.left = `${sliderRect.right + 20}px`; // Отступ вправо от слайдера на 20 пикселей
+        caption.style.left = `${middleX}px`; // Позиция по X — центральная точка между слайдером и левым краем
     });
-    }
+}
+
     positionCaptions();
     window.onresize = positionCaptions;
 };
