@@ -244,10 +244,57 @@ window.onload = function() {
         captionKurilka.style.top = `${captionY}px`;
         captionIeshcheVsyakoeRaznoe.style.top = `${captionY}px`;
     }
+     // Функция для позиционирования подписей вертикального слайдера
+    function positionVerticalCaptions() {
+        const verticalSlider = document.getElementById('verticalRangeSlider');
+        const horizontalSlider = document.getElementById('horizontalRangeSlider');
+        const captions = [
+            document.getElementById('caption-course1'),
+            document.getElementById('caption-course2'),
+            document.getElementById('caption-course3'),
+            document.getElementById('caption-course4'),
+            document.getElementById('caption-course5')
+        ];
 
+        if (!verticalSlider || !horizontalSlider || captions.includes(null)) {
+            console.error("One or more required elements not found.");
+            return;
+        }
+
+        const verticalSliderRect = verticalSlider.getBoundingClientRect();
+        const horizontalSliderRect = horizontalSlider.getBoundingClientRect();
+
+        const intersectionY = Math.min(verticalSliderRect.bottom, horizontalSliderRect.bottom);
+        console.log("Intersection Y:", intersectionY);
+
+        const sliderHeight = verticalSliderRect.height;
+
+        captions.forEach((caption, index) => {
+            let percentageY = 0;
+            switch (index) {
+                case 0: percentageY = 0.1; break; // 10%
+                case 1: percentageY = 0.3; break; // 30%
+                case 2: percentageY = 0.5; break; // 50%
+                case 3: percentageY = 0.7; break; // 70%
+                case 4: percentageY = 0.9; break; // 90%
+            }
+
+            const captionY = intersectionY - (sliderHeight * percentageY);
+            caption.style.top = `${captionY}px`;
+            caption.style.left = `${verticalSliderRect.left - 100}px`; 
+            caption.style.display = 'block';
+
+            console.log(`Caption ${index + 1} positioned at: Top = ${captionY}px, Left = ${verticalSliderRect.left - 100}px`);
+        });
+    }
+    // Вызов функций позиционирования
     positionCaptions();
-    window.onresize = positionCaptions;
-};
+    positionVerticalCaptions();
 
+    window.onresize = function() {
+        positionCaptions();
+        positionVerticalCaptions();
+    };
+};
 
 
