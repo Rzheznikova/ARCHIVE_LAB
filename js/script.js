@@ -271,7 +271,6 @@ function positionVerticalCaptions() {
     });
 }
 
-// Вызов функции в window.onload и при изменении размеров окна
 window.onload = function() {
     positionCaptions(); // Позиционируем подписи горизонтального слайдера
     positionVerticalCaptions(); // Позиционируем подписи вертикального слайдера
@@ -280,7 +279,6 @@ window.onload = function() {
         positionCaptions(); // Обновляем позиции горизонтальных подписей
         positionVerticalCaptions(); // Обновляем позиции вертикальных подписей
     };
-};
-
+}; // <-- Закрывающая скобка для window.onload
 
 
