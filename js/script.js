@@ -101,6 +101,10 @@ window.onload = function() {
             imageContainer.style.display = 'block';
         });
     }
+    
+    // Выводим в консоль текущие зоны
+    console.log(`Current Horizontal Zone: ${horizontalZone}`);
+    console.log(`Current Vertical Zone: ${verticalZone}`);
 
     // Функция для воспроизведения случайного аудио
     function playRandomAudio(audioFiles) {
