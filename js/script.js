@@ -72,9 +72,26 @@ window.onload = function() {
         } else if (sliderValue > 40 && sliderValue <= 60) {
             filePath = 'beliizal/beliizal.json';
             folderPath = 'beliizal';
-        } else if (sliderValue > 60 && sliderValue <= 80) {
-            filePath = 'kurilka/kurilka.json';
-            folderPath = 'kurilka';
+        } else if (horizontalSliderValue > 60 && horizontalSliderValue <= 80) {
+        // Используем вертикальный слайдер для выбора папки и файла
+        const verticalSliderValue = parseInt(document.getElementById('verticalRangeSlider').value);
+
+        if (verticalSliderValue >= 0 && verticalSliderValue < 19) {
+            folderPath = '5kurskurilka';
+            filePath = '5kurskurilka/kurilkakurs5.json';
+        } else if (verticalSliderValue >= 19 && verticalSliderValue < 36) {
+            folderPath = '4kurskurilka';
+            filePath = '4kurskurilka/kurilkakurs4.json';
+        } else if (verticalSliderValue >= 36 && verticalSliderValue < 53) {
+            folderPath = '3kurskurilka';
+            filePath = '3kurskurilka/kurilkakurs3.json';
+        } else if (verticalSliderValue >= 53 && verticalSliderValue < 70) {
+            folderPath = '2kurskurilka';
+            filePath = '2kurskurilka/kurilkakurs2.json';
+        } else if (verticalSliderValue >= 70 && verticalSliderValue <= 100) {
+            folderPath = '1kurskurilka';
+            filePath = '1kurskurilka/kurilkakurs1.json';
+        }
         } else {
             filePath = 'drygoe.json';
             folderPath = 'drygoe';
