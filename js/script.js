@@ -60,40 +60,25 @@ window.onload = function() {
         return arr[randomIndex];
     }
 
-    function displayRandomImage(horizontalSliderValue, verticalSliderValue) {
-    let filePath, folderPath;
+    function displayRandomImage(sliderValue) {
+        let filePath, folderPath;
 
-    // Проверяем значение горизонтального слайдера
-    if (horizontalSliderValue <= 20) {
-        filePath = 'images.json';
-        folderPath = 'goticheskaya';
-    } else if (horizontalSliderValue > 20 && horizontalSliderValue <= 40) {
-        filePath = 'masterskaya/masterskaya.json';
-        folderPath = 'masterskaya';
-    } else if (horizontalSliderValue > 40 && horizontalSliderValue <= 60) {
-        filePath = 'beliizal/beliizal.json';
-        folderPath = 'beliizal';
-    } else if (horizontalSliderValue > 60 && horizontalSliderValue <= 80) {
-        // Логика для "kurilka" в зависимости от значения вертикального слайдера
-        if (verticalSliderValue >= 0 && verticalSliderValue < 48) {
-            // Если вертикальный слайдер находится в диапазоне 0-48%, не показываем картинку
-            console.log("Vertical slider value is in range 0-48%, not displaying any image.");
-            imageContainer.style.display = 'none';
-            return;
-        } else if (verticalSliderValue >= 48 && verticalSliderValue < 64) {
-            filePath = '3kurskurilka/kurilkakurs3.json';
-            folderPath = '3kurskurilka';
-        } else if (verticalSliderValue >= 64 && verticalSliderValue < 80) {
-            filePath = '4kurskurilka/kurilkakurs4.json';
-            folderPath = '4kurskurilka';
-        } else if (verticalSliderValue >= 80 && verticalSliderValue <= 100) {
-            filePath = '5kurskurilka/kurilkakurs5.json';
-            folderPath = '5kurskurilka';
+        if (sliderValue <= 20) {
+            filePath = 'images.json';
+            folderPath = 'goticheskaya';
+        } else if (sliderValue > 20 && sliderValue <= 40) {
+            filePath = 'masterskaya/masterskaya.json';
+            folderPath = 'masterskaya';
+        } else if (sliderValue > 40 && sliderValue <= 60) {
+            filePath = 'beliizal/beliizal.json';
+            folderPath = 'beliizal';
+        } else if (sliderValue > 60 && sliderValue <= 80) {
+            filePath = 'kurilka/kurilka.json';
+            folderPath = 'kurilka';
+        } else {
+            filePath = 'drygoe.json';
+            folderPath = 'drygoe';
         }
-    } else {
-        filePath = 'drygoe.json';
-        folderPath = 'drygoe';
-    }
 
         loadImages(filePath, function(images) {
             const randomImagePath = `${folderPath}/${getRandomElement(images)}`;
@@ -101,7 +86,7 @@ window.onload = function() {
             imageContainer.style.display = 'block';
         });
     }
-    
+
     // Функция для воспроизведения случайного аудио
     function playRandomAudio(audioFiles) {
         if (audioFiles.length === 0) return;
@@ -193,8 +178,6 @@ window.onload = function() {
     const horizontalSlider = document.getElementById('horizontalRangeSlider');
     horizontalSlider.addEventListener('input', function() {
         handleSliderMovement(this, false);
-        console.log(`Horizontal Slider 1 Value: ${this.value}%`);  // Вывод значения горизонтального слайдера 1 в процентах
-    handleSliderMovement(this, false);
     });
 
     // Обработчик для горизонтального слайдера 2 (управление музыкой)
@@ -209,12 +192,10 @@ window.onload = function() {
     const verticalSlider = document.getElementById('verticalRangeSlider');
     verticalSlider.addEventListener('input', function() {
         handleSliderMovement(this, false);
-        console.log(`Vertical Slider Value: ${this.value}%`);  // Вывод значения вертикального слайдера в процентах
-    handleSliderMovement(this, false);
     });
 
     // Загружаем случайное изображение при загрузке страницы
-    displayRandomImage(horizontalSlider.value, verticalSlider.value);
+    displayRandomImage(horizontalSlider.value);
 
     // Загружаем список аудиофайлов из baseaudio при загрузке страницы
     loadAudioFiles('baseaudio.json', function(files) {
@@ -263,59 +244,11 @@ window.onload = function() {
         captionKurilka.style.top = `${captionY}px`;
         captionIeshcheVsyakoeRaznoe.style.top = `${captionY}px`;
     }
-     function positionVerticalCaptions() {
-    const verticalSlider = document.getElementById('verticalRangeSlider');
-    const horizontalSlider = document.getElementById('horizontalRangeSlider');
-    const captions = [
-        document.getElementById('caption-course1'),
-        document.getElementById('caption-course2'),
-        document.getElementById('caption-course3'),
-        document.getElementById('caption-course4'),
-        document.getElementById('caption-course5')
-    ];
 
-    // Проверка наличия всех элементов
-    if (!verticalSlider || !horizontalSlider || captions.includes(null)) {
-        console.error("One or more required elements not found.");
-        return;
-    }
-
-    // Получение координат вертикального и горизонтального слайдеров
-    const verticalSliderRect = verticalSlider.getBoundingClientRect();
-    const horizontalSliderRect = horizontalSlider.getBoundingClientRect();
-
-    // Определение точки пересечения по оси Y - используем верхнюю часть горизонтального слайдера
-    const intersectionY = horizontalSliderRect.top;
-    console.log("Intersection Y:", intersectionY);
-
-    const sliderHeight = verticalSliderRect.height;
-
-    // Расчет позиций для подписей в соответствии с ТЗ
-    captions.forEach((caption, index) => {
-        // Позиции: 10%, 30%, 50%, 70%, 90%
-        let percentageY = 0.1 + index * 0.2;  // Порядок: 10%, 30%, 50%, 70%, 90%
-
-        // Рассчитываем координату Y для размещения подписи
-        const captionY = intersectionY - (sliderHeight * percentageY);
-
-        // Задаем позицию для подписи
-        caption.style.top = `${captionY}px`;
-        caption.style.left = `${verticalSliderRect.left - 100}px`; // Немного влево от слайдера для читаемости
-        caption.style.display = 'block';
-        caption.style.zIndex = '10'; // Поднимаем над другими элементами, чтобы было видно
-
-        // Отладочный вывод для проверки
-        console.log(`Caption ${index + 1} positioned at: Top = ${captionY}px, Left = ${verticalSliderRect.left - 100}px`);
-    });
-}
-    // Вызов функций позиционирования
     positionCaptions();
-    positionVerticalCaptions();
-
-    window.onresize = function() {
-        positionCaptions();
-        positionVerticalCaptions();
-    };
+    window.onresize = positionCaptions;
 };
+
+
 
 
