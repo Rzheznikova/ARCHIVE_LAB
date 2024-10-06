@@ -192,6 +192,9 @@ window.onload = function() {
     const verticalSlider = document.getElementById('verticalRangeSlider');
     verticalSlider.addEventListener('input', function() {
         handleSliderMovement(this, false);
+        // Печатаем положение ползунка в процентах
+    const percentage = sliderValue; // Поскольку значение min=0 и max=100, значение можно использовать напрямую
+    console.log(`Vertical slider: ${percentage}%`);
     });
 
     // Загружаем случайное изображение при загрузке страницы
