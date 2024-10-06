@@ -102,9 +102,6 @@ window.onload = function() {
         });
     }
     
-    console.log(`Horizontal Slider Value: ${horizontalValue}%`);
-    console.log(`Vertical Slider Value: ${verticalValue}%`);
-
     // Функция для воспроизведения случайного аудио
     function playRandomAudio(audioFiles) {
         if (audioFiles.length === 0) return;
@@ -196,6 +193,8 @@ window.onload = function() {
     const horizontalSlider = document.getElementById('horizontalRangeSlider');
     horizontalSlider.addEventListener('input', function() {
         handleSliderMovement(this, false);
+        console.log(`Horizontal Slider 1 Value: ${this.value}%`);  // Вывод значения горизонтального слайдера 1 в процентах
+    handleSliderMovement(this, false);
     });
 
     // Обработчик для горизонтального слайдера 2 (управление музыкой)
@@ -210,6 +209,8 @@ window.onload = function() {
     const verticalSlider = document.getElementById('verticalRangeSlider');
     verticalSlider.addEventListener('input', function() {
         handleSliderMovement(this, false);
+        console.log(`Vertical Slider Value: ${this.value}%`);  // Вывод значения вертикального слайдера в процентах
+    handleSliderMovement(this, false);
     });
 
     // Загружаем случайное изображение при загрузке страницы
