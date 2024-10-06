@@ -192,10 +192,6 @@ window.onload = function() {
     const verticalSlider = document.getElementById('verticalRangeSlider');
     verticalSlider.addEventListener('input', function() {
         handleSliderMovement(this, false);
-     // Вычисление и вывод позиции ползунка в процентах
-    const sliderValue = parseInt(this.value);
-    const percentage = 100 - sliderValue; // Процент от нижней точки (0%) до верхней точки (100%)
-    console.log(`Vertical slider: ${percentage}%`);
     });
 
     // Загружаем случайное изображение при загрузке страницы
@@ -248,9 +244,59 @@ window.onload = function() {
         captionKurilka.style.top = `${captionY}px`;
         captionIeshcheVsyakoeRaznoe.style.top = `${captionY}px`;
     }
+     function positionVerticalCaptions() {
+    const verticalSlider = document.getElementById('verticalRangeSlider');
+    const horizontalSlider = document.getElementById('horizontalRangeSlider');
+    const captions = [
+        document.getElementById('caption-course1'),
+        document.getElementById('caption-course2'),
+        document.getElementById('caption-course3'),
+        document.getElementById('caption-course4'),
+        document.getElementById('caption-course5')
+    ];
 
+    // Проверка наличия всех элементов
+    if (!verticalSlider || !horizontalSlider || captions.includes(null)) {
+        console.error("One or more required elements not found.");
+        return;
+    }
+
+    // Получение координат вертикального и горизонтального слайдеров
+    const verticalSliderRect = verticalSlider.getBoundingClientRect();
+    const horizontalSliderRect = horizontalSlider.getBoundingClientRect();
+
+    // Определение точки пересечения по оси Y - используем верхнюю часть горизонтального слайдера
+    const intersectionY = horizontalSliderRect.top;
+    console.log("Intersection Y:", intersectionY);
+
+    const sliderHeight = verticalSliderRect.height;
+
+    // Расчет позиций для подписей в соответствии с ТЗ
+    captions.forEach((caption, index) => {
+        // Позиции: 10%, 30%, 50%, 70%, 90%
+        let percentageY = 0.1 + index * 0.2;  // Порядок: 10%, 30%, 50%, 70%, 90%
+
+        // Рассчитываем координату Y для размещения подписи
+        const captionY = intersectionY - (sliderHeight * percentageY);
+
+        // Задаем позицию для подписи
+        caption.style.top = `${captionY}px`;
+        caption.style.left = `${verticalSliderRect.left - 100}px`; // Немного влево от слайдера для читаемости
+        caption.style.display = 'block';
+        caption.style.zIndex = '10'; // Поднимаем над другими элементами, чтобы было видно
+
+        // Отладочный вывод для проверки
+        console.log(`Caption ${index + 1} positioned at: Top = ${captionY}px, Left = ${verticalSliderRect.left - 100}px`);
+    });
+}
+    // Вызов функций позиционирования
     positionCaptions();
-    window.onresize = positionCaptions;
+    positionVerticalCaptions();
+
+    window.onresize = function() {
+        positionCaptions();
+        positionVerticalCaptions();
+    };
 };
 
 
