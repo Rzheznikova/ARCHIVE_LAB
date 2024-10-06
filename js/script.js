@@ -72,26 +72,26 @@ window.onload = function() {
         } else if (sliderValue > 40 && sliderValue <= 60) {
             filePath = 'beliizal/beliizal.json';
             folderPath = 'beliizal';
-        } else if (horizontalSliderValue > 60 && horizontalSliderValue <= 80) {
-        // Используем вертикальный слайдер для выбора папки и файла
-        const verticalSliderValue = parseInt(document.getElementById('verticalRangeSlider').value);
+        } else if (sliderValue > 60 && sliderValue <= 80) {
+            // Используем вертикальный слайдер для выбора папки и файла
+            const verticalSliderValue = parseInt(document.getElementById('verticalRangeSlider').value);
 
-        if (verticalSliderValue >= 0 && verticalSliderValue < 19) {
-            folderPath = '5kurskurilka';
-            filePath = '5kurskurilka/kurilkakurs5.json';
-        } else if (verticalSliderValue >= 19 && verticalSliderValue < 36) {
-            folderPath = '4kurskurilka';
-            filePath = '4kurskurilka/kurilkakurs4.json';
-        } else if (verticalSliderValue >= 36 && verticalSliderValue < 53) {
-            folderPath = '3kurskurilka';
-            filePath = '3kurskurilka/kurilkakurs3.json';
-        } else if (verticalSliderValue >= 53 && verticalSliderValue < 70) {
-            folderPath = '2kurskurilka';
-            filePath = '2kurskurilka/kurilkakurs2.json';
-        } else if (verticalSliderValue >= 70 && verticalSliderValue <= 100) {
-            folderPath = '1kurskurilka';
-            filePath = '1kurskurilka/kurilkakurs1.json';
-        }
+            if (verticalSliderValue >= 0 && verticalSliderValue < 19) {
+                folderPath = '5kurskurilka';
+                filePath = '5kurskurilka/kurilkakurs5.json';
+            } else if (verticalSliderValue >= 19 && verticalSliderValue < 36) {
+                folderPath = '4kurskurilka';
+                filePath = '4kurskurilka/kurilkakurs4.json';
+            } else if (verticalSliderValue >= 36 && verticalSliderValue < 53) {
+                folderPath = '3kurskurilka';
+                filePath = '3kurskurilka/kurilkakurs3.json';
+            } else if (verticalSliderValue >= 53 && verticalSliderValue < 70) {
+                folderPath = '2kurskurilka';
+                filePath = '2kurskurilka/kurilkakurs2.json';
+            } else if (verticalSliderValue >= 70 && verticalSliderValue <= 100) {
+                folderPath = '1kurskurilka';
+                filePath = '1kurskurilka/kurilkakurs1.json';
+            }
         } else {
             filePath = 'drygoe.json';
             folderPath = 'drygoe';
@@ -104,6 +104,26 @@ window.onload = function() {
         });
     }
 
+    // Обработчик для горизонтального слайдера 1
+    const horizontalSlider = document.getElementById('horizontalRangeSlider');
+    horizontalSlider.addEventListener('input', function() {
+        const horizontalSliderValue = parseInt(this.value);
+        displayRandomImage(horizontalSliderValue); // Передача значения горизонтального слайдера в функцию
+    });
+
+    // Обработчик для вертикального слайдера
+    const verticalSlider = document.getElementById('verticalRangeSlider');
+    verticalSlider.addEventListener('input', function() {
+        const verticalSliderValue = parseInt(this.value);
+        console.log(`Vertical slider: ${verticalSliderValue}%`);
+
+        // Повторный вызов displayRandomImage() для обновления при изменении вертикального слайдера
+        const horizontalSliderValue = parseInt(horizontalSlider.value);
+        if (horizontalSliderValue > 60 && horizontalSliderValue <= 80) {
+            displayRandomImage(horizontalSliderValue);
+        }
+    });
+    
     // Функция для воспроизведения случайного аудио
     function playRandomAudio(audioFiles) {
         if (audioFiles.length === 0) return;
