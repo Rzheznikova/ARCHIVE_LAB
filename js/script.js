@@ -192,9 +192,8 @@ window.onload = function() {
     const verticalSlider = document.getElementById('verticalRangeSlider');
     verticalSlider.addEventListener('input', function() {
         handleSliderMovement(this, false);
-    // Вычисление и вывод позиции ползунка в процентах
-    const sliderValue = parseInt(this.value);
-    const percentage = 100 - sliderValue; // Процент от нижней точки (0%) до верхней точки (100%)
+    // Печатаем положение ползунка в процентах
+    const percentage = sliderValue; // Поскольку значение min=0 и max=100, значение можно использовать напрямую
     console.log(`Vertical slider: ${percentage}%`);
     });
 
