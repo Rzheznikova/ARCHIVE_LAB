@@ -197,23 +197,26 @@ window.onload = function() {
         handleSliderMovement(this, false);
     });
 
-    // Обработчик для горизонтального слайдера 2 (управление музыкой)
-    const horizontalSlider2 = document.getElementById('horizontalRangeSlider2');
-    horizontalSlider2.addEventListener('input', function() {
-        if (isAudioEnabled) {
-            handleSliderMovement(this, true);
-        }
+    // Обработчик для горизонтального слайдера 1
+    const horizontalSlider = document.getElementById('horizontalRangeSlider');
+    horizontalSlider.addEventListener('input', function() {
+    const horizontalSliderValue = parseInt(this.value);
+    displayRandomImage(horizontalSliderValue); // Передача значения горизонтального слайдера в функцию
     });
 
     // Обработчик для вертикального слайдера
     const verticalSlider = document.getElementById('verticalRangeSlider');
     verticalSlider.addEventListener('input', function() {
-        handleSliderMovement(this, false);
-    // Печатаем положение ползунка в процентах
-    const percentage = sliderValue; // Поскольку значение min=0 и max=100, значение можно использовать напрямую
-    console.log(`Vertical slider: ${percentage}%`);
-    });
+    const verticalSliderValue = parseInt(this.value);
+    console.log(`Vertical slider: ${verticalSliderValue}%`);
 
+    // Повторный вызов displayRandomImage() для обновления при изменении вертикального слайдера
+    const horizontalSliderValue = parseInt(horizontalSlider.value);
+    if (horizontalSliderValue > 60 && horizontalSliderValue <= 80) {
+        displayRandomImage(horizontalSliderValue);
+        }
+    });
+    
     // Загружаем случайное изображение при загрузке страницы
     displayRandomImage(horizontalSlider.value);
 
