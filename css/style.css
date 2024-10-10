@@ -58,6 +58,7 @@ input[type="range"] {
     height: 30px;
     background: white; /* Цвет ползунка - белый */
     cursor: pointer;
+    margin-top: -12.5px;
 }
 
 #horizontalRangeSlider::-ms-thumb {
@@ -65,6 +66,7 @@ input[type="range"] {
     height: 30px;
     background: white; /* Цвет ползунка - белый */
     cursor: pointer;
+    margin-top: -12.5px;
 }
 
 /* Стили для дорожки горизонтального слайдера 1 */
@@ -83,6 +85,7 @@ input[type="range"] {
     height: 30px; /* Высота ползунка */
     background: white; /* Цвет ползунка - белый */
     cursor: pointer;
+    margin-top: -12.5px;
 }
 
 #horizontalRangeSlider2::-moz-range-thumb {
@@ -90,6 +93,7 @@ input[type="range"] {
     height: 30px;
     background: white; /* Цвет ползунка - белый */
     cursor: pointer;
+    margin-top: -12.5px;
 }
 
 #horizontalRangeSlider2::-ms-thumb {
@@ -97,6 +101,7 @@ input[type="range"] {
     height: 30px;
     background: white; /* Цвет ползунка - белый */
     cursor: pointer;
+    margin-top: -12.5px;
 }
 
 /* Стили для дорожки горизонтального слайдера 2 */
