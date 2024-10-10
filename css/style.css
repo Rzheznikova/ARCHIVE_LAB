@@ -50,6 +50,7 @@ input[type="range"] {
     height: 30px; /* Высота ползунка */
     background: black; /* Цвет ползунка - белый */
     cursor: pointer;
+    margin-top: -12.5px; /* Смещаем ползунок вверх на половину его высоты минус половину толщины полосы (30px/2 - 5px/2) */ 
 }
 
 #horizontalRangeSlider::-moz-range-thumb {
