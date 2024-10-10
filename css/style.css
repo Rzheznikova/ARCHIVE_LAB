@@ -132,6 +132,7 @@ input[type="range"] {
     background: black; /* Цвет ползунка */
     cursor: pointer;
     transform: rotate(90deg); /* Поворот ползунка для вертикального движения */
+    margin-left: -12.5px;
 }
 
 #verticalRangeSlider::-moz-range-thumb {
@@ -140,6 +141,7 @@ input[type="range"] {
     background: black;
     cursor: pointer;
     transform: rotate(90deg); /* Поворот ползунка для вертикального движения */
+    margin-left: -12.5px;
 }
 
 #verticalRangeSlider::-ms-thumb {
@@ -148,6 +150,7 @@ input[type="range"] {
     background: black;
     cursor: pointer;
     transform: rotate(90deg); /* Поворот ползунка для вертикального движения */
+    margin-left: -12.5px;
 }
 
 /* Стили для дорожки вертикального слайдера */
