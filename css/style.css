@@ -160,6 +160,7 @@ input[type="range"] {
     width: 100%;
     height: 5px;
     background: black;
+    margin-left: -12.5px;
 }
 
 /* Убираем фокусную рамку, которая может появляться вокруг ползунка при клике */
